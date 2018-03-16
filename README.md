@@ -83,9 +83,9 @@ npm run dev
 * 在项目地址下，打开Git Bash Here
 
 ```
-$ git checkout -b dev //切换本地分支
+$ git add .
 $ git commit -m "update revise" //提交更新到暂存区
-$ git push origin dev //提交分支暂存到远程仓库
+$ git push -u origin master //提交分支暂存到远程仓库
 ```
 
 * 如果提交过程存在冲突，自行百度Git相关命令解决，建议首次使用git提交前进行文件备份！！！
