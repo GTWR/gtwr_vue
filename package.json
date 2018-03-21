@@ -13,7 +13,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "swiper": "^4.2.0",
     "vue": "^2.5.2",
+    "vue-awesome-swiper": "^3.1.3",
+    "vue-concise-slider": "^2.4.8",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
