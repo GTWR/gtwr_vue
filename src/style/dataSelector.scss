@@ -1,0 +1,57 @@
+@import 'main_style.scss';
+
+.data-selector{
+  background-color: white;
+  box-shadow: $shadow_card,$shadow_card;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .data-list{
+  	margin-left:10px;
+  	.parent_node{
+  		margin-top: 5px;
+  		transition: all 0.5s;
+  		width: $left-side-width - 40;
+  		cursor: pointer;
+  		img{
+  			vertical-align: middle;
+  		}
+  		b{
+  			vertical-align: middle;
+  		}
+  	}
+  	.parent_node:hover{
+  		background-color: $hover_color;
+  	}
+  	.parent_node span{
+  		float: right;
+  	}
+  	.child_list{
+  		margin-left: 20px;
+  		p{
+  			margin: 5px;
+  		}
+  		p:hover{
+  			background-color: $hover_color;
+  		}
+  	}
+  }
+  .data_drag_container{
+  	height: 100px;
+  	background-color: rgba(0,0,0,0.05);
+  	border: 1px dashed rgba(0,0,0,0.7);
+  	margin: 10px;
+  	text-align: center;
+  	img{
+  		margin-top: 20px;
+  	}
+  	p{
+		margin-top: 0px;
+  	}
+  }
+}
+
+
+
+
+

@@ -1,0 +1,12 @@
+@import 'main_style.scss';
+.map-container{
+  @include container(565px);
+  #leafmap{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+
+

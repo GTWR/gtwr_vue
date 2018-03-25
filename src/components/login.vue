@@ -1,30 +1,24 @@
 <template>
   <div id="hello">
     <div class="carousel_slide">
-	<carousel :slides="slides" :inv="invTime"></carousel>
+	   <carousel :slides="slides" :inv="invTime"></carousel>
 	</div>
 	<h1>{{ msg }}</h1>
     <button class="login-btn" @click="goHomePage">
       匿名登录
     </button>
-	
-    <div class="footer">
-	
-        &emsp;&copy; OpenStreetMap &copy; Mapbox <b>Improve this map</b>&emsp;  
-    
-	</div>
-	
   </div>
 </template>
 
 <script>
-import AMap from 'AMap';   //在页面中引入高德地图
+import Leaflet from 'leaflet'
 import carousel from '../components/Carousel.vue'  //引入carousel组件
 export default {
   name: 'login', 
   data () {
     return {
       msg: ' Hello to GTWR',
+      map:null,
 	  invTime:2000,
 	  //引入滚动视窗图片
 	  slides: [
@@ -49,17 +43,17 @@ export default {
     }
   },
     mounted(){
-       this.loadmap();     //加载地图和相关组件
+       this.initMap();
     },
   methods:{
     goHomePage:function(){
       this.$router.push({path:'/home'})
     },
-	loadmap(){
-        var map = new AMap.Map('hello', {
-          zoom: 3
-        });
-      }
+	  initMap(){
+      this.map = L.map('hello').setView([51.505,-0.09],3);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      ).addTo(this.map);
+    }
   },
   components: {
             carousel
@@ -74,7 +68,7 @@ export default {
 
 
 #hello{
-
+  text-align: center;
   height: 100%;
   width: 100%;
 }
