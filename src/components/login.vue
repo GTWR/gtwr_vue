@@ -13,6 +13,7 @@
 <script>
 import Leaflet from 'leaflet'
 import carousel from '../components/Carousel.vue'  //引入carousel组件
+
 export default {
   name: 'login', 
   data () {

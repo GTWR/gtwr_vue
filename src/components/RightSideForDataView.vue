@@ -1,0 +1,26 @@
+<template>
+  <div>
+    <map-viewer></map-viewer>
+    <data-viewer></data-viewer>
+    <div class="clear:both"></div>
+  </div>
+</template>
+
+<script>
+import mapViewer from './MapViewer'
+import dataViewer from './DataViewer'
+require('../style/main_style.scss')
+
+export default {
+  name: 'Home',
+  data () {
+    return {
+      msg: ' Hello to GTWR'
+    }
+  },
+  components:{
+    dataViewer,
+    mapViewer
+  }
+}
+</script>

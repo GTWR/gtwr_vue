@@ -1,14 +1,15 @@
 @import 'main_style.scss';
 
 .par-container{
-  @include container($left_sider_container_height);
+  @include container($left_sider_container_height+30);
   margin-top: $card-margin_padding;
   display: flex;
   flex-direction: column;
   .par-list{
     margin-left:10px;
+    margin-top: 10px;
     input{
-      width: 305px;
+      width: $left-side-width - 80;
     }
     p{
       line-height: 10px;
@@ -18,7 +19,7 @@
       width: 100px;
       height: 30px;
       float: right;
-      margin-right: 1%;
+      margin-right: 3%;
       margin-top: 3px;
       display: inline-block;
       border-radius: 4px;

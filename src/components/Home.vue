@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <header class="header">
-      <p><span>GTWR </span>计算平台</p>
+      <p><span>GTWR </span>云计算平台</p>
     </header><!-- /header -->
     <div class="main-content">
       <div class="left-side">
@@ -9,9 +9,7 @@
          <par-definer></par-definer>
       </div>
       <div class="right-side">
-        <map-viewer></map-viewer>
-        <data-viewer></data-viewer>
-        <div class="clear:both"></div>
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -20,8 +18,6 @@
 <script>
 import dataSelector from './DataSelector'
 import parDefiner from './ParDefiner'
-import mapViewer from './MapViewer'
-import dataViewer from './DataViewer'
 require('../style/main_style.scss')
 
 export default {
@@ -31,14 +27,12 @@ export default {
       msg: ' Hello to GTWR'
     }
   },
+  mounted(){
+    this.$router.push({path:'/home/dataview'})
+  },
   components:{
     dataSelector,
-    parDefiner,
-    dataViewer,
-    mapViewer
+    parDefiner
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>

@@ -15,6 +15,7 @@
   		cursor: pointer;
   		img{
   			vertical-align: middle;
+        width: 20px;
   		}
   		b{
   			vertical-align: middle;
@@ -28,16 +29,37 @@
   	}
   	.child_list{
   		margin-left: 20px;
+      width: $left-side-width - 55;
   		p{
   			margin: 5px;
   		}
   		p:hover{
   			background-color: $hover_color;
   		}
+      span{
+        float: right;
+      }
+      .grand_son_list{
+        margin-left: 20px;
+        font-size: 13px;
+        img{
+          width: 13px;
+        }
+        button{
+          font-size: 5px;
+          width: 32px;
+          margin:0;
+          padding:0;
+          border-radius: 2px;
+          border: none;
+          background-color: lightseagreen;
+          color: #FFFFFF;
+        }
+      }
   	}
   }
   .data_drag_container{
-  	height: 100px;
+  	height: 80px;
   	background-color: rgba(0,0,0,0.05);
   	border: 1px dashed rgba(0,0,0,0.7);
   	margin: 10px;
