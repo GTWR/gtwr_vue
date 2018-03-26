@@ -6,7 +6,7 @@
 		  	<div class="parent_node">
 		  		<img :src="data.src">
 		  		<b>{{data.name}}</b>
-		  		<span @click="openfolder(index)">+</span>
+		  		<!-- <span @click="openfolder(index)">+</span> -->
 		  	</div>
 		  	<div class="child_list" v-show="data.open">
 		  		<div v-for="child,index1 in data.data_type">
@@ -41,6 +41,7 @@ import demoLogo from '../assets/img/demo_data_aa.png'
 import historyLogo from '../assets/img/his_data.png'
 import csvFileGogo from '../assets/img/csv.png'
 import geojsonFileLogo from '../assets/img/mind_map.png'
+import serviceFileLogo from '../assets/img/service.png'
 
 export default {
   name: 'DataSelector',
@@ -51,12 +52,13 @@ export default {
 		      	name:'示例数据',
 		      	data_type:[
 			      	{
-			      		name:'中国PM2.5浓度',
+			      		name:'美国人口分布',
 			      		open:true,
 			      		url:'',
 			      		children:[
-			      			{name:'中国PM2.5浓度.csv',src:''},
-			      			{name:'中国PM2.5浓度.geojson',src:''}
+			      			{name:'美国人口分布.csv',src:''},
+			      			{name:'美国人口分布.geojson',src:''},
+			      			{name:'美国人口分布WMS',src:''},
 			      		]
 			      	},
 			      	{
@@ -65,7 +67,8 @@ export default {
 			      		url:'',
 			      		children:[
 			      			{name:'全球7月份降水量.csv',src:''},
-			      			{name:'全球7月份降水量.geojson',src:''}
+			      			{name:'全球7月份降水量.geojson',src:''},
+			      			{name:'全球7月份降水量WMSn',src:''}
 			      		]
 			      	},
 			      	{
@@ -74,7 +77,8 @@ export default {
 			      		url:'',
 			      		children:[
 			      			{name:'中国车流量.csv',src:''},
-			      			{name:'中国车流量.geojson',src:''}
+			      			{name:'中国车流量.geojson',src:''},
+			      			{name:'中国车流量WMSn',src:''}
 			      		]
 			      	}
 			    ],
@@ -96,7 +100,7 @@ export default {
   	this.initDataTypeLogo();
   },
   methods:{
-  	//控制父节点的开关
+  	//控制父节点的开关，用户登录支持开关，但是匿名登录不支持开关
   	openfolder:function(index){
   		/*this.data_list[index].open = this.data_list[index].open ? false:true; */
   	},
@@ -111,11 +115,13 @@ export default {
   		for(let i=0; i< temp.length;i++){
   			for(let j=0; j < temp[i].children.length;j++){
   				const regCsv = RegExp(/\.csv/)
-  				/*const regGeo = RegExp(/\.geojson/)*/
+  				const regGeo = RegExp(/\.geojson/)
   				if (temp[i].children[j].name.match(regCsv)) {
   					temp[i].children[j].src = csvFileGogo;
-  				}else{
+  				}else if(temp[i].children[j].name.match(regGeo)){
   					temp[i].children[j].src = geojsonFileLogo;
+  				}else{
+  					temp[i].children[j].src = serviceFileLogo;
   				}
   			}
   		}

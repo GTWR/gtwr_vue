@@ -20,7 +20,7 @@ export default {
   },
   methods:{
   	initMap(){
-  		this.map = L.map('leafmap').setView([51.505,-0.09],5);
+  		this.map = L.map('leafmap').setView([50.505,-88.09],3);
   		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
   		).addTo(this.map);
   	}
