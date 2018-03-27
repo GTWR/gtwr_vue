@@ -68,6 +68,19 @@ module.exports = {
       {
         test: /\.sass$/,
         loaders: ['style', 'css', 'sass']
+      },
+      {
+        test: /\.csv$/,
+        loader: 'csv-loader',
+        options: {
+          dynamicTyping: true,
+          header: true,
+          skipEmptyLines: true
+        }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   },

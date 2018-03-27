@@ -14,13 +14,13 @@
 		  				<p>{{child.name}}
 		  				<span @click="openfolderForSon(index,index1)">+</span></p>
 		  			</div>
-		  			<div class="grand_son_list" v-show="child.open">
+		  			<div class="grand_son_list" v-show="childOpen">
 						<div v-for="grandson in child.children">
 							<p>
 								<img :src="grandson.src">
 								{{grandson.name}}
-								<button @click="showDataDescription">说明</button>
-								<button @click="showDataView">预览</button>
+								<button @click="showDataDescription(index,index1)">说明</button>
+								<button @click="showDataView(index,index1)">预览</button>
 							</p>
 						</div>
 		  			</div>
@@ -37,87 +37,55 @@
 
 <script>
 require('../style/dataSelector.scss')
-import demoLogo from '../assets/img/demo_data_aa.png'
-import historyLogo from '../assets/img/his_data.png'
-import csvFileGogo from '../assets/img/csv.png'
+import csvFileLogo from '../assets/img/csv.png'
 import geojsonFileLogo from '../assets/img/mind_map.png'
 import serviceFileLogo from '../assets/img/service.png'
+import store from '@/store/store'
+import {mapState} from 'vuex'
 
 export default {
   name: 'DataSelector',
   data () {
     return {
-    	data_list:[
-	      	{
-		      	name:'示例数据',
-		      	data_type:[
-			      	{
-			      		name:'美国人口分布',
-			      		open:true,
-			      		url:'',
-			      		children:[
-			      			{name:'美国人口分布.csv',src:''},
-			      			{name:'美国人口分布.geojson',src:''},
-			      			{name:'美国人口分布WMS',src:''},
-			      		]
-			      	},
-			      	{
-			      		name:'全球7月份降水量',
-			      		open:true,
-			      		url:'',
-			      		children:[
-			      			{name:'全球7月份降水量.csv',src:''},
-			      			{name:'全球7月份降水量.geojson',src:''},
-			      			{name:'全球7月份降水量WMSn',src:''}
-			      		]
-			      	},
-			      	{
-			      		name:'中国车流量',
-			      		open:true,
-			      		url:'',
-			      		children:[
-			      			{name:'中国车流量.csv',src:''},
-			      			{name:'中国车流量.geojson',src:''},
-			      			{name:'中国车流量WMSn',src:''}
-			      		]
-			      	}
-			    ],
-			    src:demoLogo,
-			    open:true
-	        },
-	        {
-		      	name:'历史记录',
-		      	data_type:[
-		      	
-			    ],
-			    src:historyLogo,
-			    open:true
-	  	    }
-	    ]
+      parentIndex: 0,
+      childIndex:0
     }
   },
+  store,
   mounted(){
   	this.initDataTypeLogo();
+
+  },
+  computed:{
+    ...mapState({
+        // ...
+      data_list: state => state.data_list,
+      parentNodeIndex: state => state.parent_node_index,
+      childNodeIndex: state => state.child_node_index
+      /*open:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open*/
+    }),
+    childOpen(){
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open;
+    }
   },
   methods:{
   	//控制父节点的开关，用户登录支持开关，但是匿名登录不支持开关
   	openfolder:function(index){
-  		/*this.data_list[index].open = this.data_list[index].open ? false:true; */
+  		/*store.state.data_list[index].open =store.state.data_list[index].open ? false:true; */
   	},
   	//控制子节点的开关
   	openfolderForSon:function(index,index1){
-  		this.data_list[index].data_type[index1].open = this.data_list[index].data_type[index1].open? false:true;
-
+      this.$store.dispatch('open');
   	},
   	//为不同的数据类型添加不同的图标
   	initDataTypeLogo:function(){
-  		let temp = this.data_list[0].data_type;
+  		let temp =this.data_list[0].data_type;
   		for(let i=0; i< temp.length;i++){
   			for(let j=0; j < temp[i].children.length;j++){
   				const regCsv = RegExp(/\.csv/)
   				const regGeo = RegExp(/\.geojson/)
   				if (temp[i].children[j].name.match(regCsv)) {
-  					temp[i].children[j].src = csvFileGogo;
+  					temp[i].children[j].src = csvFileLogo;
   				}else if(temp[i].children[j].name.match(regGeo)){
   					temp[i].children[j].src = geojsonFileLogo;
   				}else{
@@ -126,12 +94,23 @@ export default {
   			}
   		}
   	},
-  	showDataDescription:function(){
-  		this.$router.push({path:'/home/datadescription'})
+  	//说明按钮
+  	showDataDescription:function(index,index1){
+  		this.$router.push({path:'/home/datadescription'}); 		
+      this.IndexChange(index,index1);
+
   	},
-  	showDataView:function(){
-  		this.$router.push({path:'/home/dataview'})
-  	}
+  	//预览按钮
+  	showDataView:function(index,index1){
+  		this.$router.push({path:'/home/dataview'});
+  		this.IndexChange(index,index1);
+  	},
+    IndexChange:function(index,index1){
+      this.parentIndex = index;
+      this.childIndex = index1;
+      this.$store.dispatch('parentIndex' , this.parentIndex);
+      this.$store.dispatch('childIndex' , this.childIndex);
+    }
   }
 }
 </script>

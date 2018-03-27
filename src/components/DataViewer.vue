@@ -1,158 +1,54 @@
 <template>
   <div class="data-container">
   	<header class="title"><p>数据列表</p></header><!-- /header -->
-  	<div id="data-table"></div>
+  	<div id="data-table">
+      <table>
+        <tr>
+          <th v-for="(value,key) in (dataA[0].features?dataA[0].features[0].properties:dataA[0])">
+            {{key}}
+          </th>
+        </tr>
+        <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)">
+          <td v-for="(value,key) in (dataA[0].features?line.properties:line)">{{value}}</td>
+        </tr>
+      </table> 
+    </div>
   </div>
 </template>
 
 <script>
 require('../style/dataViewer.scss')
+import store from '@/store/store'
+import {mapState} from 'vuex'
 
 export default {
   name: 'ParDefiner',
   data () {
     return {
-      dataA: [
-      	{
-      		name:'Nicholas',
-      		age: 17,
-      		major: 'GIS',
-      		hobby:'girls',
-      		research:'Web GIS'
-      	},
-      	{
-      		name:'Alex',
-      		age: 17,
-      		major: 'GIS',
-      		hobby:'girls',
-      		research:'Web GIS'
-      	},
-      	{
-      		name:'Gemma',
-      		age: 17,
-      		major: 'GIS',
-      		hobby:'girls',
-      		research:'Web GIS'
-      	},
-      	{
-      		name:'Gemma',
-      		age: 17,
-      		major: 'GIS',
-      		hobby:'girls',
-      		research:'Web GIS'
-      	},
-        {
-          name:'Nicholas',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Alex',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Gemma',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Gemma',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Nicholas',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Alex',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Gemma',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Gemma',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Nicholas',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Alex',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Gemma',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        },
-        {
-          name:'Gemma',
-          age: 17,
-          major: 'GIS',
-          hobby:'girls',
-          research:'Web GIS'
-        }
- 
-      ],
+      
     }
   },
+  store,
   mounted(){
-  	this.tableList();
+    
   },
   computed:{
-  	
+    ...mapState({
+        // ...
+      parentNodeIndex: state => state.parent_node_index,
+      childNodeIndex: state => state.child_node_index/*,
+      dataA:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url*/
+    }),
+    dataA(){
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
+    },
+
+  },
+  whatched:{
+
   },
   methods:{
-  	tableList:function(){
-  		let table = document.getElementById('data-table');
-  		let content = '<table ><tr>';
-  		for (let item in this.dataA[0]) {
-  			content += '<th>'+item+'</th>';
-  		}
-  		content += '</tr>'
-  		for (let i = 0; i < this.dataA.length; i++) {
-  			content += '<tr>';
-  			for (let item in this.dataA[i]) {
-  				content += '<td>'+this.dataA[i][item]+'</td>';
-  			}
-  			content += '</tr>';
-  		}
-  		content += '</table>';
-  		table.innerHTML = content;
-  	}
+
   }
 }
 </script>
