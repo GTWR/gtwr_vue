@@ -22,7 +22,7 @@
 			参数5：<input placeholder="输入参数5">
 			<p>参数说明：该参数表示XXXX，参数范围XX</p>
 		</div>
-		<button class="submit" style="vertical-align:middle"><span>开始计算</span></button>
+		<button class="submit" style="vertical-align:middle" @click="compute"><span>开始计算</span></button>
 	</div>
   </div>
 </template>
@@ -36,6 +36,11 @@ export default {
     return {
       msg: ' Hello to GTWR'
     }
+  },
+  methods:{
+  	compute:function(){
+  		this.$router.push({path:'/home/computeresult'});
+  	}
   }
 }
 </script>

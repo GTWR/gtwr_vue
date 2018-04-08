@@ -1,6 +1,8 @@
 <template>
   <div>
-    <map-viewer></map-viewer>
+    <div class="map-container">  
+      <map-viewer></map-viewer>
+    </div>
     <data-viewer></data-viewer>
     <div class="clear:both"></div>
   </div>

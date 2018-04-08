@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import store from '@/store/store'
+import {mapState} from 'vuex'
 
 export default {
   name: 'Home',
@@ -14,21 +14,20 @@ export default {
 
     }
   },
-  store,
   components:{
   },
   mounted(){
     /*alert(store.state.parent_node_index)*/
   },
   computed:{
-    parentNodeIndex(){
-      return this.$store.state.parent_node_index
-    },
-    childNodeIndex(){
-      return this.$store.state.child_node_index
-    },
+    ...mapState({
+        // ...
+      parentNodeIndex: state => state.parent_node_index,
+      childNodeIndex: state => state.child_node_index/*,
+      dataA:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url*/
+    }),
     dataA(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
     }
   },
 }

@@ -1,0 +1,469 @@
+[{
+	"type": "FeatureCollection",
+	"features": [{
+		"geometry": {
+			"type": "Point",
+			"coordinates": [110.35, 20.02]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "海南省",
+			"PM10": "46",
+			"PM 2.5": "30",
+			"排名": "1",
+			"质量等级": "优",
+			"城市数": "2",
+			"AQI": "50"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [91.11, 29.97]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "西藏自治区",
+			"PM10": "55",
+			"PM 2.5": "23",
+			"排名": "2",
+			"质量等级": "良",
+			"城市数": "3",
+			"AQI": "55"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [102.73, 25.04]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "云南省",
+			"PM10": "60",
+			"PM 2.5": "35",
+			"排名": "4",
+			"质量等级": "良",
+			"城市数": "16",
+			"AQI": "61"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [119.3, 26.08]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "福建省",
+			"PM10": "56",
+			"PM 2.5": "37",
+			"排名": "3",
+			"质量等级": "良",
+			"城市数": "9",
+			"AQI": "61"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [126.63, 45.75]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "黑龙江省",
+			"PM10": "65",
+			"PM 2.5": "43",
+			"排名": "5",
+			"质量等级": "良",
+			"城市数": "13",
+			"AQI": "64"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [111.65, 40.82]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "内蒙古自治区",
+			"PM10": "72",
+			"PM 2.5": "31",
+			"排名": "6",
+			"质量等级": "良",
+			"城市数": "12",
+			"AQI": "65"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [113.23, 23.16]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "广东省",
+			"PM10": "60",
+			"PM 2.5": "43",
+			"排名": "7",
+			"质量等级": "良",
+			"城市数": "21",
+			"AQI": "65"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [125.35, 43.88]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "吉林省",
+			"PM10": "71",
+			"PM 2.5": "46",
+			"排名": "8",
+			"质量等级": "良",
+			"城市数": "9",
+			"AQI": "70"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [106.71, 26.57]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "贵州省",
+			"PM10": "77",
+			"PM 2.5": "48",
+			"排名": "9",
+			"质量等级": "良",
+			"城市数": "9",
+			"AQI": "71"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [120.19, 30.26]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "浙江省",
+			"PM10": "74",
+			"PM 2.5": "48",
+			"排名": "10",
+			"质量等级": "良",
+			"城市数": "15",
+			"AQI": "72"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [121.48, 31.22]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "上海市",
+			"PM10": "63",
+			"PM 2.5": "44",
+			"排名": "11",
+			"质量等级": "良",
+			"城市数": "1",
+			"AQI": "73"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [101.74, 36.56]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "青海省",
+			"PM10": "91",
+			"PM 2.5": "36",
+			"排名": "12",
+			"质量等级": "良",
+			"城市数": "8",
+			"AQI": "77"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [116.46, 39.92]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "北京市",
+			"PM10": "71",
+			"PM 2.5": "48",
+			"排名": "13",
+			"质量等级": "良",
+			"城市数": "1",
+			"AQI": "79"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [115.89, 28.68]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "江西省",
+			"PM10": "89",
+			"PM 2.5": "57",
+			"排名": "14",
+			"质量等级": "良",
+			"城市数": "11",
+			"AQI": "81"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [123.38, 41.8]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "辽宁省",
+			"PM10": "86",
+			"PM 2.5": "56",
+			"排名": "15",
+			"质量等级": "良",
+			"城市数": "15",
+			"AQI": "82"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [106.54, 29.59]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "重庆市",
+			"PM10": "85",
+			"PM 2.5": "60",
+			"排名": "16",
+			"质量等级": "良",
+			"城市数": "1",
+			"AQI": "84"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [106.54, 29.59]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "山东省",
+			"PM10": "98",
+			"PM 2.5": "54",
+			"排名": "17",
+			"质量等级": "良",
+			"城市数": "30",
+			"AQI": "84"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [106.54, 29.59]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "广西壮族自治区",
+			"PM10": "87",
+			"PM 2.5": "61",
+			"排名": "18",
+			"质量等级": "良",
+			"城市数": "14",
+			"AQI": "84"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [103.73, 36.03]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "甘肃省",
+			"PM10": "112",
+			"PM 2.5": "44",
+			"排名": "19",
+			"质量等级": "良",
+			"城市数": "14",
+			"AQI": "86"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [106.27, 38.47]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "宁夏回族自治区",
+			"PM10": "113",
+			"PM 2.5": "44",
+			"排名": "20",
+			"质量等级": "良",
+			"城市数": "5",
+			"AQI": "87"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [118.78, 32.04]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "江苏省",
+			"PM10": "95",
+			"PM 2.5": "60",
+			"排名": "21",
+			"质量等级": "良",
+			"城市数": "24",
+			"AQI": "88"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [117.2, 39.13]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "天津市",
+			"PM10": "89",
+			"PM 2.5": "59",
+			"排名": "22",
+			"质量等级": "良",
+			"城市数": "1",
+			"AQI": "90"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [104.06, 30.67]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "四川省",
+			"PM10": "96",
+			"PM 2.5": "62",
+			"排名": "23",
+			"质量等级": "良",
+			"城市数": "21",
+			"AQI": "90"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [113.0, 28.21]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "湖南省",
+			"PM10": "108",
+			"PM 2.5": "68",
+			"排名": "24",
+			"质量等级": "良",
+			"城市数": "14",
+			"AQI": "95"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [117.27, 31.86]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "安徽省",
+			"PM10": "102",
+			"PM 2.5": "68",
+			"排名": "25",
+			"质量等级": "良",
+			"城市数": "16",
+			"AQI": "95"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [114.31, 30.52]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "湖北省",
+			"PM10": "110",
+			"PM 2.5": "73",
+			"排名": "26",
+			"质量等级": "轻度污染",
+			"城市数": "13",
+			"AQI": "101"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [114.48, 38.03]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "河北省",
+			"PM10": "123",
+			"PM 2.5": "73",
+			"排名": "27",
+			"质量等级": "轻度污染",
+			"城市数": "11",
+			"AQI": "105"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [108.95, 34.27]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "陕西省",
+			"PM10": "126",
+			"PM 2.5": "69",
+			"排名": "28",
+			"质量等级": "轻度污染",
+			"城市数": "10",
+			"AQI": "107"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [112.53, 37.87]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "山西省",
+			"PM10": "130",
+			"PM 2.5": "72",
+			"排名": "29",
+			"质量等级": "轻度污染",
+			"城市数": "11",
+			"AQI": "108"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [113.65, 34.76]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "河南省",
+			"PM10": "142",
+			"PM 2.5": "83",
+			"排名": "30",
+			"质量等级": "轻度污染",
+			"城市数": "17",
+			"AQI": "120"
+		}
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [87.68, 43.77]
+		},
+		"type": "Feature",
+		"properties": {
+			"name": "新疆维吾尔自治区",
+			"PM10": "151",
+			"PM 2.5": "77",
+			"排名": "31",
+			"质量等级": "轻度污染",
+			"城市数": "16",
+			"AQI": "124"
+		}
+	}]
+}]

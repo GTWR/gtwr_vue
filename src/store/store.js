@@ -5,19 +5,9 @@ import Vuex from 'vuex'
 import demoLogo from '../assets/img/demo_data_aa.png'
 import historyLogo from '../assets/img/his_data.png'
 import populationJson from '../assets/data/us-states.json'
-import airQualityCsv from '../assets/data/air quality_china.csv'
+import airQualityCsv from '../assets/data/china_province_air_quality.json'
 
 Vue.use(Vuex);
-
-/*function format(data){
-	if (data[0].features) {
-		let arr = [];
-		for (let i = 0; i < data[0].features.length; i++) {
-			let obj = data[0].features[i].properties;
-			arr.push(obj)
-		}
-	}
-}*/
 
 const state = {
 	parent_node_index:0,
@@ -45,6 +35,16 @@ const state = {
 		      			{name:'中国各省空气质量.geojson',src:''},
 		      			{name:'中国各省空气质量WMS',src:''}
 		      		]
+		      	},
+		      	{
+		      		name:'Demo',
+		      		open:true,
+		      		url:'',
+		      		children:[
+		      			{name:'Demo.csv',src:''},
+		      			{name:'Demo.geojson',src:''},
+		      			{name:'DemoWMS',src:''}
+		      		]
 		      	}
 		    ],
 		    src:demoLogo,
@@ -67,26 +67,32 @@ const mutations = {
 	},
 	childIndexMutation:function(state,msg){
 		state.child_node_index = msg;
-	},
-	openMutation:function(state){
-		state.data_list[state.parent_node_index].data_type[state.child_node_index].open = state.data_list[state.parent_node_index].data_type[state.child_node_index].open? false:true;
 	}
 }
 
 const actions = {
-	parentIndex:function({commit},msg){
+	parentIndexAction:function({commit},msg){
 		commit('parentIndexMutation',msg)
 	},
-	childIndex:function({commit},msg){
+	childIndexAction:function({commit},msg){
 		commit('childIndexMutation',msg)
-	},
-	open:function({commit}){
-		commit('openMutation')
 	}
+
+}
+
+const getters = {
+	parentIndexGetter:function(state){
+		return state.parent_node_index;
+	},
+	childIndexGetter:function(state){
+		return state.child_node_index;
+	}
+
 }
 
 export default new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+    getters
 });
