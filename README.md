@@ -113,6 +113,44 @@ $ git push origin dev //提交分支暂存到远程仓库
 页面截图
 ![](/project_update_gif/20180325_yue_gemma.gif)
 
+### 2018.4.8
+
+负责人：张敏
+
+工作内容：
+
+* 新增Vuex组件，用于管理项目中共享的数据状态
+
+* 新增数据预览、数据说明两个功能按钮，分别用于预览数据内容\数据在地图上的分布、元数据内容的具体说明
+
+* 数据预览部分，能够实现数据在地图上的显示、对应的数据列表的更新
+
+* 参数定义模块可以进行计算，计算结果设置图表展示、计算日志、精度评价、其他四个模块，其中计算日志和其他仍未空白；图表展示中包含2D和3D两种类型的图表，可供选择
+
+修改文档：
+
+* 新增store文件夹，assets\data中多个数据文件
+
+* 修改main.js适应vuex的配置，修改router\index.js适应路由配置
+
+* 修改style文件，定义数据预览面板的样式，style中各个文件均有细微改动
+
+* 新增rightSideForResult文件夹，修改DataSelector、DataView、MapViewer、RightSideForDataView、RightSideForResult、ParDefiner等多个组件
+
+负责人：李晨悦
+
+工作内容：
+
+* 元数据信息
+
+* 其他具体信息具体
+
+修改文档：
+
+* assets\img中多个图片文件
+
+* 修改store.js，增加和修改RightSideForDataView.vue和scss等。
+
 
 
 

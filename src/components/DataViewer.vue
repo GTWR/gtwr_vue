@@ -36,7 +36,8 @@ export default {
     ...mapState({
         // ...
       parentNodeIndex: state => state.parent_node_index,
-      childNodeIndex: state => state.child_node_index/*,
+      childNodeIndex: state => state.child_node_index
+	  /*,
       dataA:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url*/
     }),
     dataA(){

@@ -5,8 +5,13 @@
 	</div>
 	<h1>{{ msg }}</h1>
     <button class="login-btn" @click="goHomePage">
+      用户登录
+    </button>
+	<br><br>
+	<button class="login-btn" @click="goHomePage">
       匿名登录
     </button>
+	
   </div>
 </template>
 
