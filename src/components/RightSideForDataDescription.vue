@@ -92,14 +92,14 @@
 </template>
 
 <script>
-<<<<<<< HEAD
+
 import Leaflet from 'leaflet'
 import store from '@/store/store'
 require('../style/RightSideForDataDescription.scss')
-=======
+
 import {mapState} from 'vuex'
 
->>>>>>> origin/master
+
 export default {
   name: 'Home',
   data () {
@@ -115,7 +115,7 @@ export default {
 	this.initMap();
   },
   computed:{
-<<<<<<< HEAD
+
     parentNodeIndex(){
       return this.$store.state.parent_node_index
     },
@@ -148,8 +148,8 @@ export default {
 	},
 	smallpic(){
 	return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex]
-	}
-=======
+	},
+
     ...mapState({
         // ...
       parentNodeIndex: state => state.parent_node_index,
@@ -159,7 +159,7 @@ export default {
     dataA(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
     }
->>>>>>> origin/master
+
   },
     methods:{
   	initMap(){

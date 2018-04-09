@@ -78,7 +78,7 @@ const mutations = {
 	},
 	childIndexMutation:function(state,msg){
 		state.child_node_index = msg;
-<<<<<<< HEAD
+
 	},
 	grandsonIndexMutation:function(state,msg){
 		state.grandson_node_index = msg;
@@ -86,8 +86,8 @@ const mutations = {
 	openMutation:function(state){
 		state.data_list[state.parent_node_index].data_type[state.child_node_index].open = state.data_list[state.parent_node_index].data_type[state.child_node_index].open? false:true;
 		state.data_list[state.parent_node_index].data_type[state.child_node_index].children[state.grandson_node_index].open = state.data_list[state.parent_node_index].data_type[state.child_node_index].children[state.grandson_node_index].open? false:true;
-=======
->>>>>>> origin/master
+
+
 	}
 }
 
@@ -105,16 +105,16 @@ const getters = {
 	parentIndexGetter:function(state){
 		return state.parent_node_index;
 	},
-<<<<<<< HEAD
+
 	grandsonIndex:function({commit},msg){
 		commit('grandsonIndexMutation',msg)
 	},
 	open:function({commit}){
 		commit('openMutation')
-=======
+    },
 	childIndexGetter:function(state){
 		return state.child_node_index;
->>>>>>> origin/master
+
 	}
 
 }
