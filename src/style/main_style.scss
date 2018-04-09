@@ -67,6 +67,7 @@ $hover_color:#f5f5f5;
   .left-side{display: none; }
 }
 
-
-
+.map-container{
+  @include container(565px);
+}
 

@@ -7,19 +7,9 @@ import smallpic1 from '../assets/img/small picture1.jpg'
 import smallpic2 from '../assets/img/small picture2.jpg'
 import historyLogo from '../assets/img/his_data.png'
 import populationJson from '../assets/data/us-states.json'
-import airQualityCsv from '../assets/data/air quality_china.csv'
+import airQualityCsv from '../assets/data/china_province_air_quality.json'
 
 Vue.use(Vuex);
-
-/*function format(data){
-	if (data[0].features) {
-		let arr = [];
-		for (let i = 0; i < data[0].features.length; i++) {
-			let obj = data[0].features[i].properties;
-			arr.push(obj)
-		}
-	}
-}*/
 
 const state = {
 	parent_node_index:0,
@@ -56,6 +46,16 @@ const state = {
 		      			{name:'中国各省空气质量.geojson',type:'geojson',src:'',open:true},
 		      			{name:'中国各省空气质量WMS',type:'WMS',src:'',open:true}
 		      		]
+		      	},
+		      	{
+		      		name:'Demo',
+		      		open:true,
+		      		url:'',
+		      		children:[
+		      			{name:'Demo.csv',src:''},
+		      			{name:'Demo.geojson',src:''},
+		      			{name:'DemoWMS',src:''}
+		      		]
 		      	}
 		    ],
 		    src:demoLogo,
@@ -78,6 +78,7 @@ const mutations = {
 	},
 	childIndexMutation:function(state,msg){
 		state.child_node_index = msg;
+<<<<<<< HEAD
 	},
 	grandsonIndexMutation:function(state,msg){
 		state.grandson_node_index = msg;
@@ -85,26 +86,42 @@ const mutations = {
 	openMutation:function(state){
 		state.data_list[state.parent_node_index].data_type[state.child_node_index].open = state.data_list[state.parent_node_index].data_type[state.child_node_index].open? false:true;
 		state.data_list[state.parent_node_index].data_type[state.child_node_index].children[state.grandson_node_index].open = state.data_list[state.parent_node_index].data_type[state.child_node_index].children[state.grandson_node_index].open? false:true;
+=======
+>>>>>>> origin/master
 	}
 }
 
 const actions = {
-	parentIndex:function({commit},msg){
+	parentIndexAction:function({commit},msg){
 		commit('parentIndexMutation',msg)
 	},
-	childIndex:function({commit},msg){
+	childIndexAction:function({commit},msg){
 		commit('childIndexMutation',msg)
+	}
+
+}
+
+const getters = {
+	parentIndexGetter:function(state){
+		return state.parent_node_index;
 	},
+<<<<<<< HEAD
 	grandsonIndex:function({commit},msg){
 		commit('grandsonIndexMutation',msg)
 	},
 	open:function({commit}){
 		commit('openMutation')
+=======
+	childIndexGetter:function(state){
+		return state.child_node_index;
+>>>>>>> origin/master
 	}
+
 }
 
 export default new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+    getters
 });

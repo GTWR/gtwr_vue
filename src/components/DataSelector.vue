@@ -12,15 +12,15 @@
 		  		<div v-for="child,index1 in data.data_type">
 		  			<div class="child_node" @click="showDataView">
 		  				<p>{{child.name}}
-		  				<span @click="openfolderForSon(index,index1)">+</span></p>
+		  				<!-- <span @click="child.open=child.open?false:true">+</span> --></p>
 		  			</div>
-		  			<div class="grand_son_list" v-show="childOpen">
+		  			<div class="grand_son_list" v-show="child.open">
 						<div v-for="grandson in child.children">
 							<p>
 								<img :src="grandson.src">
 								{{grandson.name}}
-								<button @click="showDataDescription(index,index1)">说明</button>
-								<button @click="showDataView(index,index1)">预览</button>
+								<button @click="showDataDescription(index,index1)" v-if="child.name != 'Demo'">说明</button>
+								<button @click="showDataView(index,index1)"  v-if="child.name != 'Demo'">预览</button>
 							</p>
 						</div>
 		  			</div>
@@ -40,7 +40,6 @@ require('../style/dataSelector.scss')
 import csvFileLogo from '../assets/img/csv.png'
 import geojsonFileLogo from '../assets/img/mind_map.png'
 import serviceFileLogo from '../assets/img/service.png'
-import store from '@/store/store'
 import {mapState} from 'vuex'
 
 export default {
@@ -48,25 +47,20 @@ export default {
   data () {
     return {
       parentIndex: 0,
-      childIndex:0
+      childIndex:0,
+      open:[]
     }
   },
-  store,
   mounted(){
   	this.initDataTypeLogo();
-
   },
   computed:{
     ...mapState({
         // ...
       data_list: state => state.data_list,
-      parentNodeIndex: state => state.parent_node_index,
-      childNodeIndex: state => state.child_node_index
+
       /*open:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open*/
-    }),
-    childOpen(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open;
-    }
+    })
   },
   methods:{
   	//控制父节点的开关，用户登录支持开关，但是匿名登录不支持开关
@@ -75,7 +69,7 @@ export default {
   	},
   	//控制子节点的开关
   	openfolderForSon:function(index,index1){
-      this.$store.dispatch('open');
+      this.data_list[index].data_type[index1].open = this.data_list[index].data_type[index1].open? false:true;
   	},
   	//为不同的数据类型添加不同的图标
   	initDataTypeLogo:function(){
@@ -108,8 +102,8 @@ export default {
     IndexChange:function(index,index1){
       this.parentIndex = index;
       this.childIndex = index1;
-      this.$store.dispatch('parentIndex' , this.parentIndex);
-      this.$store.dispatch('childIndex' , this.childIndex);
+      this.$store.dispatch('parentIndexAction' , this.parentIndex);
+      this.$store.dispatch('childIndexAction' , this.childIndex);
     }
   }
 }

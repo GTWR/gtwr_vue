@@ -136,6 +136,7 @@ $ git push origin dev //提交分支暂存到远程仓库
 * 修改style文件，定义数据预览面板的样式，style中各个文件均有细微改动
 
 * 新增rightSideForResult文件夹，修改DataSelector、DataView、MapViewer、RightSideForDataView、RightSideForResult、ParDefiner等多个组件
+<<<<<<< HEAD
 
 负责人：李晨悦
 
@@ -151,6 +152,8 @@ $ git push origin dev //提交分支暂存到远程仓库
 
 * 修改store.js，增加和修改RightSideForDataView.vue和scss等。
 
+=======
+>>>>>>> origin/master
 
 
 

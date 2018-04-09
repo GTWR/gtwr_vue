@@ -1,0 +1,90 @@
+@import 'main_style.scss';
+.result-canel{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  .content{
+    box-shadow: $shadow_card,$shadow_card;
+  	flex:1;
+
+  }
+  .tab{
+  	flex: 0 0 40px;
+  	text-align: center;
+  	.last-btn{
+  		box-shadow: $shadow_card,$shadow_card;
+  		background-color: white;
+  		border: none;
+  		font-size: 16px;
+  		height: 150px;
+  	}
+  	button{
+  		@extend .last-btn;
+  		border-bottom: 1px dashed rgba(0,0,0,0.5);
+  	}
+  }
+}
+
+@mixin chartBar($width){
+  width: $width;
+  height: 300px;
+  margin-bottom: $card-margin_padding;;
+  box-shadow: $shadow_card,$shadow_card;
+}
+.chartAnalysis{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  min-width: 800px;
+  #leafmap{
+    flex:1;
+  }
+  .chart{
+    margin-left: $card-margin_padding;
+    margin-right: $card-margin_padding;
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction:column;
+    #scatter{
+      @include chartBar(100%);
+    }
+    #line{
+      @include chartBar(100%);
+    }
+    #three-d{
+      @include chartBar(100%);
+    }
+  }
+}
+
+.precision-canel{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  .chart-container{
+    width:100%;
+    height: 600px; 
+    min-width: 921px;  
+    .row{
+      display: flex;
+      .chart{
+        @include chartBar(33%);
+        min-width: 300px;
+        margin-right: $card-margin_padding;;
+        
+      }
+    }
+  }
+  .text-container{
+    box-shadow: $shadow_card,$shadow_card;
+    margin-top: $card-margin_padding * 2;
+    margin-right: $card-margin_padding;
+    flex:1;
+    p{
+      margin-left: $card-margin_padding;
+    }
+  }
+}
+
+

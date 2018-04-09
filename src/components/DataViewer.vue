@@ -8,9 +8,11 @@
             {{key}}
           </th>
         </tr>
-        <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)">
-          <td v-for="(value,key) in (dataA[0].features?line.properties:line)">{{value}}</td>
-        </tr>
+        <tbody>
+          <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)">
+            <td v-for="(value,key) in (dataA[0].features?line.properties:line)">{{value}}</td>
+          </tr>
+        </tbody>
       </table> 
     </div>
   </div>
@@ -18,7 +20,6 @@
 
 <script>
 require('../style/dataViewer.scss')
-import store from '@/store/store'
 import {mapState} from 'vuex'
 
 export default {
@@ -28,7 +29,6 @@ export default {
       
     }
   },
-  store,
   mounted(){
     
   },
