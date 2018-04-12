@@ -113,6 +113,8 @@ $ git push origin dev //提交分支暂存到远程仓库
 页面截图
 ![](/project_update_gif/20180325_yue_gemma.gif)
 
+===========================================================
+
 ### 2018.4.8
 
 负责人：张敏
@@ -152,8 +154,26 @@ $ git push origin dev //提交分支暂存到远程仓库
 
 * 修改store.js，增加和修改RightSideForDataView.vue和scss等。
 
-=======
->>>>>>> origin/master
+页面截图
+![](/project_update_gif/20180408_yue_gemma.gif)
+
+===========================================================
+
+### 2018.4.8
+
+负责人：张敏
+
+工作内容：
+
+* 修改优化平台首页内容，在首页中添加动态的正态分布效果
+
+效果1
+![](/project_update_gif/20180412_gemma1.gif)
+效果2
+![](/project_update_gif/20180412_gemma2.gif)
+效果3
+![](/project_update_gif/20180412_gemma3.gif)
+
 
 
 
