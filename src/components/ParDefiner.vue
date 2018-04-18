@@ -39,7 +39,7 @@ export default {
   },
   methods:{
   	compute:function(){
-  		this.$router.push({path:'/home/computeresult'});
+  		this.$router.push({path:'/home/computeresult/computeLog'});
   	}
   }
 }

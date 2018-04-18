@@ -88,3 +88,16 @@
 }
 
 
+#code{
+  padding: $card-margin_padding;
+  color:black;
+  font-family:"Consolas","Monaco","Bitstream Vera Sans Mono","Courier New","sans-serif";
+  font-size:13px;
+  line-height: 20px;
+  .keyword{color:#7f0055;font-weight:bold}
+  .placeholder{margin-left:15px}
+  .comments{color:#3f7f5f}
+  .value{color:orange;}
+  .error{color:red;}
+}
+

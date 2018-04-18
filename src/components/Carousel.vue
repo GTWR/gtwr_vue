@@ -98,13 +98,14 @@ export default {
 .slide-show {
   position: relative;
   border-radius:8px;
-  border:1px solid rgba(120,120,120,0.75);
+  /* border:1px solid rgba(120,120,120,0.75); */
+  border: none;
   top:10%;
   margin:0 auto;
   width: 591px;
   height: 430px;
   overflow: hidden;
-  box-shadow:3px 3px 3px rgba(120, 120, 120, .75);
+  /* box-shadow:3px 3px 3px rgba(120, 120, 120, .75); */
 }
 .slide-show h2 {
   position: absolute;
