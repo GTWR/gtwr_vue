@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store/store'
-
+import $ from 'jquery'
 Vue.use(VueAwesomeSwiper)
 
 Vue.config.productionTip = false

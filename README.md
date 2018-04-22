@@ -174,7 +174,17 @@ $ git push origin dev //提交分支暂存到远程仓库
 效果3
 ![](/project_update_gif/20180412_gemma3.gif)
 
+### 2018.4.22
 
+负责人：李晨悦
 
+工作内容：
+* 修改数据选择与参数设置内容，添加勾选框与计算进度条，并添加了隐藏显示数据选择列表的功能；
 
+* 但是还有一些小bug，以及数据选择与参数联动效果没有做出来
+
+修改文档：
+* DataSelector.vue和scss，ParDefiner.vue和scss，store.js，package.json以及webpack.base.conf.js等；
+
+* 添加img图像。
 

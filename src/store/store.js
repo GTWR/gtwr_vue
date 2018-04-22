@@ -6,6 +6,7 @@ import demoLogo from '../assets/img/demo_data_aa.png'
 import smallpic1 from '../assets/img/small picture1.jpg'
 import smallpic2 from '../assets/img/small picture2.jpg'
 import historyLogo from '../assets/img/his_data.png'
+import privateLogo from '../assets/img/private_data.png'
 import populationJson from '../assets/data/us-states.json'
 import airQualityCsv from '../assets/data/china_province_air_quality.json'
 
@@ -61,8 +62,14 @@ const state = {
 		    src:demoLogo,
 		    open:true
 	    },
+		{
+	      	name:'私有数据',
+	      	data_type:[],
+		    src:privateLogo,
+		    open:true			
+		},
 	    {
-	      	name:'历史记录',
+	      	name:'使用记录',
 	      	data_type:[
 	      		
 		    ],

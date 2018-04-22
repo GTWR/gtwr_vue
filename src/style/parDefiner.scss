@@ -1,7 +1,7 @@
 @import 'main_style.scss';
 
 .par-container{
-  @include container($left_sider_container_height - 30);
+  @include container($left_sider_container_height - 20);
   margin-top: $card-margin_padding;
   display: flex;
   flex-direction: column;
@@ -14,6 +14,9 @@
       line-height: 10px;
       color: rgba(0,0,0,0.5);
     }
+	#proBar{
+
+	}
     .submit{
       width: 100px;
       height: 30px;
@@ -53,6 +56,8 @@
       right: 0;
     }
   }
+  
+
 }
 
 
