@@ -1,29 +1,25 @@
 <template>
   <div class="container">
     <div id="hello">
-      <transition name="slide-trans">
-        <dynamic-threed v-show="index == 1"></dynamic-threed>
-      </transition>
-      <div v-if="index>1" class="img-box">
         <transition name="slide-trans">
-          <img v-if="show" :src='slides[index-2].src' class="slide-img"></img>
+          <img v-if="show" :src='slides[index-1].src' class="slide-img"></img>
         </transition>
         <transition name="slide-trans">
-          <img v-if="!show" :src='slides[index-2].src'  class="slide-img"></img>
+          <img v-if="!show" :src='slides[index-1].src'  class="slide-img"></img>
         </transition>
-      </div>
     </div>
     <div class="playBtn">
       <button v-for="n in 5" class="circle" @click="carousel(n)" :class="{on: index === n}"></button>
     </div> 
+    <div>
+      <!--这里显示文字：参考别的http://echarts.baidu.com/这样的网站上面对产品的描述，样式自己设计，然后transition那块只有进入的动画没有离开的动画需要修改，另外图片换成高清的黄老师文章的图片，如果没有就从网上下吧，不要用不清晰的图片哦~-->
+    </div>
   </div>
 
 </template>
-
+    
 <script>
 require('../style/login.scss')
-import dynamicThreed from  '../components/login/DynamicThreed.vue'
-import imgComponent from '../components/login/img.vue'
 import vue from 'vue'
 
 export default {
@@ -35,6 +31,9 @@ export default {
       inv:5000,
   	  //引入滚动视窗图片
   	  slides: [
+          {
+            src:require('../assets/img/20180408_yue_gemma.gif')
+          },
           {
               src:require('../assets/img/test1.jpg'),
           },
@@ -90,8 +89,7 @@ export default {
     }
   },
   components: {
-    dynamicThreed,
-    imgComponent
+    
   }
 }
 </script>

@@ -29,9 +29,8 @@ const state = {
 		      		crs:'WGS84',
 					src:smallpic1,
 					children:[
-		      			{name:'美国人口分布.csv',type:'csv',src:'',open:true},
-		      			{name:'美国人口分布.geojson',type:'geojson',src:'',open:true},
-		      			{name:'美国人口分布WMS',type:'WMS',src:'',open:true},
+		      			{name:'美国人口分布.geojson',type:'csv',src:'',open:true},
+		      			{name:'美国州级地理边界.geojson',type:'geojson',src:'',open:true}
 		      		]
 		      	},
 		      	{
@@ -43,19 +42,11 @@ const state = {
 		      		crs:'WGS84',
 					src:smallpic2,
 		      		children:[
-		      			{name:'中国各省空气质量.csv',type:'csv',src:'',open:true},
-		      			{name:'中国各省空气质量.geojson',type:'geojson',src:'',open:true},
-		      			{name:'中国各省空气质量WMS',type:'WMS',src:'',open:true}
-		      		]
-		      	},
-		      	{
-		      		name:'Demo',
-		      		open:true,
-		      		url:'',
-		      		children:[
-		      			{name:'Demo.csv',src:''},
-		      			{name:'Demo.geojson',src:''},
-		      			{name:'DemoWMS',src:''}
+		      			{name:'中国各省PM25.csv',type:'csv',src:'',open:true},
+		      			{name:'中国各省PM10.csv',type:'csv',src:'',open:true},
+		      			{name:'中国各省空气质量等级.csv',type:'csv',src:'',open:true},
+		      			{name:'中国各省AQI.csv',type:'csv',src:'',open:true},
+		      			{name:'中国省级地理位置.geojson',type:'geojson',src:'',open:true},
 		      		]
 		      	}
 		    ],

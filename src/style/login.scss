@@ -9,34 +9,20 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    .img-box{
+    .slide-img{
       width:100%;
-      height: 100%;
-      .slide-img{
-        width:100%;
-        height:100%;
-      }
+      height:100%;
     }
-    .slide-trans-enter{
-      transform:translateX(100%);
+    .slide-trans-enter-active {
+      transition: all .75s;
     }
-    .slide-trans-enter-active{
-      transition:all .75s;
+    .slide-trans-enter {
+      transform: translateX(591px);
     }
-    .slide-trans-enter-to{
-      transform:translateX(0%)
-    } 
-    .slide-trans-leave{
-      transform:translateX(0%);
+    .slide-trans-old-leave-active {
+      transition: all .75s;
+      transform: translateX(-591px);
     }
-    .slide-trans-leave-active{
-      transition:all .75s;
-    }
-    .slide-trans-leave-to{
-      transform:translateX(-100%);
-    }
-
-
     #dynamic{
       height: 100%;
       width: 100%;

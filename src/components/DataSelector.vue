@@ -36,8 +36,8 @@
 								<input type="checkbox" />
 								<img :src="grandson.src">
 								{{grandson.name}}
-								<button @click="showDataDescription(index,index1)" v-if="child.name != 'Demo'">说明</button>
-								<button @click="showDataView(index,index1)"  v-if="child.name != 'Demo'">预览</button>
+								<button @click="showDataDescription(index,index1)">说明</button>
+								<button @click="showDataView(index,index1)">预览</button>
 							</p>
 						</div>
 		  			</div></div>
@@ -57,36 +57,13 @@
 								<input type="checkbox" />
 								<img :src="grandson.src">
 								{{grandson.name}}
-								<button @click="showDataDescription(index,index1)" v-if="child.name != 'Demo'">说明</button>
-								<button @click="showDataView(index,index1)"  v-if="child.name != 'Demo'">预览</button>
+								<button @click="showDataDescription(index,index1)">说明</button>
+								<button @click="showDataView(index,index1)">预览</button>
 							</p>
 						</div>
 		  			</div></div>
 					</div>
-				<div v-else-if="child.name=='Demo'">
-		  			<div class="child_node" @click="showDataView">					
-		  				<p>
-						<input type="checkbox" id="chkall4" />
-						{{child.name}}
-		  				<!-- <span @click="child.open=child.open?false:true">+</span> -->
-						<input type="hidden" id="selectHideValue" /></p>
-					</div>
-		  			<div class="grand_son_list4">
-					<div class="grand_son_list" v-show="child.open">
-						<div v-for="grandson in child.children">
-							<p>
-								<input type="checkbox" />
-								<img :src="grandson.src">
-								{{grandson.name}}
-								<button @click="showDataDescription(index,index1)" v-if="child.name != 'Demo'">说明</button>
-								<button @click="showDataView(index,index1)"  v-if="child.name != 'Demo'">预览</button>
-							</p>
-						</div>
-		  			</div>
-					</div></div>
 				</div>
-				
-				
 		  	</div> 
 		</div>
 	</div>

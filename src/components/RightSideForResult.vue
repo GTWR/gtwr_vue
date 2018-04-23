@@ -1,15 +1,15 @@
 <template>
-  <div class="result-canel">
-    <div class="content">
-      <router-view></router-view>
-    </div>    
-    <div class="tab" @click="switchTab">
-        <button id="chart">图表展示</button>
-        <button id="log">计算日志</button>
-        <button id="precision">精度评价</button>
-        <button class="last-btn">其他</button>
+    <div class="result-canel">
+      <div class="content">
+        <router-view></router-view>
+      </div>    
+      <div class="tab" @click="switchTab">
+          <button id="chart">图表展示</button>
+          <button id="log">计算日志</button>
+          <button id="precision">精度评价</button>
+          <button class="last-btn">其他</button>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
