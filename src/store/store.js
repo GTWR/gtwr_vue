@@ -13,6 +13,7 @@ import airQualityCsv from '../assets/data/china_province_air_quality.json'
 Vue.use(Vuex);
 
 const state = {
+	cover_show:false,
 	parent_node_index:0,
 	child_node_index:0,
 	grandson_node_index:0,
@@ -67,6 +68,13 @@ const state = {
 		    src:historyLogo,
 		    open:true
 		}
+	],
+	par_list:[
+		{name:'参数1', value:''},
+		{name:'参数2', value:''},
+		{name:'参数3', value:''},
+		{name:'参数4', value:''},
+		{name:'参数5', value:''},
 	]
 }
 
@@ -84,8 +92,9 @@ const mutations = {
 	openMutation:function(state){
 		state.data_list[state.parent_node_index].data_type[state.child_node_index].open = state.data_list[state.parent_node_index].data_type[state.child_node_index].open? false:true;
 		state.data_list[state.parent_node_index].data_type[state.child_node_index].children[state.grandson_node_index].open = state.data_list[state.parent_node_index].data_type[state.child_node_index].children[state.grandson_node_index].open? false:true;
-
-
+	},
+	coverShowMutation:function(state,msg){
+		state.cover_show = msg;
 	}
 }
 
@@ -95,8 +104,10 @@ const actions = {
 	},
 	childIndexAction:function({commit},msg){
 		commit('childIndexMutation',msg)
+	},
+	coverShowAction:function({commit},msg){
+		commit('coverShowMutation',msg)
 	}
-
 }
 
 const getters = {

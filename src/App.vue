@@ -11,11 +11,14 @@
     <div class="main-content">
       <router-view/>
     </div>
+    <cover-par v-show="cover_show"></cover-par>
   </div>
 </template>
 
 <script>
 require('./style/app.scss')
+import coverPar from './components/coverForParSelect.vue'
+import {mapState} from 'vuex'
 
 export default {
   name: 'App',
@@ -24,7 +27,18 @@ export default {
 
   	}
   },
+  computed:{
+    ...mapState({
+        // ...
+      cover_show: state => state.cover_show,
+
+      /*open:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open*/
+    })
+  },
   methods:{
+  },
+  components:{
+    coverPar
   }
 }
 </script>

@@ -8,6 +8,7 @@ import RightSideForResult from '@/components/RightSideForResult'
 import chartAnalysis from '@/components/rightSideForResult/chartAnalysis'
 import computeLog from '@/components/rightSideForResult/computeLog'
 import precision from '@/components/rightSideForResult/precision'
+import coverForParSelect from '@/components/coverForParSelect'
 Vue.use(Router)
 
 export default new Router({
@@ -41,7 +42,7 @@ export default new Router({
               path:"computeLog",
               component: computeLog
             },
-			{
+			      {
               path:"chartAnalysis",
               component: chartAnalysis
             },
@@ -53,6 +54,7 @@ export default new Router({
           ]
         }
       ]
+
     }
         
 

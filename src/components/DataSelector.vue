@@ -2,7 +2,7 @@
   <div class="data-selector">
   	<header class="title"><p>数据选择</p></header><!-- /header -->
     <!--数据列表-->
-  	<div class="data-list">
+  	<div class="data-list" id="data-list">
   		<div v-for="data,index in data_list">
 			  
 		  	<div class="parent_node">
@@ -23,17 +23,16 @@
     				<div>
     		  		<div class="child_node" @click="showDataView(index,index1)">					
     		  				<p>
-        						<input type="checkbox" id="chkall2" />
+        						<input type="checkbox" @click="checkParent(index,index1)" :data-parentIndex="index1"/>
         						{{child.name}}
         		  				<!-- <span @click="child.open=child.open?false:true">+</span> -->
-        						<input type="hidden" id="selectHideValue" />
                   </p>
     					</div>
     		  		<div class="grand_son_list2">
     					  <div class="grand_son_list" v-show="child.open">
       						<div v-for="grandson in child.children">
       							<p>
-      								<input type="checkbox" />
+      								<input type="checkbox" :data-index="index1"/>
       								<img :src="grandson.src">
       								{{grandson.name}}
       								<button @click="showDataDescription(index,index1)">说明</button>
@@ -67,81 +66,59 @@ export default {
     return {
       parentIndex: 0,
       childIndex:0,
-      open:[]
+      open:[],
     }
   },
-    components: {
+  components: {
             
-        },
+  },
   mounted(){
   	this.initDataTypeLogo();
-	$(document).ready(function (){  
-		//找到所有的span，并且点击span以后，控制一下元素div的显示和隐藏  
-		$(".parent_node").click(function (){  
-			$(this).next().toggle("slow");  
-		});   
-		//初始化时隐藏状态  
-		$(".child_list").each(function (index,domEle){  
-			$(domEle).toggle("slow");  
+	   $(document).ready(function (){  
+    		//找到所有的span，并且点击span以后，控制一下元素div的显示和隐藏  
+    		$(".parent_node").click(function (){  
+    			$(this).next().toggle("slow");  
+    		});   
+    		//初始化时隐藏状态  
+    		$(".child_list").each(function (index,domEle){  
+    			$(domEle).show("slow");  
         });  
     });
-	
-    $(function () {  
-	//勾选框设置1
-            $("#chkall2").prop("class", ".grand_son_list2") //初始化  
-            $("#chkall2").click(function () {var objectli = $("#chkall2").prop("class");  
-                $(this).prop('checked', this.checked)  
-                $(objectli).find(":checkbox").prop('checked', this.checked)  
-                GetSelectValues();  
-            });    
-            $(".grand_son_list2").find(":checkbox").click(function () {var objectli = $("#chkall2").prop("class");  
-                var expr1 = $(objectli).find(":checkbox:checked");  
-                var expr2 = $(objectli).find(":checkbox");  
-                var selectAll = $(expr1).length == $(expr2).length;  
-                $('#chkall2').prop('checked', selectAll);  
-                GetSelectValues();  
-            });  
-            function SetChkStatus() {var objectli = $("#chkall2").prop("class");  
-                var expr1 = $(objectli).find(":checkbox:checked");  
-                var expr2 = $(objectli).find(":checkbox");  
-                var selectAll = $(expr1).length == $(expr2).length;  
-                $('#chkall2').prop('checked', selectAll);  }
-            });
   },
   computed:{
     ...mapState({
         // ...
       data_list: state => state.data_list,
-
+      cover_show: state => state.cover_show,
       /*open:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open*/
     })
   },
   methods:{
   	//控制父节点的开关，用户登录支持开关，但是匿名登录不支持开关
-  	openfolder:function(index){
-  		/*store.state.data_list[index].open =store.state.data_list[index].open ? false:true; */
-  	},
+  	/*openfolder:function(index){
+  		store.state.data_list[index].open =store.state.data_list[index].open ? false:true; 
+  	},*/
   	//控制子节点的开关
-  	openfolderForSon:function(index,index1){
+  	/*openfolderForSon:function(index,index1){
       this.data_list[index].data_type[index1].open = this.data_list[index].data_type[index1].open? false:true;
-  	},
+  	},*/
   	//为不同的数据类型添加不同的图标
   	initDataTypeLogo:function(){
 	    let temp1 =this.data_list;
-		for(let q=0;q< temp1.length;q++){
-  		let temp =this.data_list[q].data_type;
-  		for(let i=0; i< temp.length;i++){
-  			for(let j=0; j < temp[i].children.length;j++){
-  				const regCsv = RegExp(/\.csv/)
-  				const regGeo = RegExp(/\.geojson/)
-  				if (temp[i].children[j].name.match(regCsv)) {
-  					temp[i].children[j].src = csvFileLogo;
-  				}else if(temp[i].children[j].name.match(regGeo)){
-  					temp[i].children[j].src = geojsonFileLogo;
-  				}else{
-  					temp[i].children[j].src = serviceFileLogo;
-  				}
-  			}
+  		for(let q=0;q< temp1.length;q++){
+    		let temp =this.data_list[q].data_type;
+    		for(let i=0; i< temp.length;i++){
+    			for(let j=0; j < temp[i].children.length;j++){
+    				const regCsv = RegExp(/\.csv/)
+    				const regGeo = RegExp(/\.geojson/)
+    				if (temp[i].children[j].name.match(regCsv)) {
+    					temp[i].children[j].src = csvFileLogo;
+    				}else if(temp[i].children[j].name.match(regGeo)){
+    					temp[i].children[j].src = geojsonFileLogo;
+    				}else{
+    					temp[i].children[j].src = serviceFileLogo;
+    				}
+    			}
   		}}
   	},
   	//说明按钮
@@ -163,7 +140,31 @@ export default {
       this.$store.dispatch('childIndexAction' , this.childIndex);
     },
 	  
-  
+    
+    checkParent:function(index,index1){
+      //父节点勾选，子节点全部勾选；父节点取消勾选，子节点全部取消勾选
+      var dataList = document.getElementById('data-list')
+      var checkChildren = dataList.getElementsByTagName('input');
+      var check;
+      for (var i = 0; i < checkChildren.length; i++) {
+        let attr = checkChildren[i].getAttribute('data-index');
+        let parentAttr = checkChildren[i].getAttribute('data-parentIndex');
+        if (parentAttr != null && parentAttr == index1) {
+          check = checkChildren[i].checked
+        }
+        if (attr != null && attr == index1) {
+          checkChildren[i].checked = check;
+        }
+      }
+      //控制遮罩层及参数设置页面的显示
+      if (check == true) {
+        this.$store.dispatch('coverShowAction',true);
+      }
+      
+      //提交所选择的父节点索引到vuex
+      this.IndexChange(index,index1);
+
+    }
   
   }
 }

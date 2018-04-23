@@ -2,24 +2,8 @@
   <div class="par-container">
 	<header class="title"><p>参数设置</p></header><!-- /header -->
 	<div class="par-list">
-		<div>
-			参数1：<input placeholder="输入参数1">
-			<p>参数说明：该参数表示XXXX，参数范围XX</p>
-		</div>
-		<div>
-			参数2：<input placeholder="输入参数2">
-			<p>参数说明：该参数表示XXXX，参数范围XX</p>
-		</div>
-		<div>
-			参数3：<input placeholder="输入参数3">
-			<p>参数说明：该参数表示XXXX，参数范围XX</p>
-		</div>
-		<div>
-			参数4：<input placeholder="输入参数4">
-			<p>参数说明：该参数表示XXXX，参数范围XX</p>
-		</div>
-		<div>
-			参数5：<input placeholder="输入参数5">
+		<div v-for="(par,index) in par_list">
+			{{par.name}}：<input placeholder="输入参数" v-model="par.value">
 			<p>参数说明：该参数表示XXXX，参数范围XX</p>
 		</div>
 		<div style="background:white;width:315px;height:18px;padding:2px;border:1px solid lightseagreen;border-radius: 3px;">
@@ -35,6 +19,7 @@
 
 <script>
 require('../style/parDefiner.scss')
+import {mapState} from 'vuex'
 
 export default {
   name: 'ParDefiner',
@@ -42,6 +27,12 @@ export default {
     return {
       msg: ' Hello to GTWR'
     }
+  },
+  computed:{
+    ...mapState({
+        // ...
+      par_list: state=> state.par_list
+    }),
   },
   methods:{
   	compute:function(){
