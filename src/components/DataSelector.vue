@@ -1,9 +1,10 @@
 <template>
   <div class="data-selector">
   	<header class="title"><p>数据选择</p></header><!-- /header -->
+    <!--数据列表-->
   	<div class="data-list">
   		<div v-for="data,index in data_list">
-			
+			  
 		  	<div class="parent_node">
 		  		<img :src="data.src">
 		  		<b>{{data.name}}</b>
@@ -12,62 +13,44 @@
 			
 		  					
 		  	<div class="child_list" v-show="data.open">
-				<div class="data_drag_container" v-if="data.name == '私有数据'">				
-					<img src="../assets/img/add.png" height="30" width="30" >
-				
-					<p>拖拽本地文件到此处</p>    
-				</div>
-				
-				
-		  		<div v-for="child,index1 in data.data_type" >
-				<div v-if="child.name=='美国人口分布'">
-				
-		  			<div class="child_node" @click="showDataView">					
-		  				<p>
-						<input type="checkbox" id="chkall2" />
-						{{child.name}}
-		  				<!-- <span @click="child.open=child.open?false:true">+</span> -->
-						<input type="hidden" id="selectHideValue" /></p>
-					</div>
-		  			<div class="grand_son_list2">
-					<div class="grand_son_list" v-show="child.open">
-						<div v-for="grandson in child.children">
-							<p>
-								<input type="checkbox" />
-								<img :src="grandson.src">
-								{{grandson.name}}
-								<button @click="showDataDescription(index,index1)">说明</button>
-								<button @click="showDataView(index,index1)">预览</button>
-							</p>
-						</div>
-		  			</div></div>
-					</div>
-				<div v-else-if="child.name=='中国各省空气质量'">
-		  			<div class="child_node" @click="showDataView">					
-		  				<p>
-						<input type="checkbox" id="chkall3" />
-						{{child.name}}
-		  				<!-- <span @click="child.open=child.open?false:true">+</span> -->
-						<input type="hidden" id="selectHideValue" /></p>
-					</div>
-		  			<div class="grand_son_list3">
-					<div class="grand_son_list" v-show="child.open">
-						<div v-for="grandson in child.children">
-							<p>
-								<input type="checkbox" />
-								<img :src="grandson.src">
-								{{grandson.name}}
-								<button @click="showDataDescription(index,index1)">说明</button>
-								<button @click="showDataView(index,index1)">预览</button>
-							</p>
-						</div>
-		  			</div></div>
-					</div>
-				</div>
-		  	</div> 
-		</div>
-	</div>
-	
+  				<div class="data_drag_container" v-if="data.name == '私有数据'">				
+  					<img src="../assets/img/add.png" height="30" width="30" >
+  					<p>拖拽本地文件到此处</p>    
+  				</div>
+  				
+  				
+  		  	<div v-for="child,index1 in data.data_type" >
+    				<div>
+    		  		<div class="child_node" @click="showDataView(index,index1)">					
+    		  				<p>
+        						<input type="checkbox" id="chkall2" />
+        						{{child.name}}
+        		  				<!-- <span @click="child.open=child.open?false:true">+</span> -->
+        						<input type="hidden" id="selectHideValue" />
+                  </p>
+    					</div>
+    		  		<div class="grand_son_list2">
+    					  <div class="grand_son_list" v-show="child.open">
+      						<div v-for="grandson in child.children">
+      							<p>
+      								<input type="checkbox" />
+      								<img :src="grandson.src">
+      								{{grandson.name}}
+      								<button @click="showDataDescription(index,index1)">说明</button>
+      								<button @click="showDataView(index,index1)">预览</button>
+      							</p>
+      						</div>
+    		  			</div>
+              </div>
+
+    				</div>
+  				</div>
+
+
+  		  </div> 
+  		</div>
+  	</div>
+	  <!--数据列表end-->
   </div>
 </template>
 
@@ -77,7 +60,6 @@ import csvFileLogo from '../assets/img/csv.png'
 import geojsonFileLogo from '../assets/img/mind_map.png'
 import serviceFileLogo from '../assets/img/service.png'
 import {mapState} from 'vuex'
-import AttributeModal from '../components/AttributeModal.vue'  //引入组件
 
 export default {
   name: 'DataSelector',
@@ -100,7 +82,7 @@ export default {
 		});   
 		//初始化时隐藏状态  
 		$(".child_list").each(function (index,domEle){  
-			$(domEle).toggle("1000");  
+			$(domEle).toggle("slow");  
         });  
     });
 	
@@ -125,49 +107,6 @@ export default {
                 var selectAll = $(expr1).length == $(expr2).length;  
                 $('#chkall2').prop('checked', selectAll);  }
             });
-    $(function () { 
-	//勾选框设置2
-            $("#chkall3").prop("class", ".grand_son_list3") //初始化  
-            $("#chkall3").click(function () { var objectli = $("#chkall3").prop("class");  
-                $(this).prop('checked', this.checked)  
-                $(objectli).find(":checkbox").prop('checked', this.checked)  
-                GetSelectValues();  
-            });    
-            $(".grand_son_list3").find(":checkbox").click(function () { var objectli = $("#chkall3").prop("class");  
-                var expr1 = $(objectli).find(":checkbox:checked");  
-                var expr2 = $(objectli).find(":checkbox");  
-                var selectAll = $(expr1).length == $(expr2).length;  
-                $('#chkall3').prop('checked', selectAll);  
-                GetSelectValues();  
-            });  
-            function SetChkStatus() { var objectli = $("#chkall3").prop("class");  
-                var expr1 = $(objectli).find(":checkbox:checked");  
-                var expr2 = $(objectli).find(":checkbox");  
-                var selectAll = $(expr1).length == $(expr2).length;  
-                $('#chkall3').prop('checked', selectAll);  }  
-			});
-    $(function () {  
-	//勾选框设置3
-            $("#chkall4").prop("class", ".grand_son_list4") //初始化  
-            $("#chkall4").click(function () {  var objectli = $("#chkall4").prop("class");  
-                $(this).prop('checked', this.checked)  
-                $(objectli).find(":checkbox").prop('checked', this.checked)  
-                GetSelectValues();  
-            });    
-            $(".grand_son_list4").find(":checkbox").click(function () { var objectli = $("#chkall4").prop("class");  
-                var expr1 = $(objectli).find(":checkbox:checked");  
-                var expr2 = $(objectli).find(":checkbox");  
-                var selectAll = $(expr1).length == $(expr2).length;  
-                $('#chkall4').prop('checked', selectAll);  
-                GetSelectValues();  
-            });  
-            function SetChkStatus() { var objectli = $("#chkall4").prop("class");  
-                var expr1 = $(objectli).find(":checkbox:checked");  
-                var expr2 = $(objectli).find(":checkbox");  
-                var selectAll = $(expr1).length == $(expr2).length;  
-                $('#chkall4').prop('checked', selectAll);}  
-			});
-
   },
   computed:{
     ...mapState({

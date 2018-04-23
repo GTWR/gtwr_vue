@@ -2,10 +2,15 @@
   <div class="container">
     <div id="hello">
         <transition name="slide-trans">
-          <img v-if="show" :src='slides[index-1].src' class="slide-img"></img>
+          <keep-alive>
+            <dynamic-threed v-show="index==1"></dynamic-threed>
+          </keep-alive>
         </transition>
         <transition name="slide-trans">
-          <img v-if="!show" :src='slides[index-1].src'  class="slide-img"></img>
+          <img v-if="show && index>1" :src='slides[index-2].src' class="slide-img"></img>
+        </transition>
+        <transition name="slide-trans-old">
+          <img v-if="!show && index>1" :src='slides[index-2].src'  class="slide-img"></img>
         </transition>
     </div>
     <div class="playBtn">
@@ -21,7 +26,7 @@
 <script>
 require('../style/login.scss')
 import vue from 'vue'
-
+import dynamicThreed from '../components/DynamicThreed.vue'
 export default {
   name: 'login', 
   data () {
@@ -31,9 +36,9 @@ export default {
       inv:5000,
   	  //引入滚动视窗图片
   	  slides: [
-          {
+          /*{
             src:require('../assets/img/20180408_yue_gemma.gif')
-          },
+          },*/
           {
               src:require('../assets/img/test1.jpg'),
           },
@@ -89,7 +94,7 @@ export default {
     }
   },
   components: {
-    
+    dynamicThreed
   }
 }
 </script>
