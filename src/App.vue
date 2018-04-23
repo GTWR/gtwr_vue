@@ -1,23 +1,34 @@
 <template>
   <div id="app" class="wrap">
-    <router-view/>
+    <header class="header">
+      <p><span>GTWR </span>云计算平台</p>
+      <div class="login-container">
+	      <router-link to="/home/dataview" class="loginLink">用户登录</router-link>
+	      <a class="loginLink"> / </a>
+	      <router-link to="/home/dataview" class="loginLink">匿名登录</router-link>
+	   </div>
+    </header><!-- /header -->
+    <div class="main-content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
+require('./style/app.scss')
+
 export default {
-  name: 'App'
+  name: 'App',
+  data(){
+  	return{
+
+  	}
+  },
+  methods:{
+  }
 }
 </script>
 
 <style>
-.wrap{
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
+
 </style>

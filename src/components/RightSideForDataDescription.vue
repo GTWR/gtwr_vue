@@ -110,9 +110,6 @@ export default {
   components:{
   },
   mounted(){
-    /*alert(store.state.parent_node_index)*/
-	
-	this.initMap();
   },
   computed:{
 
@@ -162,11 +159,7 @@ export default {
 
   },
     methods:{
-  	initMap(){
-  		this.map = L.map('leafmap').setView([50.505,-88.09],3);
-  		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-  		).addTo(this.map);
-  	}
+  	
 	
   }
 }

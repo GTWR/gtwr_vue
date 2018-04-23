@@ -2,7 +2,7 @@
 <!--当鼠标移出的时候，可以轮播，那就调用 run；如果鼠标移入，停止轮播，那就清除定时器，clear-->
   <div class="slide-show" @mouseover="clear" @mouseout="run">
     <!-- 新旧图片的移入移出 -->
-	<div class="slide-img">
+	  <div class="slide-img">
       <a>
         <transition name="slide-trans">
           <img v-if="isShow" :src="slides[nowIndex].src">
@@ -98,13 +98,14 @@ export default {
 .slide-show {
   position: relative;
   border-radius:8px;
-  border:1px solid rgba(120,120,120,0.75);
+  /* border:1px solid rgba(120,120,120,0.75); */
+  border: none;
   top:10%;
   margin:0 auto;
   width: 591px;
   height: 430px;
   overflow: hidden;
-  box-shadow:3px 3px 3px rgba(120, 120, 120, .75);
+  /* box-shadow:3px 3px 3px rgba(120, 120, 120, .75); */
 }
 .slide-show h2 {
   position: absolute;

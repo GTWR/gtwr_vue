@@ -24,11 +24,13 @@ export default {
   components:{
   },
   mounted(){
-    this.$router.push({path:'/home/computeresult/chartAnalysis'});
+    //初试加载中页面路由指向计算日志模块
+    this.$router.push({path:'/home/computeresult/computeLog'});
   },
   computed:{
   },
   methods:{
+    //切换tab跳转到对应的页面
     switchTab:function(e){
       let rootUrl = '/home/computeresult/'
       switch(e.target.id){

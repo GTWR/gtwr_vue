@@ -22,9 +22,8 @@ export default new Router({
       component: login
     },
     {
-    	path:'/home',
-    	name:'Home',
-    	component: Home,
+      path:'/home',
+      component:Home,
       children:[
         {
           path: "dataview",
@@ -54,5 +53,7 @@ export default new Router({
         }
       ]
     }
+        
+
   ]
 })
