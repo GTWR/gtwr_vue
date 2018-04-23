@@ -1,8 +1,17 @@
 <template>
   <div class="container">
     <div id="hello">
-      <dynamic-threed v-show="index == 1"></dynamic-threed>
-      <img-component v-if="index>1" :imgsrc="slides[index-2].src"></img-component>
+      <transition name="slide-trans">
+        <dynamic-threed v-show="index == 1"></dynamic-threed>
+      </transition>
+      <div v-if="index>1" class="img-box">
+        <transition name="slide-trans">
+          <img v-if="show" :src='slides[index-2].src' class="slide-img"></img>
+        </transition>
+        <transition name="slide-trans">
+          <img v-if="!show" :src='slides[index-2].src'  class="slide-img"></img>
+        </transition>
+      </div>
     </div>
     <div class="playBtn">
       <button v-for="n in 5" class="circle" @click="carousel(n)" :class="{on: index === n}"></button>
@@ -12,7 +21,6 @@
 </template>
 
 <script>
-import carousel from '../components/Carousel.vue'  //引入carousel组件
 require('../style/login.scss')
 import dynamicThreed from  '../components/login/DynamicThreed.vue'
 import imgComponent from '../components/login/img.vue'
@@ -24,6 +32,7 @@ export default {
     return {
       show:true,
       index:1,
+      inv:5000,
   	  //引入滚动视窗图片
   	  slides: [
           {
@@ -46,12 +55,24 @@ export default {
   },
   methods:{
     carousel:function(n){
+      this.show = false;
+      setTimeout(()=>{
+        this.show = true;
+        this.index = n;
+      },10)
+      /*clearTimeout(this.inv);
       this.index = n;
-      clearTimeout(this.inv);
-      this.run()
+      this.run()*/
     },
     run:function(){
-      var timeout=3000;
+      this.invId = setInterval(()=>{
+        this.index+=1;
+        if (this.index == 6) {
+          this.index = 1
+        }
+        this.carousel(this.index);
+      }, this.inv);
+      /*var timeout=3000;
       var that = this;
       clearTimeout(this.inv);
       this.inv=setTimeout(function timeFunc(){
@@ -65,7 +86,7 @@ export default {
             timeout = 3000;
           }
           this.inv=setTimeout(timeFunc,timeout);
-      },timeout);
+      },timeout);*/
     }
   },
   components: {

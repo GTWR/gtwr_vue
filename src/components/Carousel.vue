@@ -2,7 +2,7 @@
 <!--当鼠标移出的时候，可以轮播，那就调用 run；如果鼠标移入，停止轮播，那就清除定时器，clear-->
   <div class="slide-show" @mouseover="clear" @mouseout="run">
     <!-- 新旧图片的移入移出 -->
-	<div class="slide-img">
+	  <div class="slide-img">
       <a>
         <transition name="slide-trans">
           <img v-if="isShow" :src="slides[nowIndex].src">

@@ -53,3 +53,6 @@ export default {
   }
 }
 </script>
+<style scope>
+/*写你定义的样式*/
+</style>
