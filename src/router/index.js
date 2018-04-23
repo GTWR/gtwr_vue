@@ -38,13 +38,14 @@ export default new Router({
           component: RightSideForResult,
           children:[
             {
+              path:"computeLog",
+              component: computeLog
+            },
+			{
               path:"chartAnalysis",
               component: chartAnalysis
             },
-            {
-              path:'computeLog',
-              component: computeLog
-            },
+            
             {
               path:'precesion',
               component:precision
