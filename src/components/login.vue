@@ -3,7 +3,7 @@
     <div id="hello">
         <transition name="slide-trans">
           <keep-alive>
-            <dynamic-threed v-show="index==1"></dynamic-threed>
+            <dynamicThreed v-show="index==1"></dynamicThreed>
           </keep-alive>
         </transition>
         <transition name="slide-trans">

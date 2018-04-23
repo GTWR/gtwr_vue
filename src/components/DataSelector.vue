@@ -74,6 +74,7 @@ export default {
   },
   mounted(){
   	this.initDataTypeLogo();
+<<<<<<< Updated upstream
 	   $(document).ready(function (){  
     		//找到所有的span，并且点击span以后，控制一下元素div的显示和隐藏  
     		$(".parent_node").click(function (){  
@@ -82,6 +83,16 @@ export default {
     		//初始化时隐藏状态  
     		$(".child_list").each(function (index,domEle){  
     			$(domEle).show("slow");  
+=======
+	$(document).ready(function (){  
+		//找到所有的span，并且点击span以后，控制一下元素div的显示和隐藏  
+		$(".parent_node").click(function (){  
+			$(this).next().toggle("slow");  
+		});   
+		//初始化时隐藏状态  
+		$(".child_list").each(function (index,domEle){  
+			$(domEle).show("slow");  
+>>>>>>> Stashed changes
         });  
     });
   },
