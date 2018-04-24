@@ -95,6 +95,9 @@ const mutations = {
 	},
 	coverShowMutation:function(state,msg){
 		state.cover_show = msg;
+	},
+	parListMutation:function(state,msg){
+		state.par_list = msg;
 	}
 }
 
@@ -107,6 +110,9 @@ const actions = {
 	},
 	coverShowAction:function({commit},msg){
 		commit('coverShowMutation',msg)
+	},
+	parListAction:function({commit},msg){
+		commit('parListMutation',msg)
 	}
 }
 

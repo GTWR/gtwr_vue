@@ -7,9 +7,11 @@
 			<p>参数说明：该参数表示XXXX，参数范围XX</p>
 		</div>
 		<div style="background:white;width:315px;height:18px;padding:2px;border:1px solid lightseagreen;border-radius: 3px;">
-		<div id="proBar" style="width:0%;background-color:lightseagreen;color:rgba(0,0,0,0.5);border-radius: 3px;">
-		<span style="display: inline-block;position: relative;">
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspProcessBar</span></div></div> 
+			<div id="proBar" style="width:0%;background-color:lightseagreen;color:rgba(0,0,0,0.5);border-radius: 3px;">
+				<span style="display: inline-block;position: relative;">
+				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspProcessBar</span>
+			</div>
+		</div> 
 		<button class="submit" style="vertical-align:middle" @click="compute"  ><span>开始计算</span></button> 
 		
 	</div>

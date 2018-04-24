@@ -67,6 +67,7 @@ export default {
       parentIndex: 0,
       childIndex:0,
       open:[],
+      par_list_temp:null
     }
   },
   components: {
@@ -92,6 +93,7 @@ export default {
         // ...
       data_list: state => state.data_list,
       cover_show: state => state.cover_show,
+      par_list:state=>state.par_list
       /*open:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open*/
     })
   },
@@ -161,6 +163,13 @@ export default {
       //控制遮罩层及参数设置页面的显示
       if (check == true) {
         this.$store.dispatch('coverShowAction',true);
+      }else{
+        //当取消点选时，参数设置清空
+        this.par_list_temp = this.par_list
+        for (var i = 0; i < this.par_list.length; i++) {
+          this.par_list_temp[i].value = '';
+        }
+        this.$store.dispatch('parListAction',this.par_list_temp)
       }
       
       //提交所选择的父节点索引到vuex

@@ -33,7 +33,7 @@ export default {
     return {
       show:true,
       index:1,
-      inv:5000,
+      inv:6000,
   	  //引入滚动视窗图片
   	  slides: [
           /*{

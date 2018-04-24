@@ -63,8 +63,8 @@
   background-color: white;
   box-shadow: $shadow_card,$shadow_card;
   width: 100%;
-   height:300px;
-  overflow:scroll;
+   height:250px;
+  overflow-y:scroll;
   margin-top: $card-margin_padding;
   display: flex;
   flex-direction: column;

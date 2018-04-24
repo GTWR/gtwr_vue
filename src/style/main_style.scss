@@ -28,3 +28,7 @@ $hover_color:#f5f5f5;
   @include container(565px);
 }
 
+.right-container{
+  display: flex;
+  flex-direction:column;
+}

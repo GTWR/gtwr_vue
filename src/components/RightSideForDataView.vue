@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="right-container">
     <div class="map-container">  
       <map-viewer></map-viewer>
     </div>
     <data-viewer></data-viewer>
-    <div class="clear:both"></div>
+    <div style="clear:both"></div>
   </div>
 </template>
 
