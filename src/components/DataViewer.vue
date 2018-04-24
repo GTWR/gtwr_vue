@@ -1,13 +1,18 @@
 <template>
   <div class="data-container">
   	<header class="title"><p>数据列表</p></header><!-- /header -->
-  	<div id="data-table">
+	
+  	<div class="data-head">
       <table>
         <tr>
           <th v-for="(value,key) in (dataA[0].features?dataA[0].features[0].properties:dataA[0])">
             {{key}}
           </th>
         </tr>
+	  </table>
+	 </div>
+	 <div class="data-table">
+	  <table>
         <tbody>
           <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)">
             <td v-for="(value,key) in (dataA[0].features?line.properties:line)">{{value}}</td>
@@ -53,6 +58,3 @@ export default {
   }
 }
 </script>
-<style scope>
-/*写你定义的样式*/
-</style>

@@ -75,23 +75,10 @@ export default {
           this.index = 1
         }
         this.carousel(this.index);
-      }, this.inv);
-      /*var timeout=3000;
-      var that = this;
-      clearTimeout(this.inv);
-      this.inv=setTimeout(function timeFunc(){
-          that.index += 1;
-          if (that.index == 6) {
-            that.index = 1;
-          }
-          if (that.index == 1) {
-            timeout = 20000;
-          }else{
-            timeout = 3000;
-          }
-          this.inv=setTimeout(timeFunc,timeout);
-      },timeout);*/
+      }, this.inv);     
     }
+	
+	
   },
   components: {
     dynamicThreed
