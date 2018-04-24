@@ -11,6 +11,7 @@
 		<span style="display: inline-block;position: relative;">
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspProcessBar</span></div></div> 
 		<button class="submit" style="vertical-align:middle" @click="compute"  ><span>开始计算</span></button> 
+		
 	</div>
 	   
     
@@ -28,6 +29,9 @@ export default {
       msg: ' Hello to GTWR'
     }
   },
+  mounted(){
+	
+  },
   computed:{
     ...mapState({
         // ...
@@ -35,17 +39,19 @@ export default {
     }),
   },
   methods:{
+	
   	compute:function(){
   		//this.$router.push({path:'/home/computeresult'});
+		this.$router.push({path:'/home/computeresult/computeLog'});
 		var barObj = document.getElementById("proBar");
 		var currentWidth = parseInt(barObj.style.width.substring(0, barObj.style.width.length - 1));
-		this.$router.push({path:'/home/computeresult/computeLog'});
 		if (currentWidth < 315) {
 			barObj.style.width = (currentWidth + 1) + "px";
 			
 		}
-		else{return ;}
-		setTimeout(this.compute, 10);
+		else{return 0;}
+		setTimeout(this.compute, 32);
+		
   	},
   }
 }
