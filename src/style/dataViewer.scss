@@ -7,6 +7,8 @@
   margin-top: $card-margin_padding;
   display: flex;
   flex-direction: column;
+  height:40%;
+  min-height: 200px;
   table{
     margin-left:10px;
     border: 1px solid #F5F5F5;

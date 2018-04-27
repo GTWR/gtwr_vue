@@ -25,10 +25,12 @@ $hover_color:#f5f5f5;
 }
 
 .map-container{
-  @include container(565px);
+  @include container(60%);
+  min-height: 400px; 
 }
 
 .right-container{
   display: flex;
   flex-direction:column;
+  height: 100%;
 }
