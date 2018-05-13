@@ -57,7 +57,7 @@
 			<div class="top-lat"><p>36.00</p><br></div>
 			<div class="left-long" style="float:left;"><p>75.99</p></div>			
 			<div class="content12">
-				<div class="map-container"><img :src="smallpic.src" style="height:170px;width:170px;"></div>
+				<div class="map-containers"><img :src="smallpic.src" style="height:170px;width:170px;"></div>
 			</div>			
 			<div class="right-long" style="float:right;"><p>78.00</p></div>					
 			<div class="bottom-lat"><br><p>33.99</p></div>
