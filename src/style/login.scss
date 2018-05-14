@@ -1,37 +1,59 @@
 @import 'main_style.scss';
 
+$title_font_size:27px;
+
 .container{
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content:center;
   #hello{
     width: 100%;
     height: 100%;
     overflow: hidden;
-    .slide-img{
-      width:100%;
-      height:100%;
-    }
-    .slide-trans-enter-active {
-      transition: all .75s;
-    }
-    .slide-trans-enter {	  
-      transform: translateX(100%);
-    }
-    .slide-trans-old-leave-active {
-      transition: all .75s;
-      transform: translateX(-100%);
-    }
     #dynamic{
       height: 100%;
       width: 100%;
     }
   }
+  
+} 
+
+.intro-text{
+  position: absolute;
+  top: 30%;
+  left:40%;
+  color: white;
+  p{
+    line-height: 20px;
+    font-size: $title_font_size - 4;
+  }
+  .title{
+    background-color: lightseagreen;
+    height: 50px;
+    width: 400px;
+    color:white;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+    font-size: $title_font_size;
+  }
+  .link{
+    color:lightseagreen;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
+.slides{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content:center;
   .playBtn{
     position: absolute;
     bottom: 50px;
-	margin:0px auto; 
+    margin:0px auto; 
     .circle{
       width:11px;
       height:11px;
@@ -44,4 +66,17 @@
       background-color:$title_color;
     }
   }
+  img{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s linear; 
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  img.active{
+    opacity: 1;
+  }
 }
+

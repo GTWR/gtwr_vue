@@ -1,6 +1,6 @@
 <template>
   <div class="chartAnalysis">
-    <map-viewer></map-viewer> 
+    <map-result></map-result> 
     <div class="chart">
       <div id="scatter"></div>
       <div id="line"></div>
@@ -12,25 +12,30 @@
 <script>
 import echarts from 'echarts'
 import'echarts-gl'
-import mapViewer from '../MapViewer'
+import mapResult from './MapForResult'
+import messageBus from '../../bus/messageBus.js'
 require('../../style/rightSideForResult.scss')
 
 export default {
   name: 'chartAnalysis',
   data () {
     return {
-        
+        data_scatter:[]
     }
   },
   components:{
-    mapViewer
+    mapResult
   },
   mounted(){
     this.drawScatter();
     this.drawThreeD();
     this.drawLine();
+    messageBus.$on('data-for-chart',(prop)=>{
+      this.data_scatter = prop;
+    });
   },
   computed:{
+    
   },
   methods:{
     //绘制第一幅散点图
@@ -38,6 +43,20 @@ export default {
       let scatterChart = document.getElementById('scatter');
       let myChart = echarts.init(scatterChart);
       let app = {};
+
+      console.log(this.data_scatter);
+      //组织数据
+      let data = [];
+      let i = 0;
+      for (let item in this.data_scatter) {
+        data.push({});
+        data[i]['name'] = item;
+        data[i]['type'] = 'scatter';
+        data[i]['data'] = [];
+        data[i]['data'].push(this.data_scatter[item])
+      }
+
+      console.log(data);
       let option = {
         title : {
             text: '二维散点图',
@@ -72,7 +91,8 @@ export default {
                 }
             }
         ],
-        series : [
+        series :
+        [
             {
                 name:'女性',
                 type:'scatter',

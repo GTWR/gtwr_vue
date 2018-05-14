@@ -9,7 +9,7 @@
 	   </div>
     </header><!-- /header -->
     <div class="main-content">
-      <router-view/>
+      <router-view></router-view>
     </div>
     <cover-par v-show="cover_show"></cover-par>
   </div>
@@ -31,14 +31,15 @@ export default {
     ...mapState({
         // ...
       cover_show: state => state.cover_show,
-
-      /*open:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open*/
     })
   },
   methods:{
   },
+  mounted(){
+    
+  },
   components:{
-    coverPar
+    coverPar,
   }
 }
 </script>

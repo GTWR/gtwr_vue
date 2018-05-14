@@ -9,6 +9,9 @@ import chartAnalysis from '@/components/rightSideForResult/chartAnalysis'
 import computeLog from '@/components/rightSideForResult/computeLog'
 import precision from '@/components/rightSideForResult/precision'
 import coverForParSelect from '@/components/coverForParSelect'
+import dynamicThreed from '@/components/login/DynamicThreed'
+import slides from '@/components/login/slides'
+
 Vue.use(Router)
 
 export default new Router({
@@ -20,7 +23,11 @@ export default new Router({
     {
       path:'/login',
       name:'Login',
-      component: login
+      component: login,
+    },
+    {
+      path:'/demo',
+      component: slides
     },
     {
       path:'/home',

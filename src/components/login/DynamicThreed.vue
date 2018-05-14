@@ -5,10 +5,10 @@
 </template>
 
 <script>
-require('../style/login.scss')
+require('../../style/login.scss')
 import echarts from 'echarts'
 import'echarts-gl'
-import linedata from '../assets/data/test.json'
+import linedata from '../../assets/data/test.json'
 
 export default {
   name: 'hello', 
@@ -51,7 +51,7 @@ export default {
             orient: 'vertical',
             autoPlay: true,
             inverse: true,
-            playInterval: 500,
+            playInterval: 300,
             left: null,
             right: 0,
             top: null,
