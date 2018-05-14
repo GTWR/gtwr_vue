@@ -49,7 +49,6 @@ export default {
 		var currentWidth = parseInt(barObj.style.width.substring(0, barObj.style.width.length - 1));
 		if (currentWidth < 315) {
 			barObj.style.width = (currentWidth + 1) + "px";
-			
 		}
 		else{return 0;}
 		setTimeout(this.compute, 32);

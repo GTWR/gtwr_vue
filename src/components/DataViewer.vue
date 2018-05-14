@@ -11,11 +11,12 @@
         </tr>
 	  </table>
 	 </div>
-	 <div class="data-table">
+	 <div class="data-table" id="data-table">
 	  <table id="t1">
         <tbody>
-          <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)" >
-            <td v-for="(value,key) in (dataA[0].features?line.properties:line)">{{value}}<a :name="line.properties.name"></a></td>
+          <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)" :id="SpaceFilter(line.properties.name)">
+<!--             <a :name="line.properties.name"></a> -->
+            <td v-for="(value,key) in (dataA[0].features?line.properties:line)" >{{value}}</td>
           </tr>
         </tbody>
       </table>
@@ -26,18 +27,17 @@
 <script>
 require('../style/dataViewer.scss')
 import {mapState} from 'vuex'
-import bus from '../js/public.js'
+import messageBus from '../bus/messageBus.js'
 
 export default {
   name: 'ParDefiner',
   data () {
-	titlename:''
     return {
-
+      titlename:''
     }
   },
   mounted(){
-    this.getEventData()
+    this.getEventData();
   },
   computed:{
     ...mapState({
@@ -50,28 +50,54 @@ export default {
     },
   },
   watch:{
-
   },
   methods:{
-	getEventData(){
-		const that = this;
-		//接收点击要素的name值，传给titlename
-		bus.$on('event-to-chart',function(val){
-		that.titlename=val});
-		//找出对应表行
-		var tr;
-		var aa= that.titlename;
-		if(aa !=""){
-			for(var i=0;i<t1.rows.length;i++){
-				t1.rows[i].bgColor='';
-			}    
-		tr=document.getElementById(aa).parentElement;//返回该列的所在行tr
-		tr.bgColor='red';
-		window.location.href="#"+aa;
+  	getEventData(){
+  		const that = this;
+  		//接收点击要素的name值，传给titlename
+  		messageBus.$on('event-to-chart',function(val){
+        this.titlename=val 
+
+        //jquery方法,使表格中的滚动条滚动到指定位置，同时改变背景色
+        const id = '#'+that.SpaceFilter(this.titlename);//要定位的地方的id
+        var $objTr = $(id); //找到要定位的地方 
+        let t1 = document.getElementById('t1');//表格容器
+        for(var i=0;i<t1.rows.length;i++){
+          t1.rows[i].style.backgroundColor='';//将表格容器中所有行背景色变为空
+        } 
+        $objTr.css("background-color","#DCDCDC"); //设置要定位地方的css 
+        let tableContainer = $("#data-table");
+        let scrollLocation = $objTr.offset().top-tableContainer.offset().top+tableContainer.scrollTop();//计算滚动的位置
+        tableContainer.animate({scrollTop:scrollLocation},"slow"); //定位tr 
+
+        /*
+        *找出对应表行，这是不用jQuery的实现方法，但是这个方法比较僵硬，直接跳转，同时会改变路由地址，所以舍弃这种方法
+        *
+        * 
+        let t1 = document.getElementById('t1');
+        var tr;
+        if (this.titlename != "") {
+          for(var i=0;i<t1.rows.length;i++){
+            t1.rows[i].style.backgroundColor='';
+          } 
+          tr=document.getElementById(this.titlename);//返回该列的所在行tr
+          tr.style.backgroundColor='red';
+          window.location.href="#"+this.titlename;
+        }
+        *
+        */
+      });
+  	},
+    //字符串格式化，将name中包含空格的字符串进行格式化，如New Mexico=>New-Mexico
+    SpaceFilter:function(string){
+      if (typeof string === 'string') {
+        if(string.indexOf(" ") != -1) {
+            let string_ = string.replace(' ','_');
+            return string_;
+        }
+      }
+      return string;
     }
-
-	},
-
   }
 }
 </script>

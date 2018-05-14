@@ -7,7 +7,7 @@ require('../style/mapViewer.scss')
 import Leaflet from 'leaflet'
 import {mapState,mapGetters} from 'vuex'
 import Vue from "vue"
-import bus from '../js/public.js'
+import messageBus from '../bus/messageBus.js'
 
 var bgMapUrl = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2VtbWFhYWEiLCJhIjoiY2o2a2N5dzB1MWd1ZTMzcnlqMDhkM3ZjYyJ9.0vVVkY9k7t8z0e3uqMgQnQ';
 
@@ -140,7 +140,7 @@ export default {
     handleClick:function(e){
       let layer = e.target;
       let prop = layer.feature.properties.name;
-	  bus.$emit('event-to-chart','prop');
+	    messageBus.$emit('event-to-chart',prop);
       
     }
   }
