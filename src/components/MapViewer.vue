@@ -5,32 +5,11 @@
 <script>
 require('../style/mapViewer.scss')
 import Leaflet from 'leaflet'
-import {mapState,mapGetters} from 'vuex'
-import Vue from "vue"
+import {mapState} from 'vuex'
 import messageBus from '../bus/messageBus.js'
 
 var bgMapUrl = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2VtbWFhYWEiLCJhIjoiY2o2a2N5dzB1MWd1ZTMzcnlqMDhkM3ZjYyJ9.0vVVkY9k7t8z0e3uqMgQnQ';
 
-var vm = new Vue({
-  methods:{
-    //设置点的样式
-    pointStyle:function(feature){
-      return {
-            radius: 6,
-            fillColor: this.pointStyleGetColor(feature.properties['质量等级']),
-            weight: 0,
-            opacity: 1,
-            fillOpacity: 0.8
-      }
-    },
-	//设置点的颜色
-    pointStyleGetColor:function(d){
-      return d == '优' ? '#43CE17' :
-             d == '良' ? '#EFDC31' :
-             d == '轻度污染' ? '#FFAA00':'#800026';
-    } 
-  }
-})
 
 export default {
   name: 'ParDefiner',
@@ -47,17 +26,21 @@ export default {
   },
   computed:{
     ...mapState({
-        
       parentNodeIndex: state => state.parent_node_index,
-      childNodeIndex: state => state.child_node_index
+      childNodeIndex: state => state.child_node_index,
+      grandSonNodeIndex: state => state.grandson_node_index
     }),
     dataA(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
+    },
+    //获取点击的具体数据的子节点，如“中国各省PM2.5"
+    par(){
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].index;
     }
   },
   watch:{
-    dataA:'addDataViewOnMap',
-	
+    //dataA:'addDataViewOnMap',
+	  par:'addDataViewOnMap'
   },
   methods:{
 	//初始化地图
@@ -73,17 +56,19 @@ export default {
       if(this.dataA[0].features[0].geometry.type == 'Polygon'){
         this.map.setView([50.505,-108.09],3)
         this.layer = L.geoJson(this.dataA,
-		{style:this.polygonStyle,
-		onEachFeature:this.onEachFeature 
-		});
+      		{style:this.polygonStyle,
+      		onEachFeature:this.onEachFeature 
+      		}
+        );
       }
 	  else{
         this.map.setView([40.31, 100.52],3)
+        let that = this;
         this.layer = L.geoJson(this.dataA,{
           pointToLayer: function(feature,latlng){
-            return L.circleMarker(latlng,vm.pointStyle(feature))
+            return L.circleMarker(latlng,that.pointStyle(feature,that.par))
           },
-		  onEachFeature: this.onEachFeature
+		      onEachFeature: this.onEachFeature
         }) 
       }
       
@@ -102,14 +87,49 @@ export default {
     },
 	//设置多边形的样式
     polygonStyle:function(feature) {
+
         return {
-            fillColor: this.polygonStyleGetColor(feature.properties.density),
+            fillColor: this.polygonStyleGetColor(feature.properties[this.par]),
             weight: 2,
             opacity: 1,
             color: 'white',
             dashArray: '3',
             fillOpacity: 0.7
         };
+    },
+    //设置点的样式
+    pointStyle:function(feature,par){
+      return {
+            radius: 6,
+            fillColor: this.pointStyleGetColor(feature.properties[par],par),
+            weight: 0,
+            opacity: 1,
+            fillOpacity: 0.8
+      }
+    },
+  //设置点的颜色
+    pointStyleGetColor:function(d,par){
+      if (par == '质量等级') {
+        return d == '优' ? '#43CE17' :
+             d == '良' ? '#EFDC31' :
+             d == '轻度污染' ? '#FFAA00':'#800026';
+      }else{
+        if (par== '城市数') {
+          return d >20 ? '#43CE17' :
+             d >10 ? '#EFDC31' :
+             d >5 ? '#FFAA00':'#800026';
+        }else{
+          return d > 110 ? '#800026' :
+             d > 95  ? '#BD0026' :
+             d > 80  ? '#E31A1C' :
+             d > 65  ? '#FC4E2A' :
+             d > 50   ? '#FD8D3C' :
+             d > 35   ? '#FEB24C' :
+             d > 20   ? '#FED976' :
+                        '#FFEDA0';
+        }
+      }
+      
     },
 	//鼠标滑过特征图块，高亮显示
 	highlightFeature:function(e) {

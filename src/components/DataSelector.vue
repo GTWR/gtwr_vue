@@ -12,7 +12,7 @@
 		  	</div>
 			
 		  					
-		  	<div class="child_list" v-show="data.open">
+		  	<div class="child_list">
   				<div class="data_drag_container" v-if="data.name == '私有数据'">				
   					<img src="../assets/img/add.png" height="30" width="30" >
   					<p>拖拽本地文件到此处</p>    
@@ -29,14 +29,14 @@
                   </p>
     					</div>
     		  		<div class="grand_son_list2">
-    					  <div class="grand_son_list" v-show="child.open">
-      						<div v-for="grandson in child.children">
+    					  <div class="grand_son_list">
+      						<div v-for="grandson,index2 in child.children">
       							<p>
       								<input type="checkbox" :data-index="index1"/>
       								<img :src="grandson.src">
       								{{grandson.name}}
       								<button @click="showDataDescription(index,index1)">说明</button>
-      								<button @click="showDataView(index,index1)">预览</button>
+      								<button @click="showDataView(index,index1,index2)">预览</button>
       							</p>
       						</div>
     		  			</div>
@@ -126,22 +126,25 @@ export default {
   		}}
   	},
   	//说明按钮
-  	showDataDescription:function(index,index1){
+  	showDataDescription:function(index,index1,index2){
   		this.$router.push({path:'/home/datadescription'}); 		
-      this.IndexChange(index,index1);
+      this.IndexChange(index,index1,0);
 
   	},
 
   	//预览按钮
-  	showDataView:function(index,index1){
+  	showDataView:function(index,index1,index2){
   		this.$router.push({path:'/home/dataview'});
-  		this.IndexChange(index,index1);
+      //alert(index2)
+  		this.IndexChange(index,index1,index2);
   	},
-    IndexChange:function(index,index1){
+    IndexChange:function(index,index1,index2){
       this.parentIndex = index;
       this.childIndex = index1;
+      this.grandsonIndex = index2;
       this.$store.dispatch('parentIndexAction' , this.parentIndex);
       this.$store.dispatch('childIndexAction' , this.childIndex);
+      this.$store.dispatch('grandSonIndexAction' , this.grandsonIndex);
     },
 	  
     
@@ -173,7 +176,7 @@ export default {
       }
       
       //提交所选择的父节点索引到vuex
-      this.IndexChange(index,index1);
+      this.IndexChange(index,index1,0);
 
     }
   

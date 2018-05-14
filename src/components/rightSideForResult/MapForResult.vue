@@ -5,7 +5,7 @@
 <script>
 require('../../style/mapViewer.scss')
 import Leaflet from 'leaflet'
-import {mapState,mapGetters} from 'vuex'
+import {mapState} from 'vuex'
 import Vue from "vue"
 import messageBus from '../../bus/messageBus.js'
 
