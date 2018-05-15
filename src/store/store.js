@@ -121,25 +121,8 @@ const actions = {
 	}
 }
 
-/*const getters = {
-	parentIndexGetter:function(state){
-		return state.parent_node_index;
-	},
-	grandsonIndex:function({commit},msg){
-		commit('grandsonIndexMutation',msg)
-	},
-	open:function({commit}){
-		commit('openMutation')
-    },
-	childIndexGetter:function(state){
-		return state.child_node_index;
-	}
-
-}*/
-
 export default new Vuex.Store({
     state,
     mutations,
-    actions,
-    /*getters*/
+    actions
 });

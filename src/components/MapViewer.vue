@@ -33,13 +33,11 @@ export default {
     dataA(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
     },
-    //获取点击的具体数据的子节点，如“中国各省PM2.5"
     par(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].index;
     }
   },
   watch:{
-    //dataA:'addDataViewOnMap',
 	  par:'addDataViewOnMap'
   },
   methods:{

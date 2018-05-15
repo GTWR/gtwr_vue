@@ -67,8 +67,8 @@ export default {
   components:{
   },
   mounted(){
-    this.typeCode();
-    /*this.turnToChart();*/ 
+    //this.turn();
+    this.typeCode()
   },
   computed:{
 
@@ -76,8 +76,10 @@ export default {
   methods:{
     /*
     *加载code
+    *以jQuery的方法，打字式加载code
      */
-    typeCode:function(){
+    /*typeCode:function(){
+      let done = $.Deferred();
       $.fn.typewriter = function() {
           this.each(function() {
             var $ele = $(this), str = $ele.html(), progress = 0;
@@ -92,14 +94,44 @@ export default {
               $ele.html(str.substring(0, progress) + (progress & 1 ? '_' : ''));
               if (progress >= str.length) {
                 clearInterval(timer);
+                done.resolve();
               }
-
             }, 25);
-
           });
-
           return this;
-      };
+      };  
+      $("#code").typewriter();
+      return done.promise();
+    },
+    //执行完打字之后执行页面跳转
+    turn:function(){
+      let that = this;
+      this.typeCode().then(function(){
+        that.$router.push({path:'/home/computeresult/chartAnalysis'});
+      })
+    }*/
+    typeCode:function(){
+      let that = this;
+      $.fn.typewriter = function() {
+          this.each(function() {
+            var $ele = $(this), str = $ele.html(), progress = 0;
+            $ele.html('');
+            var timer = setInterval(function() {
+              var current = str.substr(progress, 1);
+              if (current == '<') {
+                progress = str.indexOf('>', progress) + 1;
+              } else {
+                progress++;
+              }
+              $ele.html(str.substring(0, progress) + (progress & 1 ? '_' : ''));
+              if (progress >= str.length) {
+                clearInterval(timer);
+                that.$router.push({path:'/home/computeresult/chartAnalysis'});
+              }
+            }, 25);
+          });
+          return this;
+      };  
       $("#code").typewriter();
       
     },
