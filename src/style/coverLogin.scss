@@ -1,0 +1,53 @@
+@import 'main_style.scss';
+$margin: 15px;
+
+.cover-login{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index:1000;
+	img{
+		position: absolute;
+		top: 20px;
+		right:20px;
+	}
+	.box-container{
+		position:absolute;
+		left:0;
+		top:0;
+		bottom:0;
+		right:0;
+		margin:auto;
+		width:350px - $margin;
+		height: 200px;
+		background-color: white;
+		box-shadow: $shadow_card,$shadow_card;
+		padding: $margin;
+		.login{
+			text-align: center;
+			a{
+				text-decoration: underline;
+				color: $title_color;
+				font-size: 0.8em;
+				margin-left: 3.5em;
+			}
+			.submit{
+			  margin-top: $margin;
+		      width: 100px;
+		      height: 30px;
+		      border-radius: 4px;
+		      background-color: $title_color;
+		      border: none;
+		      color: #FFFFFF;
+		      cursor: pointer;
+		    }
+		    .submit span {
+		      cursor: pointer;
+		      display: inline-block;
+		      position: relative;
+		    }
+		}
+		
+	}
+}
