@@ -21,7 +21,7 @@
   				
   		  	<div v-for="child,index1 in data.data_type" >
     				<div>
-    		  		<div class="child_node" @click="showDataView(index,index1)">					
+    		  		<div class="child_node" @click="showDataView(index,index1,0)">					
     		  				<p>
         						<input type="checkbox" @click="checkParent(index,index1)" :data-parentIndex="index1"/>
         						{{child.name}}
@@ -66,6 +66,7 @@ export default {
     return {
       parentIndex: 0,
       childIndex:0,
+      grandsonIndex:0,
       open:[],
       par_list_temp:null
     }
@@ -145,11 +146,13 @@ export default {
       this.$store.dispatch('parentIndexAction' , this.parentIndex);
       this.$store.dispatch('childIndexAction' , this.childIndex);
       this.$store.dispatch('grandSonIndexAction' , this.grandsonIndex);
+      //alert(this.parentIndex+','+this.childIndex+','+this.grandsonIndex)
     },
 	  
     
     checkParent:function(index,index1){
       //父节点勾选，子节点全部勾选；父节点取消勾选，子节点全部取消勾选
+     
       var dataList = document.getElementById('data-list')
       var checkChildren = dataList.getElementsByTagName('input');
       var check;

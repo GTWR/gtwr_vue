@@ -15,6 +15,7 @@ Vue.use(Vuex);
 
 const state = {
 	cover_show:false,
+	login_show:false,
 	parent_node_index:0,
 	child_node_index:0,
 	grandson_node_index:0,
@@ -90,13 +91,15 @@ const mutations = {
 	},
 	childIndexMutation:function(state,msg){
 		state.child_node_index = msg;
-
 	},
 	grandSonIndexMutation:function(state,msg){
 		state.grandson_node_index = msg;
 	},
 	coverShowMutation:function(state,msg){
 		state.cover_show = msg;
+	},
+	loginShowMutation:function(state,msg){
+		state.login_show = msg;
 	},
 	parListMutation:function(state,msg){
 		state.par_list = msg;
@@ -115,6 +118,9 @@ const actions = {
 	},
 	coverShowAction:function({commit},msg){
 		commit('coverShowMutation',msg)
+	},
+	LoginShowAction:function({commit},msg){
+		commit('loginShowMutation',msg)
 	},
 	parListAction:function({commit},msg){
 		commit('parListMutation',msg)

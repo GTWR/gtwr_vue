@@ -38,6 +38,7 @@ export default {
         // ...
       parentNodeIndex: state => state.parent_node_index,
       childNodeIndex: state => state.child_node_index,
+      grandSonNodeIndex: state => state.grandson_node_index,
       par_list: state=> state.par_list
     }),
     dataA(){
