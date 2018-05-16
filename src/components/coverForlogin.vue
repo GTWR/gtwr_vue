@@ -1,15 +1,19 @@
 <template>
-  <div class="cover-login">
+  <div class="cover-login cover">
     <div class="box-container">
-      <header class="title"><p>登录</p></header>
-      <div class="login">
-          <p><span>账号：</span><input type="text"></p>
-          <p><span>密码：</span><input type="text"></p>
-          <a>注册</a>
-          <a>忘记密码？</a><br/>
-          <button class="submit" style="vertical-align:middle" @click="submitPar" ><span>提交</span></button>
+      <div class="main">
+        <hr color="lightgrey"/>
+        <header class="login-title"><b>欢迎登录</b></header>
+        <div class="login">
+            <input type="text" placeholder="输入用户名..."><br/>
+            <input type="text" placeholder="输入密码"><br/>
+            <button @click="submitPar" ><span>登录</span></button>
+            <div>
+              <a style="float:right">忘记密码？</a>
+              <a style="float:left">注册</a>
+            </div>
+        </div> 
       </div>
-      
     </div>
     <img src="../assets/img/close.png" height="20" width="20" @click="submitPar">
   </div>

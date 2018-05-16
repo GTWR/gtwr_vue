@@ -2,16 +2,6 @@
 $margin: 15px;
 
 .cover-login{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0,0,0,0.4);
-	z-index:1000;
-	img{
-		position: absolute;
-		top: 20px;
-		right:20px;
-	}
 	.box-container{
 		position:absolute;
 		left:0;
@@ -19,35 +9,66 @@ $margin: 15px;
 		bottom:0;
 		right:0;
 		margin:auto;
-		width:350px - $margin;
-		height: 200px;
+		width:350px - $margin * 2;
+		height: 220px;
 		background-color: white;
 		box-shadow: $shadow_card,$shadow_card;
-		padding: $margin;
-		.login{
-			text-align: center;
-			a{
-				text-decoration: underline;
-				color: $title_color;
-				font-size: 0.8em;
-				margin-left: 3.5em;
+		padding: $margin * 2;
+		padding-right:$margin * 3;
+		.main{
+			width: 100%;
+			height: 100%;
+			position: relative;
+			display: flex;
+			justify-content:center;
+			hr{
+				position: absolute;
+				top: 0px;
+				width: 100%;
 			}
-			.submit{
-			  margin-top: $margin;
-		      width: 100px;
-		      height: 30px;
-		      border-radius: 4px;
-		      background-color: $title_color;
-		      border: none;
-		      color: #FFFFFF;
-		      cursor: pointer;
-		    }
-		    .submit span {
-		      cursor: pointer;
-		      display: inline-block;
-		      position: relative;
-		    }
+			.login-title{
+				position: absolute;
+				background-color: white;
+				color:$title_color;
+				width: 100px;
+				height: 2em;
+				top:0;
+				text-align: center;
+				b{
+					line-height: 1em;
+					margin-top: 5px;
+				}
+			}
+			.login{
+				height: 100%;
+				width: 100%;
+				text-align: center;
+				margin-top: $margin * 2;
+				input{
+					margin-top: $margin;
+					width: 99%;
+					height: 30px;
+				}
+				button{
+					margin-top: $margin;
+					width: 100%;
+			    	height: 40px;
+			    	border-radius: 4px;
+			    	background-color: $title_color;
+			     	border: none;
+			    	color: #FFFFFF;
+			     	cursor: pointer;
+				}
+				div{
+					margin-top: $margin;
+					text-decoration: underline;
+					color: $title_color;
+					font-size: 0.8em;
+					overflow: hidden;
+
+				}
+
+			} 
 		}
-		
 	}
 }

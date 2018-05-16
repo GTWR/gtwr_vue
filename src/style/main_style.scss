@@ -6,6 +6,7 @@ $title_height:30px;
 $left_sider_container_height:435px;
 $left-side-width: 350px;
 $hover_color:#f5f5f5;
+$grey: rgba(0,0,0,0.5);
 
 @mixin container($height){
   background-color: white;
@@ -33,4 +34,17 @@ $hover_color:#f5f5f5;
   display: flex;
   flex-direction:column;
   height: 100%;
+}
+
+.cover{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  z-index:1000;
+  img{
+    position: absolute;
+    top: 20px;
+    right:20px;
+  }
 }
