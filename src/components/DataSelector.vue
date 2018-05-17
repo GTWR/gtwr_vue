@@ -10,12 +10,13 @@
 		  		<b>{{data.name}}</b>
 		  		<!-- <span @click="openfolder(index)">+</span> -->
 		  	</div>
-			
 		  					
+   
 		  	<div class="child_list">
-  				<div class="data_drag_container" v-if="data.name == '私有数据'">				
-  					<img src="../assets/img/add.png" height="30" width="30" >
-  					<p>拖拽本地文件到此处</p>    
+  				<div class="data_drag_container" v-if="data.name == '私有数据'" style="position: relative;">				
+  					<img class="normalFace" src="../assets/img/add.png" height="30" width="30" >
+            <input  type="file" style="opacity:0; position: absolute;top: 11px;left: 5px;padding-left: 100px;width:150px;cursor:pointer;height: 50px;" >
+  	 				<p>拖拽本地文件到此处</p>    
   				</div>
   				
   				
@@ -185,4 +186,7 @@ export default {
   
   }
 }
+
+
 </script>
+SS
