@@ -3,8 +3,8 @@
 	<header class="title"><p>参数设置</p></header><!-- /header -->
 	<div class="par-list">
 		<div v-for="(par,index) in par_list">
-			{{par.name}}：<input placeholder="输入参数" v-model="par.value">
-			<p>参数说明：该参数表示XXXX，参数范围XX</p>
+			<span style="display:inline-block;width:80px;text-align:left;">{{par.name}}：</span><input placeholder="输入参数" v-model="par.value" >
+			<p style="font-size:14px;">参数说明：{{par.content}}</p>
 		</div>
 		<div style="background:white;width:315px;height:18px;padding:2px;border:1px solid lightseagreen;border-radius: 3px;">
 			<div id="proBar" style="width:0%;background-color:lightseagreen;color:rgba(0,0,0,0.5);border-radius: 3px;">

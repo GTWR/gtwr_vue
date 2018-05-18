@@ -4,7 +4,7 @@
       <header class="title"><p>参数设置</p></header>
       <div class="main">
         <div v-for="(par,index) in par_list">
-          <span>{{par.name}}:</span>
+          <span style="display:inline-block;width:80px;text-align:right;">{{par.name}}:</span>
           <select v-model="par_list[index].value">
             <option disabled value="">请选择</option>
             <option :value="childNodeIndex==0?'州级边界':'省级中心'">{{childNodeIndex==0?'州级边界':'省级中心'}}</option>

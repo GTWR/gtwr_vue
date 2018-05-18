@@ -8,14 +8,14 @@
 		bottom:0;
 		right:0;
 		margin:auto;
-		width:570px;
-		height: 200px;
+		width:400px;
+		height: 400px;
 		background-color: white;
 		box-shadow: $shadow_card,$shadow_card;
 		display: flex;
 		flex-direction:column;
 		.main{
-			margin-left: 10px;
+			margin-left: 45px;
 			display: flex;
 			flex-wrap:wrap;
 			div{

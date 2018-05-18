@@ -1,4 +1,4 @@
-# gtwr_portal
+﻿# gtwr_portal
 
 ## 项目概述
 
@@ -195,5 +195,13 @@ $ git push origin dev //提交分支暂存到远程仓库
 * 涉及到div标签的，尽快使用html的语义标签，http://www.w3school.com.cn/html/html5_semantic_elements.asp
 * 在使用git上传代码前，务必先保证自己熟悉了Git上传代码的流程，提前可以学习[廖雪峰Git教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013758410364457b9e3d821f4244beb0fd69c61a185ae0000)
 * 在使用git上传代码前，请先在此文档，即项目目录下的readme.md中，按照Markdown的语法以及之前我所撰写的文档的格式，将自己完成的工作内容更新在文档中。
+----------------------------------------------
+### 2018.5.18
 
+负责人：李晨悦
+
+工作内容：
+* 完成采集GTWR计算的示例数据以及可供可视化的计算结果
+* 针对GTWR计算过程，更新页面中的“参数设置”、“计算日志”模块，将具体需要设置的参数，计算的步骤更新为正确的GTWR计算相关内容
+* 修改ParDefiner.vue和scss，Computelog.vue，coverforparselect.vue，store.js等
 
