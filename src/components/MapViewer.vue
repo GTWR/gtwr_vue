@@ -17,12 +17,19 @@ export default {
     return {
       	map: null,
         layer:null,
-	
+        highlightFromTable:null,
+        highlightLayerStyle:{
+          weight: 3,
+          color: 'lightseagreen',
+          dashArray: '',
+          fillOpacity: 0.7
+        }
     }
   },
   mounted(){
   	this.initMap();
     this.addDataViewOnMap();
+    this.listenToTable();
   },
   computed:{
     ...mapState({
@@ -85,7 +92,6 @@ export default {
     },
 	//设置多边形的样式
     polygonStyle:function(feature) {
-
         return {
             fillColor: this.polygonStyleGetColor(feature.properties[this.par]),
             weight: 2,
@@ -132,12 +138,7 @@ export default {
 	//鼠标滑过特征图块，高亮显示
 	highlightFeature:function(e) {
 		var layer = e.target;
-		layer.setStyle({
-			weight: 3,
-			color: 'lightseagreen',
-			dashArray: '',
-			fillOpacity: 0.7
-		});
+		layer.setStyle(this.highlightLayerStyle);
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
@@ -160,6 +161,30 @@ export default {
       let prop = layer.feature.properties.name;
 	    messageBus.$emit('event-to-chart',prop);
       
+    },
+    //监听从dataviewer中点击数据行所传输的数据，并在地图上显示点击数据行所对应的图块
+    listenToTable:function(){
+      const that = this;
+      messageBus.$on('from-table-to-map',function(val){
+        //清空已经高亮的图层
+        if (that.highlightFromTable!=null) {
+          that.highlightFromTable.remove();
+        }
+        //叠加点击数据行对一个的小图块
+        if(val.geometry.type == 'Polygon'){
+          that.highlightFromTable = L.geoJson(val,{
+            style: that.polygonStyle
+          }).addTo(that.map);   
+        }else{
+          const temp = that;
+          that.highlightFromTable = L.geoJson(val,{
+            pointToLayer: function(feature,latlng){
+              return L.circleMarker(latlng,temp.pointStyle(feature,temp.par))
+            }
+          }).addTo(that.map)
+        }
+        that.highlightFromTable.setStyle(that.highlightLayerStyle);
+      });
     }
   }
 }
