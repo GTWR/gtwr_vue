@@ -79,11 +79,15 @@ const state = {
 		}
 	],
 	par_list:[
-		{name:'参数1', value:''},
-		{name:'参数2', value:''},
-		{name:'参数3', value:''},
-		{name:'参数4', value:''},
-		{name:'参数5', value:''},
+		{name:'因变量', value:'', content:'GTWR模型的dependent variable'},
+		{name:'解释变量', value:'', content:'GTWR模型的explanatory variable'},
+		{name:'X - 坐标', value:'', content:'点或面板数据的x坐标，表示空间信息'},
+		{name:'Y - 坐标', value:'', content:'点或面板数据的y坐标，表示空间信息'},
+		{name:'时间维度', value:'', content:'点或面板数据的时间戳，表示时态信息'},
+		{name:'时空距比', value:'', content:'可自定义，也可自动优化生成'},
+		{name:'带宽方法', value:'', content:'选择计算带宽的方法，如AICc等'},
+		{name:'核方法', value:'', content:'内核类型决定是固定距离还是可变的'},
+		
 	]
 }
 
