@@ -14,7 +14,7 @@
 	 <div class="data-table" id="data-table">
 	  <table id="t1">
         <tbody>
-          <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)" :id="SpaceFilter(line.properties.name)">
+          <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)" :id="SpaceFilter(line.properties.name)" @click="InteractWithMap(line.properties.name,line)">
 <!--             <a :name="line.properties.name"></a> -->
             <td v-for="(value,key) in (dataA[0].features?line.properties:line)" >{{value}}</td>
           </tr>
@@ -33,7 +33,8 @@ export default {
   name: 'ParDefiner',
   data () {
     return {
-      titlename:''
+      titlename:'',
+      
     }
   },
   mounted(){
@@ -69,23 +70,6 @@ export default {
         let tableContainer = $("#data-table");
         let scrollLocation = $objTr.offset().top-tableContainer.offset().top+tableContainer.scrollTop();//计算滚动的位置
         tableContainer.animate({scrollTop:scrollLocation},"slow"); //定位tr 
-
-        /*
-        *找出对应表行，这是不用jQuery的实现方法，但是这个方法比较僵硬，直接跳转，同时会改变路由地址，所以舍弃这种方法
-        *
-        * 
-        let t1 = document.getElementById('t1');
-        var tr;
-        if (this.titlename != "") {
-          for(var i=0;i<t1.rows.length;i++){
-            t1.rows[i].style.backgroundColor='';
-          } 
-          tr=document.getElementById(this.titlename);//返回该列的所在行tr
-          tr.style.backgroundColor='red';
-          window.location.href="#"+this.titlename;
-        }
-        *
-        */
       });
   	},
     //字符串格式化，将name中包含空格的字符串进行格式化，如New Mexico=>New-Mexico
@@ -97,6 +81,16 @@ export default {
         }
       }
       return string;
+    },
+    InteractWithMap:function(name,line){
+      let t1 = document.getElementById('t1');//表格容器
+      for(var i=0;i<t1.rows.length;i++){
+        t1.rows[i].style.backgroundColor='';//将表格容器中所有行背景色变为空
+      } 
+      const id = '#'+name;//点击数据行的id
+      var $objTr = $(id); //找到数据行的dom 
+      $objTr.css("background-color","#DCDCDC"); //设置点击行的css
+      messageBus.$emit('from-table-to-map',line)
     }
   }
 }
