@@ -7,9 +7,9 @@ import smallpic1 from '../assets/img/small picture1.jpg'
 import smallpic2 from '../assets/img/small picture2.jpg'
 import historyLogo from '../assets/img/his_data.png'
 import privateLogo from '../assets/img/private_data.png'
-import populationJson from '../assets/data/us-states.json'
-import airQualityCsv from '../assets/data/china_province_air_quality.json'
-import housePrice from '../assets/data/housePrice.json'
+import populationJson from '../assets/data/demoData/us-states.json'
+import airQualityCsv from '../assets/data/demoData/china_province_air_quality.json'
+import housePrice from '../assets/data/demoData/housePrice.json'
 
 Vue.use(Vuex);
 
@@ -66,7 +66,9 @@ const state = {
 		{
 	      	name:'私有数据',
 	      	data_type:[],
-		    src:privateLogo,			
+		    src:privateLogo,	
+		    children:[
+		    ]		
 		},
 	    {
 	      	name:'使用记录',
