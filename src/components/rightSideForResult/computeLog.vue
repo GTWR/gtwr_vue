@@ -30,36 +30,82 @@ export default {
       codeList:[
         {
           step:'一',
-          name:'解析数据文件，解析参数设置',
+          name:'解析数据文件，解析参数设置，计算局部模型系数......',
           par:[]
         },
         {
           step:'二',
-          name:'计算参数',
+          name:'模型参数',
           par:[{
-                name:'A',
-                value:0.7808323,
-                comment:'代表数据1与数据2中数据具有相关性，因此可以进行后续计算'
+                name:'Bandwidth',
+                value:0.114996,
+                comment:'计算带宽，产生了对距离的影响衰减'
               }]
         },
         {
           step:'三',
-          name:'计算参数',
+          name:'模型参数',
           par:[{
-                name:'B',
-                value:0.7808323,
-                comment:'代表数据1与数据2中数据具有相关性，因此可以进行后续计算'
+                name:'ResidualSquares',
+                value:11.1144,
+                comment:'计算误差平方，进行交叉验证'
               }]
         },
         {
           step:'四',
-          name:'计算结果',
+          name:'模型参数',
           par:[{
-                name:'GTWR par',
-                value:0.7808323,
-                comment:'balabalalaabalala'
+                name:'Sigma',
+                value:0.105477,
+                comment:'系数σ'
               }]
-        }
+        },
+		{
+          step:'五',
+          name:'模型参数',
+          par:[{
+                name:'AICc',
+                value:-1447.84,
+                comment:'计算带宽方法参数'
+              }]
+        },
+		{
+          step:'六',
+          name:'模型参数',
+          par:[{
+                name:'R2',
+                value:0.85287,
+                comment:'拟合优度，代表GTWR模型拟合程度'
+              }]
+        },
+		{
+          step:'七',
+          name:'模型参数',
+          par:[{
+                name:'R2Adjusted',
+                value:0.851681,
+                comment:'计算调整优化后的拟合优度'
+              }]
+        },
+		{
+          step:'八',
+          name:'模型参数',
+          par:[{
+                name:'Spatio-temporal Distance Ratio',
+                value:0.268765,
+                comment:'空间-时间距离之比，代表时间距离效应与空间距离效应的对比'
+              }]
+        },
+		{
+          step:'九',
+          name:'模型参数',
+          par:[{
+                name:'Trace_of_SMatrix',
+                value:93.9743,
+                comment:'整体模型评价结果矩阵参数'
+              }]
+        },
+		
       ]
        
     }
