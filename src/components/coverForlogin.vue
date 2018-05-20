@@ -1,5 +1,5 @@
 <template>
-  <div class="cover-login cover">
+  <div class="cover-login">
     <div class="box-container">
       <div class="main">
         <hr color="lightgrey"/>
