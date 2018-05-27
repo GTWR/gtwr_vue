@@ -15,8 +15,12 @@
 		  	<div class="child_list">
   				<div class="data_drag_container" v-if="data.name == '私有数据'" style="position: relative;">				
   					<img class="normalFace" src="../assets/img/add.png" height="30" width="30" >
-            <input  type="file" style="opacity:0; position: absolute;top: 11px;left: 5px;padding-left: 100px;width:150px;cursor:pointer;height: 50px;" >
-  	 				<p>拖拽本地文件到此处</p>    
+            		<input  type="file"  id="file"  onchange="upload(this)"  style="opacity:0; position: absolute;top: 11px;left: 5px;padding-left: 100px;width:150px;cursor:pointer;height: 50px;" >
+  	 				<p>拖拽本地文件到此处</p>   
+            
+
+
+
   				</div>
   				
   				
@@ -186,6 +190,38 @@ export default {
   
   }
 }
+function upload(input) {
+  //支持chrome IE10
+  if (window.FileReader) {
+    var file = input.files[0];
+    filename = file.name.split(".")[0];
+    var reader = new FileReader();
+    reader.onload = function() {
+      console.log(this.result)
+      alert(this.result);
+    }
+    reader.readAsText(file);
+  } 
+  //支持IE 7 8 9 10
+  else if (typeof window.ActiveXObject != 'undefined'){
+    var xmlDoc; 
+    xmlDoc = new ActiveXObject("Microsoft.XMLDOM"); 
+    xmlDoc.async = false; 
+    xmlDoc.load(input.value); 
+    alert(xmlDoc.xml); 
+  } 
+  //支持FF
+  else if (document.implementation && document.implementation.createDocument) { 
+    var xmlDoc; 
+    xmlDoc = document.implementation.createDocument("", "", null); 
+    xmlDoc.async = false; 
+    xmlDoc.load(input.value); 
+    alert(xmlDoc.xml);
+  } else { 
+    alert('error'); 
+  } 
+}
+
 
 
 </script>
