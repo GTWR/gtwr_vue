@@ -10,12 +10,10 @@
             <button @click="submitPar" ><span>登录</span></button>
             <div>
               <a style="float:right">忘记密码？</a>
-              <a  href="#/coverForSign"  @click="submitPar"  style="float:left">注册</a>
+              <a @click="sign"  style="float:left">注册</a>
             </div>
-        </div> 
+        </div>  
       </div>
-  </div> 
-</div>
     </div>
     <img src="../assets/img/close.png" height="20" width="20" @click="submitPar">
   </div>
@@ -23,9 +21,10 @@
 
 <script>
 require('../style/coverLogin.scss')
+import {mapState} from 'vuex'
 
 export default {
-	name: 'coverLogin',
+	  name: 'coverLogin',
   data () {
     return {
       visible:false
@@ -38,13 +37,21 @@ export default {
 
   },
   methods:{
-    submitPar:function(){
+      submitPar:function(){
+        //关闭遮罩层与登录面板
+        this.$store.dispatch('LoginShowAction',false);
+    },
+    sign:function(){
       //关闭遮罩层与登录面板
       this.$store.dispatch('LoginShowAction',false);
-    },
+      //打开注册页面
+      this.$store.dispatch('SignShowAction',true);
+
+    }
   },
   components:{
 
-  },
+      },
+      
 }
 </script>

@@ -23,7 +23,7 @@
         </div> 
       </div>
     </div>
-   
+    <img src="../assets/img/close.png" height="20" width="20" @click="submitPar">
   </div>
 </template>
 <script>
@@ -73,19 +73,22 @@ export default {
     })
   },
   methods:{
-
- send:function() {
-    let me = this;
-    me.sendMsgDisabled = true;
-    let interval = window.setInterval(function() {
-     if ((me.time--) <= 0) {
-      me.time = 60;
-      me.sendMsgDisabled = false;
-      window.clearInterval(interval);
-     }
-    }, 1000);
-   },
-checkUserPhone:function(){
+    submitPar:function(){
+      //关闭遮罩层与登录面板
+      this.$store.dispatch('SignShowAction',false);
+    },
+    send:function() {
+      let me = this;
+      me.sendMsgDisabled = true;
+      let interval = window.setInterval(function() {
+       if ((me.time--) <= 0) {
+        me.time = 60;
+        me.sendMsgDisabled = false;
+        window.clearInterval(interval);
+       }
+      }, 1000);
+     },
+      checkUserPhone:function(){
         if(this.userPhone == ''){
           console.log(111)
           $(".hiddenTanchuang").removeClass('hiddenTanchuang')
@@ -143,9 +146,10 @@ checkUserPhone:function(){
                     //把code值赋给验证码  
           this.checkCode = this.code; 
       },  
-      getview:function()
-      {
-      this.$router.push({path:"/home/dataview"})
+      getview:function(){
+        this.$store.dispatch('SignShowAction',false);
+        this.$router.push({path:"/home/dataview"});
+
       },
     }
 }
