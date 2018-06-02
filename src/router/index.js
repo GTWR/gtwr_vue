@@ -12,6 +12,7 @@ import precision from '@/components/rightSideForResult/precision'
 import coverForParSelect from '@/components/coverForParSelect'
 import dynamicThreed from '@/components/login/DynamicThreed'
 import slides from '@/components/login/slides'
+import coverForSign from '@/components/coverForSign'
 
 Vue.use(Router)
 
@@ -21,6 +22,12 @@ export default new Router({
       path: '/',
       redirect:'/login'
     },
+     {
+      path:'/coverForSign',
+      name:'Sign',
+      component: coverForSign,
+    },
+
     {
       path:'/login',
       name:'Login',

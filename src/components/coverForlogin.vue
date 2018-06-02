@@ -2,15 +2,17 @@
   <div class="cover-login">
     <div class="box-container">
       <div class="main">
-  <hr color="lightgrey"/>
-  <header class="login-title"><b>欢迎登录</b></header>
-  <div class="login">
-      <input type="text" placeholder="输入用户名..."><br/>
-      <input type="text" placeholder="输入密码"><br/>
-      <button @click="submitPar" ><span>登录</span></button>
-      <div>
-        <a style="float:right">忘记密码？</a>
-        <a style="float:left">注册</a>
+        <hr color="lightgrey"/>
+        <header class="login-title"><b>欢迎登录</b></header>
+        <div class="login">
+            <input type="text" placeholder="输入用户名..."><br/>
+            <input type="password" placeholder="输入密码"><br/>
+            <button @click="submitPar" ><span>登录</span></button>
+            <div>
+              <a style="float:right">忘记密码？</a>
+              <a  href="#/coverForSign"  @click="submitPar"  style="float:left">注册</a>
+            </div>
+        </div> 
       </div>
   </div> 
 </div>
@@ -23,10 +25,10 @@
 require('../style/coverLogin.scss')
 
 export default {
-  name: 'coverLogin',
+	name: 'coverLogin',
   data () {
     return {
-      
+      visible:false
     }
   },
   mounted(){
@@ -43,6 +45,6 @@ export default {
   },
   components:{
 
-  }
+  },
 }
 </script>
