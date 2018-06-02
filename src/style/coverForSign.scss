@@ -101,13 +101,16 @@ $margin: 20px;
 				    letter-spacing:5px;
 				    margin-left: 10px;
 				    height: 40px;
-				    
+				    line-height:normal;
+				    *overflow:visible ;   	
 				}
 				.send_msg{
 				    width:100px;
 				    margin-left: 10px;
 				    height: 40px;
 				}
+				button::-moz-focus-inner,
+				input[type="button"]::-moz-focus-inner { border:none; padding:0; }
 			} 
 		}
 	}
