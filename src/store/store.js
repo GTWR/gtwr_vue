@@ -26,6 +26,8 @@ const state = {
 	      	data_type:[
 		      	{
 		      		name:'美国人口分布',
+		      		centerPosition:[50.505,-108.09],
+		      		zoom: 3,
 		      		url:populationJson,
 					update_time:'2018-02-03',
 					descriptions:'该数据主要显示了美国城市人口的分布密度状况，由点要素、线要素和面要素等矢量元素组成，而数据类型有三种，即CSV、geojson和WMS。最新更新时间为2018年2月3日。',
@@ -38,6 +40,8 @@ const state = {
 		      	},
 		      	{
 		      		name:'中国各省空气质量',
+		      		centerPosition: [40.31, 100.52],
+		      		zoom: 3,
 		      		url:airQualityCsv,
 					update_time:'2018-02-03',
 					descriptions:'该数据显示了中国各省的空气质量，主要包括省、市、AQI、质量等级、pm2.5、PM10、排名等，以及数据状态有CSV、geojson和WMS。最新更新时间为2018年2月3日。',
@@ -54,6 +58,8 @@ const state = {
 		      	},
 		      	{
 		      		name:'房价',
+		      		centerPosition:[50.995,-114.09],
+		      		zoom: 10,
 		      		url:housePrice,
 		      		description:'该数据显示了XXX的房价以及相关因素数据，主要包括绿化面积，质量，交通状况，服务设施等。最新更新时间为2018年5月14日。',
 		      		src:smallpic2,
