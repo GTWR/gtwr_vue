@@ -42,6 +42,12 @@ export default {
     },
     par(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].index;
+    },
+    viewZoom(){
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;
+    },
+    centerPosition(){
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;
     }
   },
   watch:{
@@ -59,7 +65,7 @@ export default {
         this.layer.remove();
       }
       if(this.dataA[0].features[0].geometry.type == 'Polygon'){
-        this.map.setView([50.505,-108.09],3)
+        this.map.setView(this.centerPosition,this.viewZoom)
         this.layer = L.geoJson(this.dataA,
       		{style:this.polygonStyle,
       		onEachFeature:this.onEachFeature 
@@ -67,7 +73,7 @@ export default {
         );
       }
 	  else{
-        this.map.setView([40.31, 100.52],3)
+        this.map.setView(this.centerPosition,this.viewZoom)
         let that = this;
         this.layer = L.geoJson(this.dataA,{
           pointToLayer: function(feature,latlng){
