@@ -17,6 +17,7 @@ const state = {
 	cover_show:false,
 	login_show:false,
 	sign_show:false,
+	reset_show:false,
 	parent_node_index:0,
 	child_node_index:0,
 	grandson_node_index:0,
@@ -111,6 +112,9 @@ const mutations = {
 	signShowMutation:function(state,msg){
 		state.sign_show = msg;
 	},
+	resetShowMutation:function(state,msg){
+		state.reset_show = msg;
+	},
 	parListMutation:function(state,msg){
 		state.par_list = msg;
 	}
@@ -134,6 +138,9 @@ const actions = {
 	},
 	SignShowAction:function({commit},msg){
 		commit('signShowMutation',msg)
+	},
+	ResetShowAction:function({commit},msg){
+		commit('resetShowMutation',msg)
 	},
 	parListAction:function({commit},msg){
 		commit('parListMutation',msg)

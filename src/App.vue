@@ -14,6 +14,7 @@
     <cover-par v-show="cover_show"></cover-par>
     <cover-login v-show="login_show"></cover-login>
     <cover-sign v-show="sign_show"></cover-sign>
+    <cover-reset v-show="reset_show"></cover-reset>
   </div>
 </template>
 
@@ -22,6 +23,7 @@ require('./style/app.scss')
 import coverPar from './components/coverForParSelect.vue'
 import coverLogin from './components/coverForlogin.vue'
 import coverSign from './components/coverForSign.vue'
+import coverReset from './components/coverForReset.vue'
 import {mapState} from 'vuex'
 
 export default {
@@ -36,7 +38,8 @@ export default {
         // ...
       cover_show: state => state.cover_show,
       login_show: state => state.login_show,
-      sign_show: state => state.sign_show 
+      sign_show: state => state.sign_show,
+      reset_show: state => state.reset_show
     })
   },
   methods:{
@@ -50,7 +53,8 @@ export default {
   components:{
     coverPar,
     coverLogin,
-    coverSign
+    coverSign,
+    coverReset
   }
 }
 </script>
