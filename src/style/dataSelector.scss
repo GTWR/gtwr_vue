@@ -1,5 +1,4 @@
 @import 'main_style.scss';
-
 .data-selector{
   background-color: white;
   box-shadow: $shadow_card,$shadow_card;
@@ -46,18 +45,19 @@
           width: 13px;
         }
         button{
-          font-size: 0.85em;
-          width: 2.5em;
+          font-size: 0.8em;
+          width: 2.7em;
           margin:0;
           padding:0;
           border-radius: 2px;
-          border: none;
+          //border:none;
           background-color: lightseagreen;
           color: #FFFFFF;
         }
       }
   	}
   }
+
   .data_drag_container{
   	height: 80px;
   	background-color: rgba(0,0,0,0.05);
@@ -72,6 +72,8 @@
   	}
   }
 }
+
+
 .black_overlay{  
  display: none;  
  position: absolute;  
@@ -109,6 +111,12 @@
  z-index:1002;  
  overflow: auto;  
 }  
+ 
+.highlight{
+      border-width :thick;
+      border-style:solid;
+      border-color:dodgerblue;
+}
 
 
 

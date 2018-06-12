@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div class="result-canel">
       <div class="content">
         <router-view></router-view>
@@ -7,7 +7,7 @@
           <button id="chart">图表展示</button>
           <button id="log">计算日志</button>
           <button id="precision">精度评价</button>
-          <button class="last-btn">其他</button>
+          <button id="btn" class="last-btn">其他</button>
       </div>
     </div>
 </template>
@@ -36,12 +36,34 @@ export default {
       switch(e.target.id){
         case 'chart':
           this.$router.push({path:rootUrl+'chartAnalysis'});
+           document.getElementById("chart").style.background="white";
+           document.getElementById("log").style.background="white";
+           document.getElementById("precision").style.background="white";
+           document.getElementById("btn").style.background="white";
+           document.getElementById("chart").style.background="dodgerblue";
           break;
         case 'log':
           this.$router.push({path:rootUrl+'computeLog'});
+           document.getElementById("chart").style.background="white";
+           document.getElementById("log").style.background="white";
+           document.getElementById("precision").style.background="white";
+          document.getElementById("btn").style.background="white";
+           document.getElementById("log").style.background="dodgerblue";
           break;
         case 'precision':
             this.$router.push({path:rootUrl+'precesion'})
+            document.getElementById("chart").style.background="white";
+            document.getElementById("log").style.background="white";
+            document.getElementById("precision").style.background="white";
+             document.getElementById("btn").style.background="white";
+            document.getElementById("precision").style.background="dodgerblue";
+            break;
+        case 'btn':
+            document.getElementById("chart").style.background="white";
+           document.getElementById("log").style.background="white";
+           document.getElementById("precision").style.background="white";
+           document.getElementById("btn").style.background="white";
+           document.getElementById("btn").style.background="dodgerblue";
       }
 
     }

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="data-selector">
   	<header class="title"><p>数据选择</p></header><!-- /header -->
     <!--数据列表-->
@@ -36,12 +36,12 @@
     		  		<div class="grand_son_list2">
     					  <div class="grand_son_list">
       						<div v-for="grandson,index2 in child.children">
-      							<p>
+      							<p> 
       								<input type="checkbox" :data-index="index1"/>
       								<img :src="grandson.src">
       								{{grandson.name}}
-      								<button @click="showDataDescription(index,index1)">说明</button>
-      								<button @click="showDataView(index,index1,index2)">预览</button>
+      								<button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==1}" @click="showDataDescription(index,index1,index2)" >说明</button>
+      								<button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==2}" @click="showDataView(index,index1,index2)" >预览</button>
       							</p>
       						</div>
     		  			</div>
@@ -65,6 +65,8 @@ import geojsonFileLogo from '../assets/img/mind_map.png'
 import serviceFileLogo from '../assets/img/service.png'
 import {mapState} from 'vuex'
 
+
+  
 export default {
   name: 'DataSelector',
   data () {
@@ -73,7 +75,8 @@ export default {
       childIndex:0,
       grandsonIndex:0,
       open:[],
-      par_list_temp:null
+      par_list_temp:null,
+      btid:0 //说明和预览两个按钮的ID号,用于按钮高亮
     }
   },
   components: {
@@ -133,16 +136,23 @@ export default {
   	},
   	//说明按钮
   	showDataDescription:function(index,index1,index2){
-  		this.$router.push({path:'/home/datadescription'}); 		
-      this.IndexChange(index,index1,0);
 
+                this.$router.push({path:'/home/datadescription'}); 		
+                this.IndexChange(index,index1,0);
+                this.childIndex = index1;
+                this.grandsonIndex = index2;
+               this.btid=1;
+      
   	},
 
   	//预览按钮
   	showDataView:function(index,index1,index2){
-  		this.$router.push({path:'/home/dataview'});
-      //alert(index2)
-  		this.IndexChange(index,index1,index2);
+                this.$router.push({path:'/home/dataview'});
+               //alert(index2)
+                this.IndexChange(index,index1,index2);
+                this.childIndex = index1;
+                this.grandsonIndex = index2;
+              this.btid=2;
   	},
     IndexChange:function(index,index1,index2){
       this.parentIndex = index;
