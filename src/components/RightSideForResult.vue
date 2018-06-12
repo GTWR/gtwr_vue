@@ -36,6 +36,7 @@ export default {
       switch(e.target.id){
         case 'chart':
           this.$router.push({path:rootUrl+'chartAnalysis'});
+          //按钮高亮
            document.getElementById("chart").style.background="white";
            document.getElementById("log").style.background="white";
            document.getElementById("precision").style.background="white";
@@ -44,6 +45,7 @@ export default {
           break;
         case 'log':
           this.$router.push({path:rootUrl+'computeLog'});
+          //按钮高亮
            document.getElementById("chart").style.background="white";
            document.getElementById("log").style.background="white";
            document.getElementById("precision").style.background="white";
@@ -52,6 +54,7 @@ export default {
           break;
         case 'precision':
             this.$router.push({path:rootUrl+'precesion'})
+            //按钮高亮
             document.getElementById("chart").style.background="white";
             document.getElementById("log").style.background="white";
             document.getElementById("precision").style.background="white";
@@ -59,6 +62,7 @@ export default {
             document.getElementById("precision").style.background="dodgerblue";
             break;
         case 'btn':
+          //按钮高亮
             document.getElementById("chart").style.background="white";
            document.getElementById("log").style.background="white";
            document.getElementById("precision").style.background="white";

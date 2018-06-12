@@ -141,7 +141,7 @@ export default {
                 this.IndexChange(index,index1,0);
                 this.childIndex = index1;
                 this.grandsonIndex = index2;
-               this.btid=1;
+               this.btid=1;//给说明按钮一个标识号，用于高亮
       
   	},
 
@@ -152,7 +152,7 @@ export default {
                 this.IndexChange(index,index1,index2);
                 this.childIndex = index1;
                 this.grandsonIndex = index2;
-              this.btid=2;
+              this.btid=2;//给预览按钮一个标识号，用于高亮
   	},
     IndexChange:function(index,index1,index2){
       this.parentIndex = index;
