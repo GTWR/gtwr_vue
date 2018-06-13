@@ -33,35 +33,29 @@ export default {
   methods:{
     //切换tab跳转到对应的页面
     switchTab:function(e){
-      let rootUrl = '/home/computeresult/'
+      let rootUrl = '/home/computeresult/';
+      //按钮高亮
+      this.handleBtnBorder(e.target.id);
       switch(e.target.id){
         case 'chart':
           this.$router.push({path:rootUrl+'chartAnalysis'});
-          //按钮高亮
-           this.handleBtnBorder(e.target.id);
           break;
         case 'log':
           this.$router.push({path:rootUrl+'computeLog'});
-          //按钮高亮
-           this.handleBtnBorder(e.target.id);
           break;
         case 'precision':
             this.$router.push({path:rootUrl+'precesion'})
-            //按钮高亮
-            this.handleBtnBorder(e.target.id);
             break;
         case 'btn':
           //按钮高亮
-           this.handleBtnBorder(e.target.id);
            break;
       }
 
     },
     //调整按钮边框
     handleBtnBorder:function(id){
-      let tab = document.getElementsByClassName('tab')[0].childNodes;
+      let tab = document.getElementsByClassName('tab')[0].children;
       for (let i = 0; i< tab.length; i++) {
-        console.log(tab[i].id)
         if (tab[i].id != id) {tab[i].style.border="none"} else{tab[i].style.border="2px solid lightseagreen"};
       }
     }

@@ -43,8 +43,6 @@ export default {
       let scatterChart = document.getElementById('scatter');
       let myChart = echarts.init(scatterChart);
       let app = {};
-
-      console.log(this.data_scatter);
       //组织数据
       let data = [];
       let i = 0;
@@ -56,7 +54,7 @@ export default {
         data[i]['data'].push(this.data_scatter[item])
       }
 
-      console.log(data);
+      //console.log(data);
       let option = {
         title : {
             text: '二维散点图',
