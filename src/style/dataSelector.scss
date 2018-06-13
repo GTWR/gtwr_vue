@@ -46,13 +46,18 @@
         }
         button{
           font-size: 0.8em;
-          width: 2.7em;
+          width: 2.5em;
           margin:0;
           padding:0;
           border-radius: 2px;
-          //border:none;
+          border:none;
+          outline:none;
           background-color: lightseagreen;
           color: #FFFFFF;
+        }
+         //按钮高亮样式
+        .highlight{
+              border:2px solid dodgerblue;
         }
       }
   	}
@@ -111,12 +116,7 @@
  z-index:1002;  
  overflow: auto;  
 }  
- //按钮高亮样式
-.highlight{
-      border-width :thick;
-      border-style:solid;
-      border-color:dodgerblue;
-}
+
 
 
 

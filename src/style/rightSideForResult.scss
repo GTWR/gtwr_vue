@@ -21,6 +21,7 @@
   	button{
   		@extend .last-btn;
   		border-bottom: 1px dashed rgba(0,0,0,0.5);
+      outline:none;
   	}
   }
 }

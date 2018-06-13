@@ -17,10 +17,6 @@
   					<img class="normalFace" src="../assets/img/add.png" height="30" width="30" >
             		<input  type="file"  id="file"  onchange="upload(this)"  style="opacity:0; position: absolute;top: 11px;left: 5px;padding-left: 100px;width:150px;cursor:pointer;height: 50px;" >
   	 				<p>拖拽本地文件到此处</p>   
-            
-
-
-
   				</div>
   				
   				

@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div  class="send_code">
-              <input class="auth_input" type="text" v-model="verification"  placeholder="短信验证码" />
+              <input class="auth_input" type="text"  placeholder="短信验证码" />
               <button @click="send"    class="send_msg" >
               <span v-if="sendMsgDisabled">{{time+'秒后获取'}}</span>
               <span v-if="!sendMsgDisabled">获取验证码</span></button>
