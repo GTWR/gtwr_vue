@@ -14,18 +14,15 @@
       line-height: 10px;
       color:$grey;
     }
-	#proBar{
-
-	}
     .submit{
       width: 100px;
       height: 30px;
       float: right;
       margin-right: 5%;
-      margin-top: 3px;
+      margin-top: -18px;
       display: inline-block;
       border-radius: 4px;
-      background-color: lightseagreen;
+      background-color: rgba(0,139,139,0.8);
       border: none;
       color: #FFFFFF;
       transition: all 0.5s;

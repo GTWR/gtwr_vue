@@ -5,7 +5,9 @@
       <div class="login-container">
 	      <a class="loginLink" @click="login()">用户登录</a>
 	      <a class="loginLink"> / </a>
-	      <router-link to="/home/dataview" class="loginLink">匿名登录</router-link>
+	      <a class="loginLink"   v-for="item in wpList" :key="item.name"
+	      :class="{active : active == item.name}"
+	       @click="selected(item.name)">{{item.name}}</a>
 	   </div>
     </header><!-- /header -->
     <div class="main-content">
@@ -30,7 +32,12 @@ export default {
   name: 'App',
   data(){
   	return{
-
+  		wpList:[
+  		{
+  			name:'匿名登录'
+  		}
+  		],
+  		active:''
   	}
   },
   computed:{
@@ -45,6 +52,10 @@ export default {
   methods:{
     login:function(){
       this.$store.dispatch('LoginShowAction',true);
+    },
+     selected(name){
+    this.$router.push({path:"/home/dataview"});
+    this.active = name;
     }
   },
   mounted(){

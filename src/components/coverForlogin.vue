@@ -5,7 +5,7 @@
         <hr color="lightgrey"/>
         <header class="login-title"><b>欢迎登录</b></header>
         <div class="login">
-            <input type="text" placeholder="输入用户名..."><br/>
+            <input type="text"   placeholder="输入用户名..."><br/>
              <input type="text"  v-if="pwd_type"  placeholder="输入密码">
             <input type="password" placeholder="输入密码" v-else>
             <img :src="see ? seeImg : unseeImg"  @click="change_type()" class="eye_img" />
