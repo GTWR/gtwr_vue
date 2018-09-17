@@ -34,7 +34,6 @@
       position: relative;
       transition: 0.5s;
     }
-
     .submit span:after {
       content: '»';
       position: absolute;
@@ -43,7 +42,7 @@
       right: -20px;
       transition: 0.5s;
     }
-
+    
     .submit:hover span {
       padding-right: 25px;
     }

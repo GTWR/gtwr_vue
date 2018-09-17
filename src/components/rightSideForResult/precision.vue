@@ -3242,7 +3242,7 @@ export default {
       myChart.setOption(option, true);
     },
 
-    //绘制第四幅3D图
+    //绘制第四幅图
     drawRadar:function(){
       let scatterChart = document.getElementById('radar');
       let myChart = echarts.init(scatterChart);
@@ -3292,7 +3292,7 @@ export default {
 };
       myChart.setOption(option, true);
     },
-    
+    //绘制第5幅图
     drawPie:function(){
       let scatterChart = document.getElementById('pie');
       let myChart = echarts.init(scatterChart);
@@ -3342,6 +3342,8 @@ export default {
       };
       myChart.setOption(option, true);
     },
+
+    //绘制第六幅图
     drawLine:function(){
       let scatterChart = document.getElementById('line');
       let myChart = echarts.init(scatterChart);
