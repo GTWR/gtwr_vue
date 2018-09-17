@@ -1165,7 +1165,7 @@ export default {
               data: ['Living', 'Quality', 'Struct', 'Renova', 'Condic', 'Greens', 'Traffic','VIEW']
         },
         yAxis: {
-             name:'Prediction',
+             name:'Value',
              type: 'value'
         },
         series: [{
