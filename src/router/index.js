@@ -15,7 +15,19 @@ import slides from '@/components/login/slides'
 
 Vue.use(Router)
 
+
 export default new Router({
+  mode: 'history',
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop
+      }
+      return { x: 0, y: to.meta.savedPosition || 0 }
+    }
+  },
   routes: [
     {
       path: '/',
@@ -48,16 +60,22 @@ export default new Router({
           children:[
             {
               path:"computeLog",
-              component: computeLog
+              name:'computeLog',
+              component: computeLog,
+              meta: {keepAlive: true}
             },
 			      {
               path:"chartAnalysis",
-              component: chartAnalysis
+              name:'chartAnalysis',
+              component: chartAnalysis,
+              meta: {keepAlive: true}
             },
             
             {
               path:'precesion',
-              component:precision
+              name:'precesion',
+              component:precision,
+              meta: {keepAlive: true}
             }
           ]
         }

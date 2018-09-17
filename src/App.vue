@@ -11,7 +11,10 @@
 	   </div>
     </header><!-- /header -->
     <div class="main-content">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
     <cover-par v-show="cover_show"></cover-par>
     <cover-login v-show="login_show"></cover-login>

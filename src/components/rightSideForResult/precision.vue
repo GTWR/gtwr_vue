@@ -4390,5 +4390,6 @@ let option = {
       myChart.setOption(option, true);
     }    
   }
+  
 }
 </script>
