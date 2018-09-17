@@ -4405,5 +4405,6 @@ export default {
       myChart.setOption(option, true);
     }    
   }
+  
 }
 </script>

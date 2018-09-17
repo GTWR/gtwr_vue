@@ -44,7 +44,9 @@ export default {
 	
   	compute:function(){
   		//this.$router.push({path:'/home/computeresult'});
-		this.$router.push({path:'/home/computeresult/computeLog'});
+		
+		
+        this.$router.push({path:'/home/computeresult/computeLog'});
 		var barObj = document.getElementById("proBar");
 		var currentWidth = parseInt(barObj.style.width.substring(0, barObj.style.width.length - 1));
 		if (currentWidth < 100) {
@@ -53,6 +55,10 @@ export default {
 		else{return 0;}
 		setTimeout(this.compute, 246);
 		
+		var url = 'http://localhost:9010/GWRService/GWRService';
+		$.get(url,function(data){  
+   			console.log(data)
+        }); 
   	},
   }
 }

@@ -172,17 +172,17 @@ export default {
               $ele.html(str.substring(0, progress) + (progress & 1 ? '_' : ''));
               if (progress >= str.length) {
                 clearInterval(timer);
-                that.$router.push({path:'/home/computeresult/chartAnalysis'});
+                // that.$router.push({path:'/home/computeresult/computeLog'});             
               }
             }, 25);
           });
           return this;
       };  
       $("#code").typewriter();
+      $("#code").stop();
       
     },
   },
-  
 }
 </script>
 <style scope>
