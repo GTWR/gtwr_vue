@@ -41,7 +41,7 @@ export default {
           this.$router.push({path:rootUrl+'chartAnalysis'});
           break;
         case 'log':
-          this.$router.push({path:rootUrl+'computeLog'});
+          this.$router.push({path:rootUrl+'computeLog2'});
           break;
         case 'precision':
             this.$router.push({path:rootUrl+'precesion'})

@@ -8,6 +8,7 @@ import dataviewer from '@/components/DataViewer'
 import RightSideForResult from '@/components/RightSideForResult'
 import chartAnalysis from '@/components/rightSideForResult/chartAnalysis'
 import computeLog from '@/components/rightSideForResult/computeLog'
+import computeLog2 from '@/components/rightSideForResult/computeLog2'
 import precision from '@/components/rightSideForResult/precision'
 import coverForParSelect from '@/components/coverForParSelect'
 import dynamicThreed from '@/components/login/DynamicThreed'
@@ -62,6 +63,12 @@ export default new Router({
               path:"computeLog",
               name:'computeLog',
               component: computeLog,
+              meta: {keepAlive: true}
+            },
+            {
+              path:"computeLog2",
+              name:'computeLog2',
+              component: computeLog2,
               meta: {keepAlive: true}
             },
 			      {

@@ -1,5 +1,5 @@
 <template>
-  <div id="code">
+  <div id="code2">
       <span class="comments">*{{new Date().toString()}} 计算日志 */</span>
       <p v-for="code in codeList">
         第{{code.step}}步计算：
@@ -114,7 +114,7 @@ export default {
   },
   mounted(){
     //this.turn();
-    this.typeCode()
+    // this.typeCode()
   },
   computed:{
 
