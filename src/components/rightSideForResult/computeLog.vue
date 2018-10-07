@@ -183,8 +183,15 @@ export default {
       
 
       var url = 'http://localhost:9010/GWRService/GWRService';
+      var y1=new Array();
       $.get(url,function(data){  
-        console.log(data)
+        console.log(data);
+        var s = JSON.parse(data);
+        for(var i=0;i<s.length;i++){
+          y1.push(s[i].y);
+        }
+        console.log(y1);
+
         });
     },
   },
