@@ -34,10 +34,26 @@
         color:$title_color;
         margin-right: 10px;
         text-decoration: none;
+        cursor:pointer;
       }   
       .active{
       color:#38f;
       } 
+      .userLogin{
+        font-size: 12px;
+        color:black;
+        margin-right:10px;
+        margin-top:20px;
+        float:left;
+      }
+      .exit{
+        font-size: 12px;
+        color:$title_color;
+        margin-right: 10px;
+        margin-top:20px;
+        float:left;
+        cursor:pointer;
+      }
     }
   }
   .main-content{
