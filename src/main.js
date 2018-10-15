@@ -6,7 +6,14 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store/store'
 import $ from 'jquery'
+import VueResource from 'vue-resource'
+import axios from 'axios'
+
 Vue.use(VueAwesomeSwiper)
+Vue.prototype.$http=axios
+Vue.use(VueResource)
+
+
 
 Vue.config.productionTip = false
 
