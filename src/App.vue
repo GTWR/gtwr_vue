@@ -2,13 +2,22 @@
   <div id="app" class="wrap">
     <header class="header">
       <p><span>GTWR </span>云计算平台</p>
-      <div class="login-container">
+      <div v-if="this.$store.state.username==''">
+         <div class="login-container">
 	      <a class="loginLink" @click="login()">用户登录</a>
 	      <a class="loginLink"> / </a>
 	      <a class="loginLink"   v-for="item in wpList" :key="item.name"
 	      :class="{active : active == item.name}"
 	       @click="selected(item.name)">{{item.name}}</a>
-	   </div>
+	       </div>
+     </div>
+    
+      <div v-else>
+        <div class="login-container">
+          <div class=userLogin>你好，{{this.$store.state.username}} </div>
+             <div class=exit @click="exit()">注销</div>
+        </div>
+     </div>
     </header><!-- /header -->
     <div class="main-content">
       <keep-alive>
@@ -40,7 +49,7 @@ export default {
   			name:'匿名登录'
   		}
   		],
-  		active:''
+      active:''
   	}
   },
   computed:{
@@ -59,6 +68,10 @@ export default {
      selected(name){
     this.$router.push({path:"/home/dataview"});
     this.active = name;
+    },
+     exit:function(){
+          this.$store.commit('username','');
+          console.log(this.$store.state.username)
     }
   },
   mounted(){

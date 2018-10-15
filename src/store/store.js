@@ -18,6 +18,7 @@ const state = {
 	login_show:false,
 	sign_show:false,
 	reset_show:false,
+	username:'',
 	parent_node_index:0,
 	child_node_index:0,
 	grandson_node_index:0,
@@ -123,6 +124,9 @@ const mutations = {
 	},
 	parListMutation:function(state,msg){
 		state.par_list = msg;
+	},
+	username:function(state,msg){
+		state.username=msg;
 	}
 }
 

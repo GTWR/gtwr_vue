@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import login from '@/components/login'
 import Home from '@/components/Home'
 import RightSideForDataView from '@/components/RightSideForDataView'
-import RightSideForDataDescription from '@/components/RightSideForDataDescription'
 import dataviewer from '@/components/DataViewer' 
 import RightSideForResult from '@/components/RightSideForResult'
 import chartAnalysis from '@/components/rightSideForResult/chartAnalysis'
@@ -50,10 +49,6 @@ export default new Router({
         {
           path: "dataview",
           component: RightSideForDataView
-        },
-        {
-          path: "datadescription",
-          component: RightSideForDataDescription
         },
         {
           path:'computeresult',

@@ -36,8 +36,8 @@
       								<input type="checkbox" :data-index="index1"/>
       								<img :src="grandson.src">
       								{{grandson.name}}
-      								<button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==1}" @click="showDataDescription(index,index1,index2)" >说明</button>
-      								<button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==2}" @click="showDataView(index,index1,index2)" >预览</button>
+      								<!-- <button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==1}" @click="showDataDescription(index,index1,index2)" >说明</button> -->
+      								<button    :class="{highlight: childIndex==index1 &&grandsonIndex==index2}" @click="showDataView(index,index1,index2)" >预览</button>
       							</p>
       						</div>
     		  			</div>
@@ -72,7 +72,7 @@ export default {
       grandsonIndex:0,
       open:[],
       par_list_temp:null,
-      btid:0 //说明和预览两个按钮的ID号,用于按钮高亮
+      btid:1
     }
   },
   components: {
@@ -130,16 +130,16 @@ export default {
     			}
   		}}
   	},
-  	//说明按钮
-  	showDataDescription:function(index,index1,index2){
 
-                this.$router.push({path:'/home/datadescription'}); 		
-                this.IndexChange(index,index1,0);
-                this.childIndex = index1;
-                this.grandsonIndex = index2;
-               this.btid=1;//给说明按钮一个标识号，用于高亮
-      
-  	},
+  	//说明按钮
+  	// showDataDescription:function(index,index1,index2){
+
+    //             this.$router.push({path:'/home/datadescription'}); 		
+    //             this.IndexChange(index,index1,0);
+    //             this.childIndex = index1;
+    //             this.grandsonIndex = index2;
+    //            this.btid=1;//给说明按钮一个标识号，用于高亮
+  	// },
 
   	//预览按钮
   	showDataView:function(index,index1,index2){
@@ -148,7 +148,6 @@ export default {
                 this.IndexChange(index,index1,index2);
                 this.childIndex = index1;
                 this.grandsonIndex = index2;
-              this.btid=2;//给预览按钮一个标识号，用于高亮
   	},
     IndexChange:function(index,index1,index2){
       this.parentIndex = index;

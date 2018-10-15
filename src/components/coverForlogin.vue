@@ -5,7 +5,7 @@
         <hr color="lightgrey"/>
         <header class="login-title"><b>欢迎登录</b></header>
         <div class="login">
-            <input type="text"   placeholder="输入用户名..."><br/>
+            <input type="text"   placeholder="输入用户名..."  v-model="username"><br/>
              <input type="text"  v-if="pwd_type"  placeholder="输入密码">
             <input type="password" placeholder="输入密码" v-else>
             <img :src="see ? seeImg : unseeImg"  @click="change_type()" class="eye_img" />
@@ -33,6 +33,7 @@ export default {
       unseeImg:require('../assets/img/close_eye.png'),//看不见
       seeImg:require('../assets/img/open_eye.png'),//看得见密码
       pwd_type:false, //此时文本框隐藏，显示密码框 
+      username:this.$store.state.username
     }
   },
   mounted(){
@@ -50,6 +51,8 @@ export default {
     submitPar:function(){
         //关闭遮罩层与登录面板
         this.$store.dispatch('LoginShowAction',false);
+        this.$store.commit('username',this.username);
+        this.$router.push({path:"/home/dataview"});
     },
     sign:function(){
       //关闭遮罩层与登录面板
