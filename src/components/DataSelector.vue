@@ -178,7 +178,7 @@ export default {
       }
       //控制遮罩层及参数设置页面的显示
       if (check == true) {
-        this.$store.dispatch('coverShowAction',true);
+        //this.$store.dispatch('coverShowAction',true);
       }else{
         //当取消点选时，参数设置清空
         this.par_list_temp = this.par_list
