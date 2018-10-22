@@ -53,6 +53,25 @@
     }
   }
   
+  .tab{
+    text-align: center;
+    button{
+      color: lightseagreen;
+      font-size: 15px;
+      font-weight: bold;
+  		background-color: white;
+  		border: none;
+  		font-size: 16px;
+      width: 150px;
+      margin-top:5px;
+      margin-bottom:5px;
+      outline:none;
+      cursor: pointer;
+    }
+    .active{
+      border:2px solid dodgerblue;
+    }
+  }
 
 }
 

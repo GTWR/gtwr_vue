@@ -87,7 +87,7 @@ const state = {
 		    src:historyLogo,
 		}
 	],
-	par_list:[
+	par_list1:[
 		{name:'因变量', value:'', content:'GTWR模型的dependent variable'},
 		{name:'解释变量', value:'', content:'GTWR模型的explanatory variable'},
 		{name:'X - 坐标', value:'', content:'点或面板数据的x坐标，表示空间信息'},
@@ -97,6 +97,13 @@ const state = {
 		{name:'带宽方法', value:'', content:'选择计算带宽的方法，如AICc等'},
 		{name:'核方法', value:'', content:'内核类型决定是固定距离还是可变的'},
 		
+	],
+	par_list2:[
+		{name:'X - 坐标',value:'',content:'点或面板数据的x坐标，表示空间信息'},
+		{name:'Y - 坐标',value:'',content:'点或面板数据的y坐标，表示空间信息'},
+		{name:'pctRural',value:'',content:'暂无该参数的相关描述'},
+		{name:'pctbach',value:'',content:'暂无该参数的相关描述'},
+		{name:'totPop90',value:'',content:'暂无该参数的相关描述'},
 	]
 }
 
