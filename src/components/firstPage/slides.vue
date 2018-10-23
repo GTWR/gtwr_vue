@@ -9,7 +9,7 @@
 </template>
 
 <script>
-require('../../style/login.scss')
+require('../../style/firstPage.scss')
 
 export default {
   name: 'hello', 

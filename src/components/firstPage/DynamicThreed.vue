@@ -5,7 +5,7 @@
 </template>
 
 <script>
-require('../../style/login.scss')
+require('../../style/firstPage.scss')
 import echarts from 'echarts'
 import'echarts-gl'
 import linedata from '../../assets/data/test.json'

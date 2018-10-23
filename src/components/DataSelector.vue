@@ -26,7 +26,6 @@
                   <p>
                     <input type="checkbox" @click="checkParent(index,index1)" :data-parentIndex="index1"/>
                     {{child.name}}
-                      <!-- <span @click="child.open=child.open?false:true">+</span> -->
                   </p>
               </div>
               <div class="grand_son_list2">
@@ -34,9 +33,8 @@
                   <div v-for="grandson,index2 in child.children">
                     <p> 
                       <input type="checkbox" :data-index="index1"/>
-                      <img :src="grandson.src">
+                      <img :src='ImgChildNodeSrc'>
                       {{grandson.name}}
-                      <!-- <button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==1}" @click="showDataDescription(index,index1,index2)" >说明</button> -->
                       <button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==2}" @click="showDataView(index,index1,index2)" >预览</button>
                     </p>
                   </div>
@@ -56,13 +54,8 @@
 
 <script>
 require('../style/dataSelector.scss')
-import csvFileLogo from '../assets/img/csv.png'
-import geojsonFileLogo from '../assets/img/mind_map.png'
-import serviceFileLogo from '../assets/img/service.png'
 import {mapState} from 'vuex'
 
-
-  
 export default {
   name: 'DataSelector',
   data () {
@@ -72,6 +65,8 @@ export default {
       grandsonIndex:0,
       open:[],
       par_list_temp:null,
+      ImgChildNodeSrc:require('../assets/img/service.png'),
+      ImgParentNodeSrc:require('../assets/img/mind_map.png'),
       btid:0 //说明和预览两个按钮的ID号,用于按钮高亮
     }
   },
@@ -79,7 +74,6 @@ export default {
             
   },
   mounted(){
-    this.initDataTypeLogo();
 
      $(document).ready(function (){  
         //找到所有的span，并且点击span以后，控制一下元素div的显示和隐藏  
@@ -103,44 +97,6 @@ export default {
     })
   },
   methods:{
-    //控制父节点的开关，用户登录支持开关，但是匿名登录不支持开关
-    /*openfolder:function(index){
-      store.state.data_list[index].open =store.state.data_list[index].open ? false:true; 
-    },*/
-    //控制子节点的开关
-    /*openfolderForSon:function(index,index1){
-      this.data_list[index].data_type[index1].open = this.data_list[index].data_type[index1].open? false:true;
-    },*/
-    //为不同的数据类型添加不同的图标
-    initDataTypeLogo:function(){
-      let temp1 =this.data_list;
-      for(let q=0;q< temp1.length;q++){
-        let temp =this.data_list[q].data_type;
-        for(let i=0; i< temp.length;i++){
-          for(let j=0; j < temp[i].children.length;j++){
-            const regCsv = RegExp(/\.csv/)
-            const regGeo = RegExp(/\.geojson/)
-            if (temp[i].children[j].name.match(regCsv)) {
-              temp[i].children[j].src = csvFileLogo;
-            }else if(temp[i].children[j].name.match(regGeo)){
-              temp[i].children[j].src = geojsonFileLogo;
-            }else{
-              temp[i].children[j].src = serviceFileLogo;
-            }
-          }
-      }}
-    },
-    //说明按钮
-    showDataDescription:function(index,index1,index2){
-
-                this.$router.push({path:'/home/datadescription'});    
-                this.IndexChange(index,index1,0);
-                this.childIndex = index1;
-                this.grandsonIndex = index2;
-               this.btid=1;//给说明按钮一个标识号，用于高亮
-      
-    },
-
     //预览按钮
     showDataView:function(index,index1,index2){
                 this.$router.push({path:'/home/dataview'});

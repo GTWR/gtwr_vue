@@ -72,13 +72,6 @@ export default {
 		}
 		else{return 0;}
 		setTimeout(this.compute, 246);
-		
-		
-
-		// var url = 'http://localhost:9010/GWRService/GWRService';
-		// $.get(url,function(data){  
-  //  			console.log(data)
-  //       }); 
   	},
   	gtwr:function(){
         this.tab=1

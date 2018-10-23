@@ -1,18 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/components/login'
+import login from '@/components/firstPage'
 import Home from '@/components/Home'
 import RightSideForDataView from '@/components/RightSideForDataView'
-import RightSideForDataDescription from '@/components/RightSideForDataDescription'
-import dataviewer from '@/components/DataViewer' 
 import RightSideForResult from '@/components/RightSideForResult'
 import chartAnalysis from '@/components/rightSideForResult/chartAnalysis'
 import computeLog from '@/components/rightSideForResult/computeLog'
 import computeLog2 from '@/components/rightSideForResult/computeLog2'
 import precision from '@/components/rightSideForResult/precision'
-import coverForParSelect from '@/components/coverForParSelect'
-import dynamicThreed from '@/components/login/DynamicThreed'
-import slides from '@/components/login/slides'
+import slides from '@/components/firstPage/slides'
 
 Vue.use(Router)
 
@@ -50,10 +46,6 @@ export default new Router({
         {
           path: "dataview",
           component: RightSideForDataView
-        },
-         {
-          path: "datadescription",
-          component: RightSideForDataDescription
         },
         {
           path:'computeresult',

@@ -13,22 +13,18 @@
 </template>
     
 <script>
-require('../style/login.scss')
-import dynamic from '../components/login/DynamicThreed.vue'
+require('../style/firstPage.scss')
+import dynamic from '../components/firstPage/DynamicThreed.vue'
 
 export default {
   name: 'login', 
   data () {
-    return {
-      
-      
+    return {  
     }
   },
-  mounted(){
-     
+  mounted(){    
   },
   methods:{
-
   },
   components: {
     dynamic
