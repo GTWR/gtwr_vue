@@ -5,10 +5,19 @@ import privateLogo from '../assets/img/private_data.png'
 Vue.use(Vuex);
 
 var dataTreeNodeName = require('../assets/data/dataTreeNodeName.json');//要获取的json文件
-for(var i=0;i<dataTreeNodeName.length;i++){
+for(let i=0;i<dataTreeNodeName.length;i++){
 	if(dataTreeNodeName[i].dataContent){
-		var demo = require('../assets/data/demoData/'+dataTreeNodeName[i].dataContent+'.json');
+		const demo = require('../assets/data/demoData/'+dataTreeNodeName[i].dataContent+'.json');
 		dataTreeNodeName[i].url = demo;
+		for(let j=0;j<dataTreeNodeName[i].children.length;j++){
+			const pro = dataTreeNodeName[i].children[j].name;
+			let arr = [];
+			for(let m=0;m<demo[0].features.length;m++){
+				arr.push(demo[0].features[m].properties[pro]);
+			}
+			dataTreeNodeName[i].children[j].max=Math.max.apply(null,arr);
+			dataTreeNodeName[i].children[j].min=Math.min.apply(null,arr);
+		}
 	}
 }
 

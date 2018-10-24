@@ -5,14 +5,14 @@
 	"dataContent": "housePrice",
 	"url":"../assets/data/demoData/",
 	"children": [
-		{"name":"Price"},
-		{"name":"constant"},
+		{"name":"Oprice"},
+		{"name":"Constant"},
 		{"name":"Living"},
-		{"name":"quality"},
-		{"name":"structure"},
-		{"name":"renovation"},
-		{"name":"condiction"},
-		{"name":"greenspace"},
+		{"name":"Quality"},
+		{"name":"Structure"},
+		{"name":"Renovation"},
+		{"name":"Condiction"},
+		{"name":"Greenspace"},
 		{"name":"Traffic"},
 		{"name":"VIEW"}
 	]

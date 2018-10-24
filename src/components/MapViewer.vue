@@ -34,20 +34,26 @@ export default {
     ...mapState({
       parentNodeIndex: state => state.parent_node_index,
       childNodeIndex: state => state.child_node_index,
-      grandSonNodeIndex: state => state.grandson_node_index
+      grandSonNodeIndex: state => state.grandson_node_index,
     }),
     dataA(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
     },
     par(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].index;
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].name;
     },
     viewZoom(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;
     },
     centerPosition(){
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;
-    }
+    },
+    maxVal(){
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].max;
+    },
+    minVal(){
+      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].min;
+    },
   },
   watch:{
 	  par:'addDataViewOnMap'
@@ -63,94 +69,51 @@ export default {
       if(this.layer != null){
         this.layer.remove();
       }
-      if(this.dataA[0].features[0].geometry.type == 'Polygon'){
-        this.map.setView(this.centerPosition,this.viewZoom)
-        this.layer = L.geoJson(this.dataA,
-      		{style:this.polygonStyle,
-      		onEachFeature:this.onEachFeature 
-      		}
-        );
-      }else{
-        this.map.setView(this.centerPosition,this.viewZoom)
-        let that = this;
-        this.layer = L.geoJson(this.dataA,{
-          pointToLayer: function(feature,latlng){
-            return L.circleMarker(latlng,that.pointStyle(feature,that.par))
-          },
-		      onEachFeature: this.onEachFeature
-        }) 
-      }
+      this.map.setView(this.centerPosition,this.viewZoom)
+      let that = this;
+      this.layer = L.geoJson(this.dataA,{
+        pointToLayer: function(feature,latlng){
+          return L.circleMarker(latlng,that.pointStyle(feature,that.par))
+        },
+        onEachFeature: this.onEachFeature
+      }) 
       this.layer.addTo(this.map);	  
     },
 	  //设置多边形的颜色
-    polygonStyleGetColor:function(d) {
-      return d > 1000 ? '#800026' :
-             d > 500  ? '#BD0026' :
-             d > 200  ? '#E31A1C' :
-             d > 100  ? '#FC4E2A' :
-             d > 50   ? '#FD8D3C' :
-             d > 20   ? '#FEB24C' :
-             d > 10   ? '#FED976' :
+    GetColor:function(d) {
+      let distance = (this.maxVal - this.minVal)/8
+      return d > this.maxVal+distance*7 ? '#800026' :
+             d > this.minVal+distance*6  ? '#BD0026' :
+             d > this.minVal+distance*5  ? '#E31A1C' :
+             d > this.minVal+distance*4  ? '#FC4E2A' :
+             d > this.minVal+distance*3   ? '#FD8D3C' :
+             d > this.minVal+distance*2   ? '#FEB24C' :
+             d > this.minVal+distance   ? '#FED976' :
                         '#FFEDA0';
-    },
-	  //设置多边形的样式
-    polygonStyle:function(feature) {
-        return {
-            fillColor: this.polygonStyleGetColor(feature.properties[this.par]),
-            weight: 2,
-            opacity: 1,
-            color: 'white',
-            dashArray: '3',
-            fillOpacity: 0.7
-        };
     },
     //设置点的样式
     pointStyle:function(feature,par){
       return {
-            radius: 6,
-            fillColor: this.pointStyleGetColor(feature.properties[par],par),
+            radius: 3,
+            fillColor: this.GetColor(feature.properties[par],par),
             weight: 0,
             opacity: 1,
             fillOpacity: 0.8
       }
     },
-  //设置点的颜色
-    pointStyleGetColor:function(d,par){
-      if (par == '质量等级') {
-        return d == '优' ? '#43CE17' :
-             d == '良' ? '#EFDC31' :
-             d == '轻度污染' ? '#FFAA00':'#800026';
-      }else{
-        if (par== '城市数') {
-          return d >20 ? '#43CE17' :
-             d >10 ? '#EFDC31' :
-             d >5 ? '#FFAA00':'#800026';
-        }else{
-          return d > 110 ? '#800026' :
-             d > 95  ? '#BD0026' :
-             d > 80  ? '#E31A1C' :
-             d > 65  ? '#FC4E2A' :
-             d > 50   ? '#FD8D3C' :
-             d > 35   ? '#FEB24C' :
-             d > 20   ? '#FED976' :
-                        '#FFEDA0';
-        }
-      }
-      
+    //鼠标滑过特征图块，高亮显示
+    highlightFeature:function(e) {
+      var layer = e.target;
+      layer.setStyle(this.highlightLayerStyle);
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+              layer.bringToFront();
+          }
     },
-	//鼠标滑过特征图块，高亮显示
-	highlightFeature:function(e) {
-		var layer = e.target;
-		layer.setStyle(this.highlightLayerStyle);
-		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-            layer.bringToFront();
-        }
-	},
-	//鼠标移出，还原样式
-	resetHighlight:function(e) {
-		this.layer.resetStyle(e.target);
-	},
-	//设置监听
+    //鼠标移出，还原样式
+    resetHighlight:function(e) {
+      this.layer.resetStyle(e.target);
+    },
+	  //设置监听
     onEachFeature:function(feature, layer) {
         layer.on({
             mouseover: this.highlightFeature,
