@@ -1,22 +1,18 @@
 <template>
   <div class="data-container">
   	<header class="title"><p>数据列表</p></header><!-- /header -->
-
   	<div class="data-head">
       <table>
         <tr>
-          <th v-for="(value,key) in (dataA[0].features?dataA[0].features[0].properties:dataA[0])">
-            {{key}}
-          </th>
+          <th v-for="key in Object.keys(dataA[0].features[0].properties).length>11 ? (Object.keys(dataA[0].features[0].properties)).slice(0,11) : Object.keys(dataA[0].features[0].properties)">{{key}}</th>
         </tr>
 	  </table>
 	 </div>
 	 <div class="data-table" id="data-table">
 	  <table id="t1">
         <tbody>
-          <tr v-for="line in (dataA[0].features?dataA[0].features:dataA)" :id="SpaceFilter(line.properties.name)" @click="InteractWithMap(line.properties.name,line)">
-<!--             <a :name="line.properties.name"></a> -->
-            <td v-for="(value,key) in (dataA[0].features?line.properties:line)" >{{value}}</td>
+          <tr v-for="line in dataA[0].features" :id="SpaceFilter(line.properties.name)" @click="InteractWithMap(line.properties.name,line)">
+            <td v-for="key in Object.keys(line.properties).length>11 ? (Object.keys(line.properties)).slice(0,11) : Object.keys(line.properties)">{{line.properties[key]}}</td>
           </tr>
         </tbody>
       </table>
@@ -33,11 +29,13 @@ export default {
   name: 'ParDefiner',
   data () {
     return {
-      titlename:'',     
+      titlename:'', 
+      proCol:[]    
     }
   },
   mounted(){
     this.getEventData();
+    console.log(this.dataA);
   },
   computed:{
     ...mapState({
@@ -48,15 +46,12 @@ export default {
       return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
     },
   },
-  watch:{
-  },
   methods:{
   	getEventData(){
   		const that = this;
   		//接收点击要素的name值，传给titlename
   		messageBus.$on('event-to-chart',function(val){
         this.titlename=val 
-
         //jquery方法,使表格中的滚动条滚动到指定位置，同时改变背景色
         const id = '#'+that.SpaceFilter(this.titlename);//要定位的地方的id
         var $objTr = $(id); //找到要定位的地方 
