@@ -13,6 +13,7 @@
 import echarts from 'echarts'
 import'echarts-gl'
 import mapResult from './MapForResult'
+import {mapState} from 'vuex'
 import messageBus from '../../bus/messageBus.js'
 require('../../style/rightSideForResult.scss')
 
@@ -37,16 +38,16 @@ export default {
         Greenspace:0,
         Traffic:0.333,
         VIEW:0.337
-    },
-    this.DrawScatter();
-    this.DrawBar();
-    this.DrawPie();
-    this.listenValue();
+    };
+    // this.DrawScatter();
+    // this.DrawBar();
+    // this.DrawPie();
+    // this.listenValue();
   },
   computed:{
-   GetData(){
-      return this.$store.state.data_list[0].data_type[2].url;
-    }
+    ...mapState({
+      computeResult: state => state.computeResult
+    }),
   },
   methods:{
       listenValue:function(){

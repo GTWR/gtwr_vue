@@ -42,9 +42,9 @@ export default {
   methods:{
     //密码的显示隐藏
     change_type:function(){
-          this.see = !this.see;//小眼睛的变化
-          this.pwd_type=!this.pwd_type;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
-        },
+      this.see = !this.see;//小眼睛的变化
+      this.pwd_type=!this.pwd_type;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
+    },
     submitPar:function(){
         //关闭遮罩层与登录面板
         messageBus.$emit('login-cover-show',false);

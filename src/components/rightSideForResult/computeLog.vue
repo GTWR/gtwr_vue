@@ -171,8 +171,7 @@ export default {
               }
               $ele.html(str.substring(0, progress) + (progress & 1 ? '_' : ''));
               if (progress >= str.length) {
-                clearInterval(timer);
-                // that.$router.push({path:'/home/computeresult/computeLog'});             
+                clearInterval(timer);            
               }
             }, 25);
           });
@@ -180,19 +179,6 @@ export default {
       };  
       $("#code").typewriter();
       $("#code").stop();
-      
-
-      var url = 'http://localhost:9010/GWRService/GWRService';
-      var y1=new Array();
-      $.get(url,function(data){  
-        console.log(data);
-        var s = JSON.parse(data);
-        for(var i=0;i<s.length;i++){
-          y1.push(s[i].y);
-        }
-        console.log(y1);
-
-        });
     },
   },
 }

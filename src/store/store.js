@@ -4,6 +4,7 @@ import demoLogo from '../assets/img/demo_data_aa.png'
 import privateLogo from '../assets/img/private_data.png'
 Vue.use(Vuex);
 
+//计算分层设色的最大值和最小值；
 var dataTreeNodeName = require('../assets/data/dataTreeNodeName.json');//要获取的json文件
 for(let i=0;i<dataTreeNodeName.length;i++){
 	if(dataTreeNodeName[i].dataContent){
@@ -39,7 +40,8 @@ const state = {
 		    children:[
 		    ]		
 		}
-	]
+	],
+	computeResult:null
 }
 
 const mutations = {
@@ -54,6 +56,9 @@ const mutations = {
 	},
 	username:function(state,msg){
 		state.username=msg;
+	},
+	computeResultMutation:function(state,msg){
+		state.computeResult = msg;
 	}
 }
 
@@ -66,6 +71,9 @@ const actions = {
 	},
 	grandSonIndexAction:function({commit},msg){
 		commit('grandSonIndexMutation',msg)
+	},
+	computeResultAction:function({commit},msg){
+		commit('computeResultMutation',msg)
 	}
 }
 

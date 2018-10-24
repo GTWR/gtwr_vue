@@ -182,10 +182,10 @@ export default {
       $("#code").stop();
       
 
-      var url = 'http://localhost:9010/GWRService/GWRService';
-      $.get(url,function(data){  
-        console.log(data)
-        });
+      // var url = 'http://localhost:9010/GWRService/GWRService';
+      // $.get(url,function(data){  
+      //   console.log(data)
+      //   });
     },
   },
 }

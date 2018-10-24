@@ -59,6 +59,7 @@ export default {
   components: {           
   },
   mounted(){
+    //控制点击节点，收起列表的动画
     $(document).ready(function (){  
         //找到所有的span，并且点击span以后，控制一下元素div的显示和隐藏  
         $(".parent_node").click(function (){  
@@ -91,6 +92,7 @@ export default {
       this.grandsonIndex = index2;
       this.btid=2;//给预览按钮一个标识号，用于高亮
     },
+    //传输目前选择的节点的index到vuex
     IndexChange:function(index,index1,index2){
       this.parentIndex = index;
       this.childIndex = index1;

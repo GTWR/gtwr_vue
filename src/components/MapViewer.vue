@@ -36,24 +36,18 @@ export default {
       childNodeIndex: state => state.child_node_index,
       grandSonNodeIndex: state => state.grandson_node_index,
     }),
-    dataA(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
-    },
-    par(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].name;
-    },
-    viewZoom(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;
-    },
-    centerPosition(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;
-    },
-    maxVal(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].max;
-    },
-    minVal(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].min;
-    },
+    //节点数据，例如房价数据
+    dataA(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;},
+    //当前选择的参数，数据属性
+    par(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].name;},
+    //当前数据适宜的缩放尺度
+    viewZoom(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;},
+    //当前数据适宜的中心
+    centerPosition(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;},
+    //当前数据属性对应的最大值
+    maxVal(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].max;},
+    //当前数据属性对应的最小值
+    minVal(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].min;},
   },
   watch:{
 	  par:'addDataViewOnMap'
@@ -64,7 +58,7 @@ export default {
   		this.map = L.map('leafmap').setView([50.505,-108.09],3);
   		L.tileLayer(bgMapUrl).addTo(this.map);
   	},
-	  //添加图层
+	  //添加数据属性的可视化图层
     addDataViewOnMap:function(){
       if(this.layer != null){
         this.layer.remove();
@@ -79,7 +73,7 @@ export default {
       }) 
       this.layer.addTo(this.map);	  
     },
-	  //设置多边形的颜色
+	  //设置数据点分层设色的颜色
     GetColor:function(d) {
       let distance = (this.maxVal - this.minVal)/8
       return d > this.maxVal+distance*7 ? '#800026' :
@@ -91,7 +85,7 @@ export default {
              d > this.minVal+distance   ? '#FED976' :
                         '#FFEDA0';
     },
-    //设置点的样式
+    //设置数据点显示的样式
     pointStyle:function(feature,par){
       return {
             radius: 3,
@@ -106,8 +100,8 @@ export default {
       var layer = e.target;
       layer.setStyle(this.highlightLayerStyle);
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-              layer.bringToFront();
-          }
+          layer.bringToFront();
+      }
     },
     //鼠标移出，还原样式
     resetHighlight:function(e) {
@@ -125,6 +119,10 @@ export default {
     handleClick:function(e){
       let layer = e.target;
       let prop = layer.feature.properties.name;
+      //清空已经高亮的图层
+      if (this.highlightFromTable!=null) {
+        this.highlightFromTable.remove();
+      }
 	    messageBus.$emit('event-to-chart',prop);
       
     },
@@ -137,18 +135,12 @@ export default {
           that.highlightFromTable.remove();
         }
         //叠加点击数据行对一个的小图块
-        if(val.geometry.type == 'Polygon'){
-          that.highlightFromTable = L.geoJson(val,{
-            style: that.polygonStyle
-          }).addTo(that.map);   
-        }else{
-          const temp = that;
-          that.highlightFromTable = L.geoJson(val,{
-            pointToLayer: function(feature,latlng){
-              return L.circleMarker(latlng,temp.pointStyle(feature,temp.par))
-            }
-          }).addTo(that.map)
-        }
+        const temp = that;
+        that.highlightFromTable = L.geoJson(val,{
+          pointToLayer: function(feature,latlng){
+            return L.circleMarker(latlng,temp.pointStyle(feature,temp.par))
+          }
+        }).addTo(that.map)
         that.highlightFromTable.setStyle(that.highlightLayerStyle);
       });
     }

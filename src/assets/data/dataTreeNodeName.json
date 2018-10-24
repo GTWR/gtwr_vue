@@ -16,4 +16,15 @@
 		{"name":"Traffic"},
 		{"name":"VIEW"}
 	]
+},{
+	"name":"fake data for test",
+	"dataContent":"fakeData",
+	"centerPosition":[30.5882,114.289],
+	"zoom":17,
+	"url":"../assets/data/demoData/",
+	"children":[
+		{"name":"PctBach"},
+		{"name":"TotPop90"},
+		{"name":"PctRural"}
+	]
 }]

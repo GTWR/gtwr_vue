@@ -1,5 +1,5 @@
 <template>
-	<div id="leafmap"></div> 
+	<div id="leafMapResultPart"></div> 
 </template>
 
 <script>
@@ -11,27 +11,6 @@ import messageBus from '../../bus/messageBus.js'
 
 var bgMapUrl = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2VtbWFhYWEiLCJhIjoiY2o2a2N5dzB1MWd1ZTMzcnlqMDhkM3ZjYyJ9.0vVVkY9k7t8z0e3uqMgQnQ';
 
-var vm = new Vue({
-  methods:{
-    //设置点的样式
-    pointStyle:function(feature){
-      return {
-            radius: 6,
-            fillColor: this.pointStyleGetColor(feature.properties['质量等级']),
-            weight: 0,
-            opacity: 1,
-            fillOpacity: 0.8
-      }
-    },
-    //设置点的颜色
-    pointStyleGetColor:function(d){
-      return d == '优' ? '#43CE17' :
-             d == '良' ? '#EFDC31' :
-             d == '轻度污染' ? '#FFAA00':'#800026';
-    }
-  }
-})
-
 export default {
   name: 'mapForResult',
   data () {
@@ -41,98 +20,73 @@ export default {
     }
   },
   mounted(){
-  	this.initMap();
-    this.addDataViewOnMap();
+    if(this.computeResult){
+      this.initMap();
+      this.addDataViewOnMap();
+    }
   },
   computed:{
     ...mapState({
-        // ...
-      parentNodeIndex: state => state.parent_node_index,
-      childNodeIndex: state => state.child_node_index/*,
-      dataA:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url*/
+      computeResult: state => state.computeResult
     }),
-    dataA(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;
-    },
-    viewZoom(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;
-    },
-    centerPosition(){
-      return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;
-    }
   },
   watch:{
-    dataA:'addDataViewOnMap'
+    computeResult:'addDataViewOnMap'
   },
   methods:{
     //初始化地图
   	initMap:function(){
-  		this.map = L.map('leafmap').setView([50.505,-108.09],3);
+  		this.map = L.map('leafMapResultPart').setView([50.505,-108.09],3);
   		L.tileLayer(bgMapUrl).addTo(this.map);
   	},
-    //添加图层
+	  //添加数据属性的可视化图层
     addDataViewOnMap:function(){
       if(this.layer != null){
         this.layer.remove();
       }
-      if(this.dataA[0].features[0].geometry.type == 'Polygon'){
-        this.map.setView(this.centerPosition,this.viewZoom3)
-        this.layer = L.geoJson(this.dataA,{
-          style:this.polygonStyle,
-          onEachFeature: this.onEachFeature
-        });
-      }else{
-        this.map.setView(this.centerPosition,this.viewZoom)
-        this.layer = L.geoJson(this.dataA,{
-          pointToLayer: function(feature,latlng){
-            return L.circleMarker(latlng,vm.pointStyle(feature))
-          },
-          onEachFeature: this.onEachFeature
-        })
-      }
-      
-      this.layer.addTo(this.map);
+      this.map.setView(this.computeResult.centerPosition,this.computeResult.zoom)
+      let that = this;
+      this.layer = L.geoJson(this.computeResult.data,{
+        pointToLayer: function(feature,latlng){
+          return L.circleMarker(latlng,that.pointStyle(feature))
+        },
+        onEachFeature: this.onEachFeature
+      }) 
+      this.layer.addTo(this.map);	  
     },
-    //设置多边形颜色
-    polygonStyleGetColor:function(d) {
-      return d > 1000 ? '#800026' :
-             d > 500  ? '#BD0026' :
-             d > 200  ? '#E31A1C' :
-             d > 100  ? '#FC4E2A' :
-             d > 50   ? '#FD8D3C' :
-             d > 20   ? '#FEB24C' :
-             d > 10   ? '#FED976' :
+	  //设置数据点分层设色的颜色
+    GetColor:function(d) {
+      let distance = (this.computeResult.maxVal - this.computeResult.minVal)/8
+      return d > this.computeResult.maxVal+distance*7 ? '#800026' :
+             d > this.computeResult.minVal+distance*6  ? '#BD0026' :
+             d > this.computeResult.minVal+distance*5  ? '#E31A1C' :
+             d > this.computeResult.minVal+distance*4  ? '#FC4E2A' :
+             d > this.computeResult.minVal+distance*3   ? '#FD8D3C' :
+             d > this.computeResult.minVal+distance*2   ? '#FEB24C' :
+             d > this.computeResult.minVal+distance   ? '#FED976' :
                         '#FFEDA0';
     },
-    //设置多边形样式
-    polygonStyle:function(feature) {
-        return {
-            fillColor: this.polygonStyleGetColor(feature.properties.density),
-            weight: 2,
+    //设置数据点显示的样式
+    pointStyle:function(feature,par){
+      return {
+            radius: 3,
+            fillColor: this.GetColor(feature.properties.yhat),
+            weight: 0,
             opacity: 1,
-            color: 'white',
-            dashArray: '3',
-            fillOpacity: 0.7
-        };
+            fillOpacity: 0.8
+      }
     },
     //鼠标滑过特征图块，高亮显示
-    highlightFeature: function(e) {
-        var layer = e.target;
-
-        layer.setStyle({
-            weight: 3,
-            color: 'lightseagreen',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
-
-        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-            layer.bringToFront();
-        }
+    highlightFeature:function(e) {
+      var layer = e.target;
+      layer.setStyle(this.highlightLayerStyle);
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+          layer.bringToFront();
+      }
     },
     //鼠标移出，还原样式
     resetHighlight:function(e) {
-        this.layer.resetStyle(e.target);
+      this.layer.resetStyle(e.target);
     },
     //设置监听
     onEachFeature:function(feature, layer) {
@@ -146,7 +100,6 @@ export default {
     handleClick:function(e){
       let layer = e.target;
       let prop = layer.feature.properties;
- 
       messageBus.$emit('data-for-chart',prop);
     }
   }

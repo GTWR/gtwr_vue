@@ -35,7 +35,6 @@ export default {
   },
   mounted(){
     this.getEventData();
-    console.log(this.dataA);
   },
   computed:{
     ...mapState({
@@ -47,6 +46,7 @@ export default {
     },
   },
   methods:{
+    //绘制表格
   	getEventData(){
   		const that = this;
   		//接收点击要素的name值，传给titlename
@@ -75,6 +75,7 @@ export default {
       }
       return string;
     },
+    //与地图交互，传输数据
     InteractWithMap:function(name,line){
       let t1 = document.getElementById('t1');//表格容器
       for(var i=0;i<t1.rows.length;i++){

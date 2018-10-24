@@ -66,22 +66,65 @@ export default {
     ...mapState({
       parentNodeIndex: state => state.parent_node_index,
       childNodeIndex: state => state.child_node_index,
-    }),
-    varList(){
-      return Object.keys(this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url[0].features[0].properties);
-    },
+		}),
+		//当前数据适宜的缩放尺度
+    viewZoom(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;},
+    //当前数据适宜的中心
+    centerPosition(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;},
+		//数据属性列表
+		varList(){return Object.keys(this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url[0].features[0].properties);},
   },
   methods:{
+		//"开始计算"按钮响应函数
   	compute:function(){
-        this.$router.push({path:'/home/computeresult/computeLog'});
+        this.animateHandle();
+				if(this.tab == 2){
+					let self = this;
+					//加载后台程序，开始GWR计算
+					$.get('http://localhost:8080/GWRService/GWRService',function(data){  
+						let dataJson = JSON.parse(data);
+						let arr = []
+						let result = {
+							data: {
+								"type": "FeatureCollection" ,
+								"name": "housePrice",
+								"features":[]
+							},
+							minVal: null,
+							maxVal: null,
+							centerPosition: self.centerPosition,
+							zoom: self.viewZoom,
+						}
+						for(let i=0;i<dataJson.length;i++){
+							arr.push(dataJson[i].yhat);
+							let obj = {
+								"type": "Feature",
+								"properties": dataJson[i],
+								"geometry": {
+									"type": "Point",
+									"coordinates": [dataJson[i].x, dataJson[i].y]
+								}
+							};
+							result.data.features.push(obj);
+						}
+						result.minVal = Math.min.apply(null,arr);
+						result.maxVal = Math.max.apply(null,arr);
+						console.log(result)
+						self.$store.dispatch('computeResultAction' , result);
+					});
+				}
+		},
+		//动画操控，以及页面跳转函数，函数抽出是为了防止数据访问请求多次发生
+		animateHandle:function(){
+				this.$router.push({path:'/home/computeresult/computeLog'});
 				var barObj = document.getElementById("proBar");
 				var currentWidth = parseInt(barObj.style.width.substring(0, barObj.style.width.length - 1));
 				if (currentWidth < 100) {
 					barObj.style.width = (currentWidth + 1) + "px";
 				}
 				else{return 0;}
-				setTimeout(this.compute, 246);
-  	},
+				setTimeout(this.animateHandle, 246);
+		},
   	gtwr:function(){
         this.tab=1
 		},
