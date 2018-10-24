@@ -10,7 +10,6 @@ import messageBus from '../bus/messageBus.js'
 
 var bgMapUrl = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2VtbWFhYWEiLCJhIjoiY2o2a2N5dzB1MWd1ZTMzcnlqMDhkM3ZjYyJ9.0vVVkY9k7t8z0e3uqMgQnQ';
 
-
 export default {
   name: 'ParDefiner',
   data () {
@@ -54,12 +53,12 @@ export default {
 	  par:'addDataViewOnMap'
   },
   methods:{
-	//初始化地图
+	  //初始化地图
   	initMap:function(){
   		this.map = L.map('leafmap').setView([50.505,-108.09],3);
   		L.tileLayer(bgMapUrl).addTo(this.map);
   	},
-	//添加图层
+	  //添加图层
     addDataViewOnMap:function(){
       if(this.layer != null){
         this.layer.remove();
@@ -71,8 +70,7 @@ export default {
       		onEachFeature:this.onEachFeature 
       		}
         );
-      }
-	  else{
+      }else{
         this.map.setView(this.centerPosition,this.viewZoom)
         let that = this;
         this.layer = L.geoJson(this.dataA,{
@@ -82,10 +80,9 @@ export default {
 		      onEachFeature: this.onEachFeature
         }) 
       }
-      
       this.layer.addTo(this.map);	  
     },
-	//设置多边形的颜色
+	  //设置多边形的颜色
     polygonStyleGetColor:function(d) {
       return d > 1000 ? '#800026' :
              d > 500  ? '#BD0026' :
@@ -96,7 +93,7 @@ export default {
              d > 10   ? '#FED976' :
                         '#FFEDA0';
     },
-	//设置多边形的样式
+	  //设置多边形的样式
     polygonStyle:function(feature) {
         return {
             fillColor: this.polygonStyleGetColor(feature.properties[this.par]),

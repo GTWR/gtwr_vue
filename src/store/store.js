@@ -2,9 +2,15 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import demoLogo from '../assets/img/demo_data_aa.png'
 import privateLogo from '../assets/img/private_data.png'
-import housePrice from '../assets/data/demoData/housePrice.json'
-import dataTreeNodeName from '../assets/data/dataTreeNodeName.json'
 Vue.use(Vuex);
+
+var dataTreeNodeName = require('../assets/data/dataTreeNodeName.json');//要获取的json文件
+for(var i=0;i<dataTreeNodeName.length;i++){
+	if(dataTreeNodeName[i].dataContent){
+		var demo = require('../assets/data/demoData/'+dataTreeNodeName[i].dataContent+'.json');
+		dataTreeNodeName[i].url = demo;
+	}
+}
 
 const state = {
 	username:'',
@@ -14,17 +20,7 @@ const state = {
     data_list:[
 	  	{
 	      	name:'示例数据',
-	      	data_type:[
-		      	{
-		      		name:dataTreeNodeName.dataName,
-		      		centerPosition:[50.995,-114.09],
-		      		zoom: 10,
-		      		url:housePrice,
-					update_time:new Date().toLocaleDateString(),
-		      		crs:'WGS84',
-		      		children:dataTreeNodeName.properties
-		      	}
-		    ],
+	      	data_type:dataTreeNodeName,
 		    src:demoLogo,
 	    },
 		{
@@ -34,24 +30,6 @@ const state = {
 		    children:[
 		    ]		
 		}
-	],
-	par_list1:[
-		{name:'因变量', value:'', content:'GTWR模型的dependent variable'},
-		{name:'解释变量', value:'', content:'GTWR模型的explanatory variable'},
-		{name:'X - 坐标', value:'', content:'点或面板数据的x坐标，表示空间信息'},
-		{name:'Y - 坐标', value:'', content:'点或面板数据的y坐标，表示空间信息'},
-		{name:'时间维度', value:'', content:'点或面板数据的时间戳，表示时态信息'},
-		{name:'时空距比', value:'', content:'可自定义，也可自动优化生成'},
-		{name:'带宽方法', value:'', content:'选择计算带宽的方法，如AICc等'},
-		{name:'核方法', value:'', content:'内核类型决定是固定距离还是可变的'},
-		
-	],
-	par_list2:[
-		{name:'X - 坐标',value:'',content:'点或面板数据的x坐标，表示空间信息'},
-		{name:'Y - 坐标',value:'',content:'点或面板数据的y坐标，表示空间信息'},
-		{name:'pctRural',value:'',content:'暂无该参数的相关描述'},
-		{name:'pctbach',value:'',content:'暂无该参数的相关描述'},
-		{name:'totPop90',value:'',content:'暂无该参数的相关描述'},
 	]
 }
 
@@ -64,9 +42,6 @@ const mutations = {
 	},
 	grandSonIndexMutation:function(state,msg){
 		state.grandson_node_index = msg;
-	},
-	parListMutation:function(state,msg){
-		state.par_list = msg;
 	},
 	username:function(state,msg){
 		state.username=msg;
@@ -82,9 +57,6 @@ const actions = {
 	},
 	grandSonIndexAction:function({commit},msg){
 		commit('grandSonIndexMutation',msg)
-	},
-	parListAction:function({commit},msg){
-		commit('parListMutation',msg)
 	}
 }
 

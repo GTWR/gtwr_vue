@@ -28,16 +28,16 @@
   	}
   	.child_list{
   		margin-left: 20px;
-      width: $left-side-width - 55;
+			width: $left-side-width - 55;
   		p{
-  			margin: 5px;
-  		}
-  		p:hover{
-  			background-color: $hover_color;
+				margin: 5px;
   		}
       span{
         float: right;
-      }
+			}
+			.child_node_img{
+				width: 15px;
+			}
       .grand_son_list{
         margin-left: 20px;
         font-size: 13px;

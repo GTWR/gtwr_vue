@@ -14,13 +14,14 @@ export default {
   name: 'hello', 
   data () {
     return {
-      myChart:null
+      myChart:null,
+      linedata: null
     }
   },
   mounted(){
+    let self = this;
     this.dynamicThreeD();
     //适应屏幕大小绘图
-    let self = this;
     window.onresize = function(){
         setTimeout(function(){
             self.myChart.resize();

@@ -1,30 +1,23 @@
 ﻿<template>
   <div class="data-selector">
-    <header class="title"><p>数据选择</p></header><!-- /header -->
+    <header class="title"><p>数据选择</p></header>
     <!--数据列表-->
     <div class="data-list" id="data-list">
-      <div v-for="data,index in data_list">
-        
+      <div v-for="data,index in data_list">       
         <div class="parent_node">
           <img :src="data.src">
           <b>{{data.name}}</b>
-          <!-- <span @click="openfolder(index)">+</span> -->
-        </div>
-                
-   
+        </div>   
         <div class="child_list">
           <div class="data_drag_container" v-if="data.name == '私有数据'" style="position: relative;">        
             <img class="normalFace" src="../assets/img/add.png" height="30" width="30" >
                 <input  type="file"  id="file"  onchange="upload(this)"  style="opacity:0; position: absolute;top: 11px;left: 5px;padding-left: 100px;width:150px;cursor:pointer;height: 50px;" >
             <p>拖拽本地文件到此处</p>   
-          </div>
-          
-          
+          </div>          
           <div v-for="child,index1 in data.data_type" >
-            <div>
               <div class="child_node" @click="showDataView(index,index1,0)">          
-                  <p>
-                    <input type="checkbox" @click="checkParent(index,index1)" :data-parentIndex="index1"/>
+                  <p :data-parentIndex="index1">
+                    <img class="child_node_img" :src='ImgParentNodeSrc'>
                     {{child.name}}
                   </p>
               </div>
@@ -32,7 +25,6 @@
                 <div class="grand_son_list">
                   <div v-for="grandson,index2 in child.children">
                     <p> 
-                      <input type="checkbox" :data-index="index1"/>
                       <img :src='ImgChildNodeSrc'>
                       {{grandson.name}}
                       <button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==2}" @click="showDataView(index,index1,index2)" >预览</button>
@@ -40,11 +32,7 @@
                   </div>
                 </div>
               </div>
-
-            </div>
           </div>
-
-
         </div> 
       </div>
     </div>
@@ -63,19 +51,15 @@ export default {
       parentIndex: 0,
       childIndex:0,
       grandsonIndex:0,
-      open:[],
-      par_list_temp:null,
       ImgChildNodeSrc:require('../assets/img/service.png'),
       ImgParentNodeSrc:require('../assets/img/mind_map.png'),
       btid:0 //说明和预览两个按钮的ID号,用于按钮高亮
     }
   },
-  components: {
-            
+  components: {           
   },
   mounted(){
-
-     $(document).ready(function (){  
+    $(document).ready(function (){  
         //找到所有的span，并且点击span以后，控制一下元素div的显示和隐藏  
         $(".parent_node").click(function (){  
           $(this).next().toggle("slow");  
@@ -83,28 +67,29 @@ export default {
         //初始化时隐藏状态  
         $(".child_list").each(function (index,domEle){  
           $(domEle).show("slow");  
-      });
         });
-  
+        $(".child_node").click(function (){  
+          $(this).next().toggle("slow");  
+        });
+        $(".grand_son_list").each(function (index,domEle){  
+          $(domEle).show("slow");  
+        });
+    });
   },
   computed:{
     ...mapState({
-        // ...
       data_list: state => state.data_list,
-      cover_show: state => state.cover_show,
       par_list:state=>state.par_list
-      /*open:state => state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].open*/
     })
   },
   methods:{
     //预览按钮
     showDataView:function(index,index1,index2){
-                this.$router.push({path:'/home/dataview'});
-               //alert(index2)
-                this.IndexChange(index,index1,index2);
-                this.childIndex = index1;
-                this.grandsonIndex = index2;
-              this.btid=2;//给预览按钮一个标识号，用于高亮
+      this.$router.push({path:'/home/dataview'});
+      this.IndexChange(index,index1,index2);
+      this.childIndex = index1;
+      this.grandsonIndex = index2;
+      this.btid=2;//给预览按钮一个标识号，用于高亮
     },
     IndexChange:function(index,index1,index2){
       this.parentIndex = index;
@@ -113,43 +98,7 @@ export default {
       this.$store.dispatch('parentIndexAction' , this.parentIndex);
       this.$store.dispatch('childIndexAction' , this.childIndex);
       this.$store.dispatch('grandSonIndexAction' , this.grandsonIndex);
-      //alert(this.parentIndex+','+this.childIndex+','+this.grandsonIndex)
-    },
-    
-    
-    checkParent:function(index,index1){
-      //父节点勾选，子节点全部勾选；父节点取消勾选，子节点全部取消勾选
-     
-      var dataList = document.getElementById('data-list')
-      var checkChildren = dataList.getElementsByTagName('input');
-      var check;
-      for (var i = 0; i < checkChildren.length; i++) {
-        let attr = checkChildren[i].getAttribute('data-index');
-        let parentAttr = checkChildren[i].getAttribute('data-parentIndex');
-        if (parentAttr != null && parentAttr == index1) {
-          check = checkChildren[i].checked
-        }
-        if (attr != null && attr == index1) {
-          checkChildren[i].checked = check;
-        }
-      }
-      //控制遮罩层及参数设置页面的显示
-      if (check == true) {
-        //this.$store.dispatch('coverShowAction',true);
-      }else{
-        //当取消点选时，参数设置清空
-        this.par_list_temp = this.par_list
-        for (var i = 0; i < this.par_list.length; i++) {
-          this.par_list_temp[i].value = '';
-        }
-        this.$store.dispatch('parListAction',this.par_list_temp)
-      }
-      
-      //提交所选择的父节点索引到vuex
-      this.IndexChange(index,index1,0);
-
     }
-  
   }
 }
 function upload(input) {

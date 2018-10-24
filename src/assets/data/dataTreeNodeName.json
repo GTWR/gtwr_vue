@@ -1,15 +1,19 @@
-{
-	"dataName":"house price",
-	"properties": [
-		{"name":"Price","type":"geojson","src":""},
-		{"name":"constant","type":"geojson","src":""},
-		{"name":"Living","type":"geojson","src":""},
-		{"name":"quality","type":"geojson","src":""},
-		{"name":"structure","type":"geojson","src":""},
-		{"name":"renovation","type":"geojson","src":""},
-		{"name":"condiction","type":"geojson","src":""},
-		{"name":"greenspace","type":"geojson","src":""},
-		{"name":"Traffic","type":"geojson","src":""},
-		{"name":"VIEW","type":"geojson","src":""}
+[{
+	"name":"house price",
+	"centerPosition":[50.995,-114.09],
+	"zoom": 10,
+	"dataContent": "housePrice",
+	"url":"../assets/data/demoData/",
+	"children": [
+		{"name":"Price"},
+		{"name":"constant"},
+		{"name":"Living"},
+		{"name":"quality"},
+		{"name":"structure"},
+		{"name":"renovation"},
+		{"name":"condiction"},
+		{"name":"greenspace"},
+		{"name":"Traffic"},
+		{"name":"VIEW"}
 	]
-}
+}]
