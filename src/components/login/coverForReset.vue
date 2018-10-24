@@ -1,41 +1,38 @@
 <template>
-  <div class="cover-reset">
+  <div class="cover-login">
     <div class="box-container">
       <div class="main">
         <hr color="lightgrey"/>
-        <header class="reset-title"><b>忘记密码</b></header>
-        <div class="reset">
-            <input type="text" placeholder="请输入手机号"  class="content_input" v-model= "LUserPhone" @blur="checkLPhone"><br/>
-           	<div class="join_formitem">
-                <div class = 'captcha'>
-                    <input type="text"  placeholder="请输入验证码" class="yanzhengma_input" v-model="picLyanzhengma" />
-                    <input type="button"  @click="createCode"  class="verification"  v-model="checkCode"/>
-                </div>
-            </div>
-            <div  class="send_code">
-              <input class="auth_input" type="text"  placeholder="短信验证码" />
+        <header class="login-title"><b>忘记密码</b></header>
+        <div class="login">
+            <input type="text" placeholder="请输入手机号" v-model= "LUserPhone" @blur="checkLPhone"><br/>
+            <input type="text"  placeholder="请输入验证码" class="yanzhengma_input" v-model="picLyanzhengma" />
+            <input type="button"  @click="createCode"  class="verification"  v-model="checkCode"/>
+            <div>
+              <input class="yanzhengma_input" type="text"  placeholder="短信验证码" />
               <button @click="send"    class="send_msg" >
               <span v-if="sendMsgDisabled">{{time+'秒后获取'}}</span>
               <span v-if="!sendMsgDisabled">获取验证码</span></button>
-          </div>
+            </div>
             <input type="text" v-if="pwdType" placeholder="请输入新密码" class="content_input" v-model="LUserPsd" @blur="checkLPsd" >
             <input type="password"  placeholder="请输入新密码" class="content_input" v-model="LUserPsd" @blur="checkLPsd"  v-else><br>
-  			<img :src="seen ? seenImg : unseenImg"  @click="changeType()" class="eye_img" />    
+  			<img :src="seen ? seenImg : unseenImg"  @click="changeType()" class="eye_img" style="top:205px"/>    
 
 			<input type="text" v-if="pwd_Type" placeholder="请再次输入新密码" class="content_new_input" v-model="LUser_Psd" @blur="checkL_Psd" >
             <input type="password"  placeholder="请再次输入新密码" class="content_new_input" v-model="LUser_Psd" @blur="checkL_Psd"  v-else><br> 
-  			<img :src="see ? seeImg : unseeImg"  @click="change_Type()" class="eyeImg" />
+  			<img :src="see ? seeImg : unseeImg"  @click="change_Type()" class="eye_img" style="top:255px"/>
             <button @click="get_view"    class="reset_button"><span>确认并提交</span></button> 
         </div> 
       </div>
     </div>
-    <img src="../assets/img/close.png" height="20" width="20" @click="submitPar">
+    <img src="../../assets/img/close.png" height="20" width="20" @click="submitPar">
   </div>
 </template>
 <script>
 var code="";
-require('../style/coverForReset.scss')
-import {mapState} from 'vuex'
+require('../../style/coverLogin.scss')
+import messageBus from '../../bus/messageBus.js'
+
 export default {
   name: 'coverForReset',
   data () {
@@ -56,12 +53,12 @@ export default {
         time: 60, // 发送验证码倒计时
         sendMsgDisabled: false,
         seen:'',
-  		unseenImg:require('../assets/img/close_eye.png'),//看不见
-  		seenImg:require('../assets/img/open_eye.png'),//看得见密码
+  		unseenImg:require('../../assets/img/close_eye.png'),//看不见
+  		seenImg:require('../../assets/img/open_eye.png'),//看得见密码
   		pwdType:false, //此时文本框隐藏，显示密码框 
   		see:'',
-  		unseeImg:require('../assets/img/close_eye.png'),//看不见
-  		seeImg:require('../assets/img/open_eye.png'),//看得见密码
+  		unseeImg:require('../../assets/img/close_eye.png'),//看不见
+  		seeImg:require('../../assets/img/open_eye.png'),//看得见密码
   		pwd_Type:false, //此时文本框隐藏，显示密码框 
     }
   },
@@ -81,26 +78,20 @@ export default {
   {
     this.createCode();
   },
-  computed:{
-    ...mapState({
-        // ...
-      
-    })
-  },
   methods:{
   	//密码的显示隐藏
   	changeType:function(){
-  	this.seen = !this.seen;//小眼睛的变化
-  	this.pwdType=!this.pwdType;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
-  			},
+        this.seen = !this.seen;//小眼睛的变化
+        this.pwdType=!this.pwdType;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
+    },
     submitPar:function(){
-      //关闭遮罩层与忘记密码面板
-      this.$store.dispatch('ResetShowAction',false);
+        //关闭遮罩层与忘记密码面板
+        messageBus.$emit('reset-cover-show',false);
     },
     change_Type:function(){
-  	this.see = !this.see;//小眼睛的变化
-  	this.pwd_Type=!this.pwd_Type;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
-  	 },
+        this.see = !this.see;//小眼睛的变化
+        this.pwd_Type=!this.pwd_Type;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
+  	},
     
     send:function() {
       let me = this;
@@ -186,7 +177,7 @@ export default {
           this.checkCode = this.code; 
       },  
       get_view:function(){
-        this.$store.dispatch('ResetShowAction',false);
+        messageBus.$emit('reset-cover-show',false);
         this.$router.push({path:"/home/dataview"});
 
       },

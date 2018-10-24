@@ -42,21 +42,15 @@ export default {
     this.slide = document.getElementsByClassName('slides')[0];
     this.imgs = this.slide.getElementsByTagName('img');
   },
-  beforeDestroy(){
-    
-  },
   methods:{
     carousel:function(n){
       this.imgs[this.index].className = "";
-      /*this.show = false;*/
       setTimeout(()=>{
-        /*this.show = true;*/
         this.index = n;
         this.imgs[this.index].className = "active";
       },10)
     },
     run:function(){
-
       this.invId = setInterval(()=>{
         this.imgs[this.index].className = "";
         this.index+=1;
@@ -64,7 +58,6 @@ export default {
           this.index = 0
         }
         this.imgs[this.index].className = "active";
-        //this.carousel(this.index);
       }, this.inv);     
     }
   }

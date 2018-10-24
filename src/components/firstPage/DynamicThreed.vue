@@ -7,7 +7,7 @@
 <script>
 require('../../style/firstPage.scss')
 import echarts from 'echarts'
-import'echarts-gl'
+import 'echarts-gl'
 import linedata from '../../assets/data/test.json'
 
 export default {
@@ -18,12 +18,20 @@ export default {
     }
   },
   mounted(){
-     this.dynamicThreeD();
+    this.dynamicThreeD();
+    //适应屏幕大小绘图
+    let self = this;
+    window.onresize = function(){
+        setTimeout(function(){
+            self.myChart.resize();
+        },200)
+    }
   },
   beforeDestroy(){
     this.myChart.clear();
   },
   methods:{
+    //投影转换，经纬度计算
     coltowgs:function(LONCOL, LATCOL) {
       let lat1 = 30.6666667;
       let lat2 = 31.8833333;
@@ -98,10 +106,6 @@ export default {
               realtime: false,
               inRange: {
                   color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-                  /*color:['#c7ffec','#83FCD8','#66ccff','#66cccc','#dcf7a1',
-                  '#ffe957' ,'#ff6600','#ff0033']*/
-                  /*color:['#83FCD8','#04dd98','#5af580','#d2f557','#ffe957','#ff6600','#ff0033']*/
-                  /*color:[ '#6235E0','#ff7400','#FFFEA0','#ff7400']*/
               },
               outOfRange: {
                   colorAlpha: 0
@@ -116,7 +120,6 @@ export default {
             bearing: -0,
             style: 'mapbox://styles/mapbox/satellite-v9',
             boxHeight: 25,
-            //altitudeScale: 1,
             postEffect: {
                 enable: true,
                 SSAO: {
@@ -154,7 +157,6 @@ export default {
               'value': [120, 30, linedata[1]]
           })
           option.options.push({
-
               visualMap: {
                   max: linedata[1]
               },

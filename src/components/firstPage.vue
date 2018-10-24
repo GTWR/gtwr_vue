@@ -17,7 +17,7 @@ require('../style/firstPage.scss')
 import dynamic from '../components/firstPage/DynamicThreed.vue'
 
 export default {
-  name: 'login', 
+  name: 'firstPage', 
   data () {
     return {  
     }

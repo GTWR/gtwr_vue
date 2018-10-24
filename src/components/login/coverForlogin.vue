@@ -6,7 +6,7 @@
         <header class="login-title"><b>欢迎登录</b></header>
         <div class="login">
             <input type="text"   placeholder="输入用户名..."  v-model="username"><br/>
-             <input type="text"  v-if="pwd_type"  placeholder="输入密码">
+            <input type="text"  v-if="pwd_type"  placeholder="输入密码">
             <input type="password" placeholder="输入密码" v-else>
             <img :src="see ? seeImg : unseeImg"  @click="change_type()" class="eye_img" />
             <button @click="submitPar" ><span>登录</span></button>
@@ -17,59 +17,57 @@
         </div>  
       </div>
     </div>
-    <img src="../assets/img/close.png" height="20" width="20" @click="submitPar">
+    <img src="../../assets/img/close.png" height="20" width="20" @click="submitPar">
   </div>
 </template>
 
 <script>
-require('../style/coverLogin.scss')
+import messageBus from '../../bus/messageBus.js'
+require('../../style/coverLogin.scss')
 import {mapState} from 'vuex'
 
 export default {
-	  name: 'coverLogin',
+	name: 'coverLogin',
   data () {
     return {
       see:'',
-      unseeImg:require('../assets/img/close_eye.png'),//看不见
-      seeImg:require('../assets/img/open_eye.png'),//看得见密码
+      unseeImg:require('../../assets/img/close_eye.png'),//看不见
+      seeImg:require('../../assets/img/open_eye.png'),//看得见密码
       pwd_type:false, //此时文本框隐藏，显示密码框 
       username:this.$store.state.username
     }
   },
   mounted(){
-    //this.$router.push({path:'/login/loginIn'});
-  },
-  computed:{
-
   },
   methods:{
-//密码的显示隐藏
+    //密码的显示隐藏
     change_type:function(){
           this.see = !this.see;//小眼睛的变化
           this.pwd_type=!this.pwd_type;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
         },
     submitPar:function(){
         //关闭遮罩层与登录面板
-        this.$store.dispatch('LoginShowAction',false);
+        messageBus.$emit('login-cover-show',false);
         this.$store.commit('username',this.username);
         this.$router.push({path:"/home/dataview"});
     },
     sign:function(){
-      //关闭遮罩层与登录面板
-      this.$store.dispatch('LoginShowAction',false);
+      //关闭遮罩层与登录忘记密码面板
+      messageBus.$emit('login-cover-show',false);
+      messageBus.$emit('reset-cover-show',false);
       //打开注册页面
-      this.$store.dispatch('SignShowAction',true);
+      messageBus.$emit('sign-cover-show',true);
     },
     reset:function(){
-      //关闭遮罩层与登录面板
-      this.$store.dispatch('LoginShowAction',false);
+      //关闭遮罩层与登录注册面板
+      messageBus.$emit('login-cover-show',false);
+      messageBus.$emit('sign-cover-show',false);
       //打开忘记密码页面
-      this.$store.dispatch('ResetShowAction',true);
+      messageBus.$emit('reset-cover-show',true);
     }
   },
   components:{
-
-      },
+  },
       
 }
 </script>

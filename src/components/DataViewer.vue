@@ -33,8 +33,7 @@ export default {
   name: 'ParDefiner',
   data () {
     return {
-      titlename:'',
-      
+      titlename:'',     
     }
   },
   mounted(){
@@ -42,7 +41,6 @@ export default {
   },
   computed:{
     ...mapState({
-
       parentNodeIndex: state => state.parent_node_index,
       childNodeIndex: state => state.child_node_index
 	  }),

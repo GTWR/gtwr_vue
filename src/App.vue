@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="wrap">
+    <!-- Start header -->
     <header class="header">
       <p><span>GTWR </span>云计算平台</p>
       <div v-if="this.$store.state.username==''">
@@ -11,74 +12,78 @@
 	       @click="selected(item.name)">{{item.name}}</a>
 	       </div>
      </div>
-    
       <div v-else>
         <div class="login-container">
           <div class=userLogin>你好，{{this.$store.state.username}} </div>
              <div class=exit @click="exit()">注销</div>
         </div>
      </div>
-    </header><!-- /header -->
+    </header>
+    <!-- End  header -->
+    <!-- Start 页面主体 -->
     <div class="main-content">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
         <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
-    <cover-par v-show="cover_show"></cover-par>
+    <!-- End 页面主体 -->
+    <!-- Start 遮罩 -->
     <cover-login v-show="login_show"></cover-login>
     <cover-sign v-show="sign_show"></cover-sign>
     <cover-reset v-show="reset_show"></cover-reset>
+    <!-- End 遮罩 -->
   </div>
 </template>
 
 <script>
 require('./style/app.scss')
-import coverPar from './components/coverForParSelect.vue'
-import coverLogin from './components/coverForlogin.vue'
-import coverSign from './components/coverForSign.vue'
-import coverReset from './components/coverForReset.vue'
-import {mapState} from 'vuex'
+import messageBus from './bus/messageBus.js'
+import coverLogin from './components/login/coverForlogin.vue'
+import coverSign from './components/login/coverForSign.vue'
+import coverReset from './components/login/coverForReset.vue'
 
 export default {
   name: 'App',
   data(){
   	return{
   		wpList:[
-  		{
-  			name:'匿名登录'
-  		}
+  		  {name:'匿名登录'}
   		],
-      active:''
+      active:'',
+      login_show: false,
+      sign_show: false,
+      reset_show: false
   	}
   },
-  computed:{
-    ...mapState({
-        // ...
-      cover_show: state => state.cover_show,
-      login_show: state => state.login_show,
-      sign_show: state => state.sign_show,
-      reset_show: state => state.reset_show
-    })
+  mounted(){
+    this.getLoginShowPar();
   },
   methods:{
+    getLoginShowPar:function(){
+      let self = this;
+      messageBus.$on('login-cover-show',function(val){
+        self.login_show = val;
+      });
+      messageBus.$on('sign-cover-show',function(val){
+        self.sign_show = val;
+      });
+      messageBus.$on('reset-cover-show',function(val){
+        self.reset_show = val;
+      });
+    },
     login:function(){
-      this.$store.dispatch('LoginShowAction',true);
+      this.login_show = true;
     },
-     selected(name){
-    this.$router.push({path:"/home/dataview"});
-    this.active = name;
+    selected(name){
+      this.$router.push({path:"/home/dataview"});
+      this.active = name;
     },
-     exit:function(){
-          this.$store.commit('username','');
-          console.log(this.$store.state.username)
+    exit:function(){
+      this.$store.commit('username','');
     }
   },
-  mounted(){
-    
-  },
   components:{
-    coverPar,
     coverLogin,
     coverSign,
     coverReset

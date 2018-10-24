@@ -7,6 +7,9 @@ $margin: 15px;
 	height: 100%;
 	background-color: rgba(0,0,0,0.4);
 	z-index:1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	img{
 		position: absolute;
 		top: 20px;
@@ -14,13 +17,8 @@ $margin: 15px;
 	}
 	.box-container{
 		position:absolute;
-		left:0;
-		top:0;
-		bottom:0;
-		right:0;
-		margin:auto;
 		width:350px - $margin * 2;
-		height: 220px;
+		height: auto;
 		background-color: white;
 		box-shadow: $shadow_card,$shadow_card;
 		padding: $margin * 2;
@@ -69,14 +67,6 @@ $margin: 15px;
 			    	color: #FFFFFF;
 			     	cursor: pointer;
 				}
-				div{
-					margin-top: $margin;
-					text-decoration: underline;
-					color: $title_color;
-					font-size: 0.8em;
-					overflow: hidden;
-
-				}
 				.eye_img{
 					position: absolute;
 					top: 105px;
@@ -84,7 +74,44 @@ $margin: 15px;
 					width: 30px;
 				    height: 20px;
 				}
-
+				.yanzhengma_input{
+					margin-top: $margin;
+					float: left;
+					width: 69%;
+					height: 30px;
+					display: inline;
+				}
+				.verification{
+					-webkit-appearance: button;
+					width:28%;
+				    margin-left:1%;
+					height: 35px;
+					display: inline;
+					float: right;
+					border-radius: 4px;
+					background-color: white;
+					outline: none;
+				}
+				div{
+					margin-top: $margin;
+					text-decoration: underline;
+					color: $title_color;
+					font-size: 0.8em;
+					overflow: hidden;
+					clear: both;
+				}
+				.disappear{
+				     visibility:hidden;
+				}				
+				.send_msg{
+				    width:28%;
+				    margin-left: 1%;
+					height: 35px;
+					border: none;
+					outline: none;
+				}
+				button::-moz-focus-inner,
+				input[type="button"]::-moz-focus-inner { border:none; padding:0; }
 			} 
 		}
 	}
