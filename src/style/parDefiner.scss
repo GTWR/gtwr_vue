@@ -1,18 +1,31 @@
 @import 'main_style.scss';
 
 .par-container{
-  @include container($left_sider_container_height - 20);
+  @include container($left_sider_container_height);
   margin-top: $card-margin_padding;
   display: flex;
   flex-direction: column;
   .par-list{
     margin-left:10px;
+    .par-title{
+      display:inline-block;
+      width:80px;
+      text-align:left;
+    }
     input{
-      width: $left-side-width - 120;
+      width: $left-side-width - 110;
+    }
+    select{
+      width: 20px;
+      margin-left: -26px;
+      border: none;
+      outline: none;
+      background-color: rgba(255,255,255,0);
     }
     p{
       line-height: 10px;
       color:$grey;
+      font-size:14px;
     }
     .submit{
       width: 100px;
@@ -33,23 +46,6 @@
       display: inline-block;
       position: relative;
       transition: 0.5s;
-    }
-    .submit span:after {
-      content: '»';
-      position: absolute;
-      opacity: 0;
-      top: 0;
-      right: -20px;
-      transition: 0.5s;
-    }
-    
-    .submit:hover span {
-      padding-right: 25px;
-    }
-
-    .submit:hover span:after {
-      opacity: 1;
-      right: 0;
     }
   }
   
