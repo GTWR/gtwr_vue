@@ -3,11 +3,10 @@
       <div class="content">
         <router-view></router-view>
       </div>    
-      <div class="tab" @click="switchTab">
-          <button id="chart">图表展示</button>
-          <button id="log">计算日志</button>
-          <button id="precision">精度评价</button>
-          <button id="btn" class="last-btn">其他</button>
+      <div class="tab" id="tab" @click="switchTab">
+          <button class="result-switch-tab" id="chart">图表展示</button>
+          <button class="result-switch-tab" id="log">计算日志</button>
+          <button class="result-switch-tab last-btn" id="precision">精度评价</button>
       </div>
     </div>
 </template>
@@ -46,17 +45,17 @@ export default {
         case 'precision':
             this.$router.push({path:rootUrl+'precesion'})
             break;
-        case 'btn':
-          //按钮高亮
-           break;
       }
-
     },
     //调整按钮边框
     handleBtnBorder:function(id){
-      let tab = document.getElementsByClassName('tab')[0].children;
+      let tab = document.getElementsByClassName('result-switch-tab');
       for (let i = 0; i< tab.length; i++) {
-        if (tab[i].id != id) {tab[i].style.border="none"} else{tab[i].style.border="2px solid lightseagreen"};
+        if (tab[i].id != id) {
+          tab[i].style.border="none"
+        } else{
+          tab[i].style.border="2px solid lightseagreen"
+        };
       }
     }
   }

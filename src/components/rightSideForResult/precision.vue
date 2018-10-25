@@ -28,16 +28,15 @@
 <script>
 import echarts from 'echarts'
 import'echarts-gl'
+import {mapState} from 'vuex'
 require('../../style/rightSideForResult.scss')
 
 export default {
   name: 'precision',
   data () {
-    return {
-       
+    return {     
     }
-  },
-  
+  },  
   components:{
   },
   mounted(){
@@ -49,9 +48,9 @@ export default {
     this.drawHis();
   },
   computed:{
-    GetData(){
-      return this.$store.state.data_list[0].data_type[2].url;
-    }
+    ...mapState({
+      computeResult: state => state.computeResult
+    }),
   },
   methods:{
     //绘制第一幅散点图

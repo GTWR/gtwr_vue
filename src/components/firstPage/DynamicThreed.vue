@@ -8,7 +8,7 @@
 require('../../style/firstPage.scss')
 import echarts from 'echarts'
 import 'echarts-gl'
-import linedata from '../../assets/data/test.json'
+import linedata from '../../assets/data/dataForDynamicThreeD.json'
 
 export default {
   name: 'hello', 

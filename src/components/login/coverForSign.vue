@@ -146,9 +146,9 @@ export default {
           this.checkCode = this.code; 
       },  
       getview:function(){
-         messageBus.$emit('sign-cover-show',false);
-        this.$router.push({path:"/home/dataview"});
-
+        messageBus.$emit('sign-cover-show',false);
+        this.$router.push({path:"/home"});
+        this.$store.commit('username',this.username);
       },
     }
 }

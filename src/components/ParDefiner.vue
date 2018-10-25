@@ -1,7 +1,7 @@
 <template>
   <div class="par-container">
 	<header class="title"><p>参数设置</p></header><!-- /header -->
-    <div class="tab" >
+    <div class="GWRtab" >
 			<button :class="{active: tab==1}" @click="gtwr">GTWR</button>
 			<button :class="{active: tab==2}" @click="gwr">GWR</button>
 		</div>

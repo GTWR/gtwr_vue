@@ -11,23 +11,23 @@
         <div class="child_list">
           <div class="data_drag_container" v-if="data.name == '私有数据'" style="position: relative;">        
             <img class="normalFace" src="../assets/img/add.png" height="30" width="30" >
-                <input  type="file"  id="file"  onchange="upload(this)"  style="opacity:0; position: absolute;top: 11px;left: 5px;padding-left: 100px;width:150px;cursor:pointer;height: 50px;" >
+                <input  type="file"  id="file"  onchange="upload(this)" >
             <p>拖拽本地文件到此处</p>   
           </div>          
           <div v-for="child,index1 in data.data_type" >
               <div class="child_node" @click="showDataView(index,index1,0)">          
-                  <p :data-parentIndex="index1">
+                  <p :data-parentIndex="index1" :class="{highlight: childIndex == index1}">
                     <img class="child_node_img" :src='ImgParentNodeSrc'>
                     {{child.name}}
                   </p>
               </div>
               <div class="grand_son_list2">
                 <div class="grand_son_list">
-                  <div v-for="grandson,index2 in child.children">
+                  <div v-for="grandson,index2 in child.children" class="grand_son_node">
                     <p> 
                       <img :src='ImgChildNodeSrc'>
                       {{grandson.name}}
-                      <button    :class="{highlight:  childIndex==index1 && grandsonIndex==index2 &&btid==2}" @click="showDataView(index,index1,index2)" >预览</button>
+                      <button :class="{highlight:  childIndex==index1 && grandsonIndex==index2 }" @click="showDataView(index,index1,index2)" >预览</button>
                     </p>
                   </div>
                 </div>
@@ -53,7 +53,6 @@ export default {
       grandsonIndex:0,
       ImgChildNodeSrc:require('../assets/img/service.png'),
       ImgParentNodeSrc:require('../assets/img/mind_map.png'),
-      btid:0 //说明和预览两个按钮的ID号,用于按钮高亮
     }
   },
   components: {           
@@ -86,11 +85,10 @@ export default {
   methods:{
     //预览按钮
     showDataView:function(index,index1,index2){
-      this.$router.push({path:'/home/dataview'});
+      this.$router.push({path:'/home'});
       this.IndexChange(index,index1,index2);
       this.childIndex = index1;
       this.grandsonIndex = index2;
-      this.btid=2;//给预览按钮一个标识号，用于高亮
     },
     //传输目前选择的节点的index到vuex
     IndexChange:function(index,index1,index2){

@@ -76,7 +76,7 @@ export default {
       this.login_show = true;
     },
     selected(name){
-      this.$router.push({path:"/home/dataview"});
+      this.$router.push({path:"/home"});
       this.active = name;
     },
     exit:function(){

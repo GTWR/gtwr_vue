@@ -40,15 +40,15 @@ export default new Router({
       component: slides
     },
     {
-      path:'/home',
+      path:'/',
       component:Home,
       children:[
         {
-          path: "dataview",
+          path: "home",
           component: RightSideForDataView
         },
         {
-          path:'computeresult',
+          path:'home/computeresult',
           component: RightSideForResult,
           children:[
             {

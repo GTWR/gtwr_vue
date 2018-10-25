@@ -178,7 +178,7 @@ export default {
       },  
       get_view:function(){
         messageBus.$emit('reset-cover-show',false);
-        this.$router.push({path:"/home/dataview"});
+        this.$router.push({path:"/home"});
 
       },
     }

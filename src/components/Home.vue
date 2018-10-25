@@ -23,7 +23,7 @@ export default {
     }
   },
   mounted(){
-    this.$router.push({path:'/home/dataview'})
+    this.$router.push({path:'/home'})
   },
   components:{
     dataSelector,
