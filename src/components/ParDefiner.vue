@@ -94,6 +94,7 @@ export default {
 				//加载后台程序，开始GWR计算
 				$.ajax({
 					url: 'http://localhost:8080/GWRService/GWRService',
+					data: self.computeData,
 					success: function(data){  
 						let dataJson = JSON.parse(data);
 						for(let i=0;i<dataJson.length;i++){

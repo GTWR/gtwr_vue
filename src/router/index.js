@@ -72,9 +72,6 @@ export default new Router({
           ]
         }
       ]
-
     }
-        
-
   ]
 })
