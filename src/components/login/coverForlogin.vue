@@ -27,7 +27,7 @@ require('../../style/coverLogin.scss')
 import {mapState} from 'vuex'
 
 export default {
-	name: 'coverLogin',
+	name: 'coverForLogin',
   data () {
     return {
       see:'',

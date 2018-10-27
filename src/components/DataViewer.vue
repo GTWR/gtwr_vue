@@ -26,7 +26,7 @@ import {mapState} from 'vuex'
 import messageBus from '../bus/messageBus.js'
 
 export default {
-  name: 'ParDefiner',
+  name: 'DataViewer',
   data () {
     return {
       titlename:'', 

@@ -20,9 +20,8 @@
 require('../../style/rightSideForResult.scss')
 var $ = require("jquery")
 
-
 export default {
-  name: 'Home',
+  name: 'computeLog',
   data () {
     return {
       success:true,

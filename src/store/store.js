@@ -4,9 +4,10 @@ import demoLogo from '../assets/img/demo_data_aa.png'
 import privateLogo from '../assets/img/private_data.png'
 Vue.use(Vuex);
 
-//计算分层设色的最大值和最小值；
+//计算分层设色的最大值和最小值；设置当前数据的中心位置
 var dataTreeNodeName = require('../assets/data/dataTreeNodeName.json');//要获取的json文件
 for(let i=0;i<dataTreeNodeName.length;i++){
+	let lonArr = [],latArr=[];
 	if(dataTreeNodeName[i].dataContent){
 		const demo = require('../assets/data/demoData/'+dataTreeNodeName[i].dataContent+'.json');
 		dataTreeNodeName[i].url = demo;
@@ -15,11 +16,15 @@ for(let i=0;i<dataTreeNodeName.length;i++){
 			let arr = [];
 			for(let m=0;m<demo[0].features.length;m++){
 				arr.push(demo[0].features[m].properties[pro]);
+				lonArr.push(demo[0].features[m].geometry.coordinates[0]);
+				latArr.push(demo[0].features[m].geometry.coordinates[1]);
 			}
 			dataTreeNodeName[i].children[j].max=Math.max.apply(null,arr);
 			dataTreeNodeName[i].children[j].min=Math.min.apply(null,arr);
 		}
 	}
+	dataTreeNodeName[i].centerPosition[0] = (Math.max.apply(null,latArr)+Math.min.apply(null,latArr))/2;
+	dataTreeNodeName[i].centerPosition[1] = (Math.max.apply(null,lonArr)+Math.min.apply(null,lonArr))/2;
 }
 
 const state = {

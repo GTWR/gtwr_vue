@@ -14,7 +14,7 @@ import dataViewer from './DataViewer'
 require('../style/main_style.scss')
 
 export default {
-  name: 'Home',
+  name: 'RightSideForDataView',
   data () {
     return {
       msg: ' Hello to GTWR'

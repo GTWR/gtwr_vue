@@ -1,6 +1,6 @@
 [{
 	"name":"house price",
-	"centerPosition":[50.995,-114.09],
+	"centerPosition":[],
 	"zoom": 10,
 	"dataContent": "housePrice",
 	"url":"../assets/data/demoData/",
@@ -19,7 +19,7 @@
 },{
 	"name":"fake data for test",
 	"dataContent":"fakeData",
-	"centerPosition":[30.5882,114.289],
+	"centerPosition":[],
 	"zoom":17,
 	"url":"../assets/data/demoData/",
 	"children":[

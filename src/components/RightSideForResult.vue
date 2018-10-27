@@ -15,7 +15,7 @@
 require('../style/rightSideForResult.scss')
 
 export default {
-  name: 'Home',
+  name: 'RightSideForResult',
   data () {
     return {
     }

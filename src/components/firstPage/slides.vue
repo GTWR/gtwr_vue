@@ -12,7 +12,7 @@
 require('../../style/firstPage.scss')
 
 export default {
-  name: 'hello', 
+  name: 'slides', 
   data () {
     return {
       imgs:null,

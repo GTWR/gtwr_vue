@@ -67,6 +67,7 @@ export default {
       parentNodeIndex: state => state.parent_node_index,
       childNodeIndex: state => state.child_node_index,
 		}),
+		gtwrData(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;},
 		//当前数据适宜的缩放尺度
     viewZoom(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;},
     //当前数据适宜的中心
@@ -77,42 +78,59 @@ export default {
   methods:{
 		//"开始计算"按钮响应函数
   	compute:function(){
-        this.animateHandle();
-				if(this.tab == 2){
-					let self = this;
-					//加载后台程序，开始GWR计算
-					$.get('http://localhost:8080/GWRService/GWRService',function(data){  
-						let dataJson = JSON.parse(data);
-						let arr = []
-						let result = {
-							data: {
-								"type": "FeatureCollection" ,
-								"name": "housePrice",
-								"features":[]
-							},
-							minVal: null,
-							maxVal: null,
-							centerPosition: self.centerPosition,
-							zoom: self.viewZoom,
-						}
-						for(let i=0;i<dataJson.length;i++){
-							arr.push(dataJson[i].yhat);
-							let obj = {
-								"type": "Feature",
-								"properties": dataJson[i],
-								"geometry": {
-									"type": "Point",
-									"coordinates": [dataJson[i].x, dataJson[i].y]
-								}
-							};
-							result.data.features.push(obj);
-						}
-						result.minVal = Math.min.apply(null,arr);
-						result.maxVal = Math.max.apply(null,arr);
-						console.log(result)
-						self.$store.dispatch('computeResultAction' , result);
-					});
+			this.animateHandle();
+			let self = this,arr=[],
+				result = {
+					data: {
+						"type": "FeatureCollection" ,
+						"features":[]
+					},
+					minVal: null,
+					maxVal: null,
+					centerPosition: self.centerPosition,
+					zoom: self.viewZoom,
+				};
+			if(this.tab == 2){
+				//加载后台程序，开始GWR计算
+				$.get('http://localhost:8080/GWRService/GWRService',function(data){  
+					let dataJson = JSON.parse(data);
+					for(let i=0;i<dataJson.length;i++){
+						arr.push(dataJson[i].yhat);
+						let obj = {
+							"type": "Feature",
+							"properties": dataJson[i],
+							"geometry": {
+								"type": "Point",
+								"coordinates": [dataJson[i].x, dataJson[i].y]
+							}
+						};
+						result.data.features.push(obj);
+					}
+				});
+			}else if(this.tab == 1){
+				let temp = this.gtwrData[0].features,
+						dataJson = [];
+				for(let j=0;j<temp.length;j++){
+					dataJson.push(temp[j].properties)
+					dataJson[j].yhat = temp[j].properties.Pprice;//GTWR和GWR的计算结果都叫yhat
 				}
+				for(let i=0;i<dataJson.length;i++){
+					arr.push(dataJson[i].yhat);//这里需要从接口中返回的数据中取出最终的计算值，添加到数组
+					let obj = {
+						"type": "Feature",
+						"properties": dataJson[i],
+						"geometry": {
+							"type": "Point",
+							//这里为了适应原始的数据，所以需要从接口中返回的数据中取出经纬度，定义在这里~
+							"coordinates": [dataJson[i].Longtitude, dataJson[i].Latitude]
+						}
+					};
+					result.data.features.push(obj);
+				}
+			}
+			result.minVal = Math.min.apply(null,arr);
+			result.maxVal = Math.max.apply(null,arr);
+			self.$store.dispatch('computeResultAction' , result);
 		},
 		//动画操控，以及页面跳转函数，函数抽出是为了防止数据访问请求多次发生
 		animateHandle:function(){

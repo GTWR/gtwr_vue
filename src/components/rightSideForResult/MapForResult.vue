@@ -1,15 +1,14 @@
 <template>
-	<div id="leafMapResultPart"></div> 
+	<div id="leafMapResultPart" style="width:100%;height:100%;"></div> 
 </template>
 
 <script>
-require('../../style/mapViewer.scss')
 import Leaflet from 'leaflet'
 import {mapState} from 'vuex'
 import Vue from "vue"
 import messageBus from '../../bus/messageBus.js'
 
-var bgMapUrl = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2VtbWFhYWEiLCJhIjoiY2o2a2N5dzB1MWd1ZTMzcnlqMDhkM3ZjYyJ9.0vVVkY9k7t8z0e3uqMgQnQ';
+var bgMapUrl11 = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2VtbWFhYWEiLCJhIjoiY2o2a2N5dzB1MWd1ZTMzcnlqMDhkM3ZjYyJ9.0vVVkY9k7t8z0e3uqMgQnQ';
 
 export default {
   name: 'mapForResult',
@@ -37,7 +36,7 @@ export default {
     //初始化地图
   	initMap:function(){
   		this.map = L.map('leafMapResultPart').setView([50.505,-108.09],3);
-  		L.tileLayer(bgMapUrl).addTo(this.map);
+  		L.tileLayer(bgMapUrl11).addTo(this.map);
   	},
 	  //添加数据属性的可视化图层
     addDataViewOnMap:function(){

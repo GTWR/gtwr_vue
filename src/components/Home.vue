@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="left-side">
-       <data-selector></data-selector>
-       <par-definer></par-definer>
+        <data-selector></data-selector>
+        <par-definer></par-definer>
     </div>
     <div class="right-side">
       <router-view></router-view>

@@ -11,7 +11,7 @@ import 'echarts-gl'
 import linedata from '../../assets/data/dataForDynamicThreeD.json'
 
 export default {
-  name: 'hello', 
+  name: 'DynamicThreed', 
   data () {
     return {
       myChart:null,

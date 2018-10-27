@@ -87,8 +87,6 @@ export default {
     showDataView:function(index,index1,index2){
       this.$router.push({path:'/home'});
       this.IndexChange(index,index1,index2);
-      this.childIndex = index1;
-      this.grandsonIndex = index2;
     },
     //传输目前选择的节点的index到vuex
     IndexChange:function(index,index1,index2){
