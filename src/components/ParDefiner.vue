@@ -91,6 +91,7 @@ export default {
 					zoom: self.viewZoom,
 				};
 			if(this.tab == 2){
+				console.log(this.computeData);
 				//加载后台程序，开始GWR计算
 				$.ajax({
 					url: 'http://localhost:8080/GWRService/GWRService',
