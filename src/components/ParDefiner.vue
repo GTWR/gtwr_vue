@@ -92,19 +92,26 @@ export default {
 				};
 			if(this.tab == 2){
 				//加载后台程序，开始GWR计算
-				$.get('http://localhost:8080/GWRService/GWRService',function(data){  
-					let dataJson = JSON.parse(data);
-					for(let i=0;i<dataJson.length;i++){
-						arr.push(dataJson[i].yhat);
-						let obj = {
-							"type": "Feature",
-							"properties": dataJson[i],
-							"geometry": {
-								"type": "Point",
-								"coordinates": [dataJson[i].x, dataJson[i].y]
-							}
-						};
-						result.data.features.push(obj);
+				$.ajax({
+					url: 'http://localhost:8080/GWRService/GWRService',
+					success: function(data){  
+						let dataJson = JSON.parse(data);
+						for(let i=0;i<dataJson.length;i++){
+							arr.push(dataJson[i].yhat);
+							let obj = {
+								"type": "Feature",
+								"properties": dataJson[i],
+								"geometry": {
+									"type": "Point",
+									"coordinates": [dataJson[i].x, dataJson[i].y]
+								}
+							};
+							result.data.features.push(obj);
+						}
+					},
+					error: function(xhr,status,error){
+						let errMsg = ['数据错误，无法成功计算','参数设置错误，无法成功计算','网络问题，请求计算失败']
+						alert(errMsg[0])
 					}
 				});
 			}else if(this.tab == 1){
