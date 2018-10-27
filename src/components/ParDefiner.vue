@@ -67,7 +67,7 @@ export default {
       parentNodeIndex: state => state.parent_node_index,
       childNodeIndex: state => state.child_node_index,
 		}),
-		gtwrData(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;},
+		computeData(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;},
 		//当前数据适宜的缩放尺度
     viewZoom(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;},
     //当前数据适宜的中心
@@ -115,7 +115,7 @@ export default {
 					}
 				});
 			}else if(this.tab == 1){
-				let temp = this.gtwrData[0].features,
+				let temp = this.computeData[0].features,
 						dataJson = [];
 				for(let j=0;j<temp.length;j++){
 					dataJson.push(temp[j].properties)

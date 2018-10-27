@@ -40,12 +40,12 @@ export default {
   components:{
   },
   mounted(){
-    this.drawScatter1();
-    this.drawScatter2();
-    this.draw3DScatter();
-    this.drawRadar();
-    this.drawPie();
-    this.drawHis();
+    // this.drawScatter1();
+    // this.drawScatter2();
+    // this.draw3DScatter();
+    // this.drawRadar();
+    // this.drawPie();
+    // this.drawHis();
   },
   computed:{
     ...mapState({
