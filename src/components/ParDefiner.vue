@@ -36,6 +36,7 @@
 require('../style/parDefiner.scss')
 import {mapState} from 'vuex'
 
+var $ = require("jquery")
 export default {
   name: 'ParDefiner',
   data () {
@@ -78,7 +79,11 @@ export default {
   methods:{
 		//"开始计算"按钮响应函数
   	compute:function(){
-			this.animateHandle();
+			//清空“查看计算结果按钮”
+			this.$store.dispatch('computeSuccessAction' , [false,this.parentNodeIndex,this.childNodeIndex]);
+			//按钮动画
+			$("#proBar").addClass('btn-animation');
+			this.$router.push({path:'/computeresult/computeLog'});
 			let self = this,arr=[],
 				result = {
 					data: {
@@ -102,7 +107,7 @@ export default {
 							arr.push(dataJson[i].yhat);
 							let obj = {
 								"type": "Feature",
-								"properties": dataJson[i],
+								"properties": Object.assign(dataJson[i],self.computeData[0].features[i].properties),
 								"geometry": {
 									"type": "Point",
 									"coordinates": [dataJson[i].x, dataJson[i].y]
@@ -140,17 +145,6 @@ export default {
 			result.minVal = Math.min.apply(null,arr);
 			result.maxVal = Math.max.apply(null,arr);
 			self.$store.dispatch('computeResultAction' , result);
-		},
-		//动画操控，以及页面跳转函数，函数抽出是为了防止数据访问请求多次发生
-		animateHandle:function(){
-				this.$router.push({path:'/home/computeresult/computeLog'});
-				var barObj = document.getElementById("proBar");
-				var currentWidth = parseInt(barObj.style.width.substring(0, barObj.style.width.length - 1));
-				if (currentWidth < 100) {
-					barObj.style.width = (currentWidth + 1) + "px";
-				}
-				else{return 0;}
-				setTimeout(this.animateHandle, 246);
 		},
   	gtwr:function(){
         this.tab=1

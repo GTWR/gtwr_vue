@@ -19,7 +19,6 @@ export default {
   name: 'Home',
   data () {
     return {
-      msg: ' Hello to GTWR'
     }
   },
   mounted(){

@@ -35,9 +35,11 @@ export default {
   methods:{
     //初始化地图
   	initMap:function(){
-  		this.map = L.map('leafMapResultPart').setView([50.505,-108.09],3);
-  		L.tileLayer(bgMapUrl11).addTo(this.map);
-  	},
+      if(!this.map){
+    		this.map = L.map('leafMapResultPart').setView([50.505,-108.09],3);
+    		L.tileLayer(bgMapUrl11).addTo(this.map);
+      }
+    },
 	  //添加数据属性的可视化图层
     addDataViewOnMap:function(){
       if(this.layer != null){
@@ -77,7 +79,7 @@ export default {
     },
     //鼠标滑过特征图块，高亮显示
     highlightFeature:function(e) {
-      var layer = e.target;
+      let layer = e.target;
       layer.setStyle(this.highlightLayerStyle);
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
           layer.bringToFront();
@@ -97,8 +99,7 @@ export default {
     },
     //鼠标点击传输数据生成对应的图表
     handleClick:function(e){
-      let layer = e.target;
-      let prop = layer.feature.properties;
+      let layer = e.target,prop = layer.feature.properties;
       messageBus.$emit('data-for-chart',prop);
     }
   }

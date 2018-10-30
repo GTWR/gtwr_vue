@@ -27,12 +27,14 @@ for(let i=0;i<dataTreeNodeName.length;i++){
 	dataTreeNodeName[i].centerPosition[1] = (Math.max.apply(null,lonArr)+Math.min.apply(null,lonArr))/2;
 }
 
+//公共状态
 const state = {
-	username:'',
-	parent_node_index:0,
-	child_node_index:0,
-	grandson_node_index:0,
-    data_list:[
+	username:'', //登录用户名
+	parent_node_index:0, //选中数据父节点，示例数据/本地数据
+	child_node_index:0, //选中的数据节点，house price/fake data
+	grandson_node_index:0, //选中的数据属性，price/living
+	//数据内容
+	data_list:[
 	  	{
 	      	name:'示例数据',
 	      	data_type:dataTreeNodeName,
@@ -46,7 +48,12 @@ const state = {
 		    ]		
 		}
 	],
-	computeResult:null
+	computeResult:null, //GWR/GTWR计算结果
+	ComputeResultBtnShow:{   //数据节点中查看计算结果图表展示的按钮
+		computeSuccess:false,
+		computeParentIndex:null,
+		computeChildIndex:null
+	}
 }
 
 const mutations = {
@@ -64,6 +71,11 @@ const mutations = {
 	},
 	computeResultMutation:function(state,msg){
 		state.computeResult = msg;
+	},
+	computeSuccessMutation: function(state,msg){
+		state.ComputeResultBtnShow.computeSuccess = msg[0];
+		state.ComputeResultBtnShow.computeParentIndex = msg[1];
+		state.ComputeResultBtnShow.computeChildIndex = msg[2];
 	}
 }
 
@@ -79,6 +91,9 @@ const actions = {
 	},
 	computeResultAction:function({commit},msg){
 		commit('computeResultMutation',msg)
+	},
+	computeSuccessAction:function({commit},msg){
+		commit('computeSuccessMutation',msg)
 	}
 }
 

@@ -49,7 +49,7 @@ export default {
         //关闭遮罩层与登录面板
         messageBus.$emit('login-cover-show',false);
         this.$store.commit('username',this.username);
-        this.$router.push({path:"/home/dataview"});
+        this.$router.push({path:"/home"});
     },
     sign:function(){
       //关闭遮罩层与登录忘记密码面板
@@ -65,9 +65,6 @@ export default {
       //打开忘记密码页面
       messageBus.$emit('reset-cover-show',true);
     }
-  },
-  components:{
-  },
-      
+  }   
 }
 </script>

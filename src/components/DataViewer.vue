@@ -53,15 +53,15 @@ export default {
   		messageBus.$on('event-to-chart',function(val){
         this.titlename=val 
         //jquery方法,使表格中的滚动条滚动到指定位置，同时改变背景色
-        const id = '#'+that.SpaceFilter(this.titlename);//要定位的地方的id
-        var $objTr = $(id); //找到要定位的地方 
-        let t1 = document.getElementById('t1');//表格容器
+        let id = '#'+that.SpaceFilter(this.titlename),//要定位的地方的id
+            $objTr = $(id), //找到要定位的地方 
+            t1 = document.getElementById('t1');//表格容器
         for(var i=0;i<t1.rows.length;i++){
           t1.rows[i].style.backgroundColor='';//将表格容器中所有行背景色变为空
         } 
         $objTr.css("background-color","#DCDCDC"); //设置要定位地方的css 
-        let tableContainer = $("#data-table");
-        let scrollLocation = $objTr.offset().top-tableContainer.offset().top+tableContainer.scrollTop();//计算滚动的位置
+        let tableContainer = $("#data-table"),
+            scrollLocation = $objTr.offset().top-tableContainer.offset().top+tableContainer.scrollTop();//计算滚动的位置
         tableContainer.animate({scrollTop:scrollLocation},"slow"); //定位tr 
       });
   	},
@@ -78,11 +78,11 @@ export default {
     //与地图交互，传输数据
     InteractWithMap:function(name,line){
       let t1 = document.getElementById('t1');//表格容器
-      for(var i=0;i<t1.rows.length;i++){
+      for(let i=0;i<t1.rows.length;i++){
         t1.rows[i].style.backgroundColor='';//将表格容器中所有行背景色变为空
       } 
-      const id = '#'+name;//点击数据行的id
-      var $objTr = $(id); //找到数据行的dom 
+      let id = '#'+name;//点击数据行的id
+          $objTr = $(id); //找到数据行的dom 
       $objTr.css("background-color","#DCDCDC"); //设置点击行的css
       messageBus.$emit('from-table-to-map',line)
     }

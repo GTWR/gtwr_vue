@@ -22,10 +22,6 @@ export default {
     return {  
     }
   },
-  mounted(){    
-  },
-  methods:{
-  },
   components: {
     dynamic
   }

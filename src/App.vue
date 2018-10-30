@@ -28,11 +28,11 @@
         <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
     <!-- End 页面主体 -->
-    <!-- Start 遮罩 -->
+    <!-- Start 登录遮罩 -->
     <cover-login v-show="login_show"></cover-login>
     <cover-sign v-show="sign_show"></cover-sign>
     <cover-reset v-show="reset_show"></cover-reset>
-    <!-- End 遮罩 -->
+    <!-- End 登录遮罩 -->
   </div>
 </template>
 
@@ -53,14 +53,16 @@ export default {
       active:'',
       login_show: false,
       sign_show: false,
-      reset_show: false
+      reset_show: false,
+      img_par_show: false
   	}
   },
   mounted(){
-    this.getLoginShowPar();
+    this.getShowPar();
   },
   methods:{
-    getLoginShowPar:function(){
+    //获取cover遮罩是否显示的参数
+    getShowPar:function(){
       let self = this;
       messageBus.$on('login-cover-show',function(val){
         self.login_show = val;
@@ -72,13 +74,16 @@ export default {
         self.reset_show = val;
       });
     },
+    //显示登录cover
     login:function(){
       this.login_show = true;
     },
+    //登录成功，进入home页面
     selected(name){
       this.$router.push({path:"/home"});
       this.active = name;
     },
+    //注销
     exit:function(){
       this.$store.commit('username','');
     }

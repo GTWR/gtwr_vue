@@ -1,12 +1,33 @@
 <template>
-  <div class="chartAnalysis">
-    <map-result></map-result> 
-    <div class="chart">
-      <div id="scatter"></div>
-      <div id="line"></div>
-      <div id="three-d"></div>
-    </div>  
-  </div>
+<div class="chartAnalysis">
+    <table style="width:100%;height:100%">
+        <tr v-for="trInd in [0,1,2]">
+            <td colspan="2" rowspan="2" v-if="trInd == 0"><map-result></map-result></td>
+            <td v-for="index in trInd==0?[0]:trInd==1?[1]:[2,3,4]">
+                <!-- 图块显示文字，点击文字可以设置图表参数 -->
+                <a class="add-chart-par" @click="showParPanel(index)" v-show="addChartIconShow[index]">点击此处添加数据图表...</a>
+                <!-- 设置图表参数 -->
+                <div class="chart-par-setting" v-show="chartParSettingPanelShow[index]">
+                    <p>选择数据图表横纵坐标</p>
+                    <a>图表标题: </a>
+                    <input v-model="par['chart'+(index+1)]['title']"><br/>
+                    <a>图表类型: </a>
+                    <select v-model="par['chart'+(index+1)]['chartType']"><option v-for="item in chartType">{{item}}</option></select><br/>
+                    <a>横坐标: </a>
+                    <select v-model="par['chart'+(index+1)]['heng']"><option v-for="item in Object.keys(computeResult[0].properties)">{{item}}</option></select><br/>
+                    <a>纵坐标: </a>
+                    <select v-model="par['chart'+(index+1)]['zong1']"><option v-for="item in Object.keys(computeResult[0].properties)">{{item}}</option></select>
+                    <img src="../../assets/img/add.png" @click="addZongNode(index)" v-show="!zongNodeShow[index]"><br/>
+                    <a v-show="zongNodeShow[index]">纵坐标: </a>
+                    <select v-show="zongNodeShow[index]" v-model="par['chart'+(index+1)]['zong2']"><option v-for="item in Object.keys(computeResult[0].properties)">{{item}}</option></select><br/>
+                    <button @click="parSettingSubmit(index,par['chart'+(index+1)]['title'],par['chart'+(index+1)]['heng'],par['chart'+(index+1)]['zong1'],par['chart'+(index+1)]['zong2'],par['chart'+(index+1)]['chartType'])">完成</button>
+                </div>
+                <!-- 显示，绘制图表 -->
+                <div :id="chartPanelId(index)" class="chart" v-show="chartPanelShow[index]"></div>
+            </td>
+        </tr>
+    </table>    
+</div> 
 </template>
 
 <script>
@@ -18,224 +39,106 @@ import messageBus from '../../bus/messageBus.js'
 require('../../style/rightSideForResult.scss')
 
 export default {
-  name: 'chartAnalysis',
-   data () {
-    return {
-        data_scatter:[],
-    }
-  },
-  components:{
-    mapResult
-  },
-  mounted(){
-    //data_scatter数组属性初始化
-    this.data_scatter={
-        Living:0.149,
-        Quality:0.209,
-        Structure:0.25,
-        Renovation:0.5,
-        Condiction:0.333,
-        Greenspace:0,
-        Traffic:0.333,
-        VIEW:0.337
-    };
-    console.log(this.computeResult)
-    // this.DrawScatter();
-    // this.DrawBar();
-    // this.DrawPie();
-    // this.listenValue();
-  },
-  computed:{
-    ...mapState({
-      computeResult: state => state.computeResult.data.features
-    }),
-  },
-  methods:{
-    listenValue:function(){
-        messageBus.$on('data-for-chart',(prop)=>{
-            this.data_scatter=prop,
-            this.DrawBar(),
-            this.DrawPie()
-        });
-    },
-    //绘制第一幅散点图
-    DrawScatter:function(){
-        let scatterChart = document.getElementById('scatter');
-        let myChart = echarts.init(scatterChart);
-        let app = {};
-        let data=[];
-        for(let i=0;i<this.GetData[0].features.length;i++){
-            data.push([this.GetData[0].features[i].properties.Oprice,this.GetData[0].features[i].properties.Pprice]);
-        }//通过循环读取HousePrice.Json文件中的数据
-        let option = {
-            title: {
-                text: '预测房价与真实房价',
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter:function(param){
-                    return 'Observation:'+param.value[0]
-                        +'<br>Prediction:'+param.value[1]
-                },
-                axisPointer: {
-                    type: 'cross'
-                }
-            },
-            grid: {
-                    left: '0%',
-                    right: '13%',
-                    bottom: '0%',
-                    containLabel: true
-            },
-            xAxis: {
-                type: 'value',
-                name:'Obser-'+'\n'
-                    +'vation',
-                nameGap:2,
-                nameTextStyle:{
-                            fontSize:'10'
-                        },
-                scale:true,
-                splitLine: {
-                    lineStyle: {
-                        type: 'dashed'
-                    }
-                },
-            },
-            yAxis: {
-                type: 'value',
-                name:'Prediction',
-                scale:true,
-                splitLine: {
-                    lineStyle: {
-                        type: 'dashed'
-                    }
-                },
-            },
-            series: [{
-                symbolSize: 10,
-                data :data,
-                type: 'scatter'
-            }]
-        };
-        myChart.setOption(option, true);
-    },
-    
-    //绘制第二幅直方图
-    DrawBar:function(){
-        let scatterChart = document.getElementById('line');
-        let myChart = echarts.init(scatterChart);
-        let app = {};
-        let option = {
-            title : {
-                text: '影响房价的各个因子'
-            },
-            color:['#3398DB'],
-            grid: {
-                left: '0%',
-                right: '13%',
-                bottom: '0%',
-                containLabel: true
-            },
-            tooltip:{
-                trigger:'axis',
-                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                }
-            },
-            label:{
-                show:true,
-                position:'top',
-                color:'#3398DB'
-            },
-            xAxis: {
-                name:'Factor',
-                nameGap:2,
-                nameTextStyle:{
-                    fontSize:'10'
-                },
-                axisLabel:{
-                    textStyle:{
-                        fontSize:10
-                    }
-                },
-                type: 'category',
-                data: ['Living', 'Quality', 'Struct', 'Renova', 'Condic', 'Greens', 'Traffic','VIEW']
-            },
-            yAxis: {
-                name:'Value',
-                type: 'value'
-            },
-            series: [{
-                data:[this.data_scatter.Living,this.data_scatter.Quality,this.data_scatter.Structure,this.data_scatter.Renovation,
-                    this.data_scatter.Condiction,this.data_scatter.Greenspace,this.data_scatter.Traffic,this.data_scatter.VIEW],
-                type: 'bar'
-            }]
-        };
-        myChart.setOption(option, true);
-    },
-    //绘制第三幅饼图
-    DrawPie:function(){
-        let scatterChart = document.getElementById('three-d');
-        let myChart = echarts.init(scatterChart);
-        let app = {};
-        let option = {
-            title : {
-                text: '影响房价的各个因子占比'
-            },
-            toolbox: {
-                show : false
-            },
-            legend: {
-                orient: 'vertical',
-                x : 'right',
-                y : 'top',
-                textStyle:{
-                    fontSize:10
-                },
-                data:['Living:'+this.data_scatter.Living,'Quality:'+this.data_scatter.Quality,'Struct:'+this.data_scatter.Structure,
-                        'Renova:'+this.data_scatter.Renovation,'Condic:'+this.data_scatter.Condiction,'Greens:'+this.data_scatter.Greenspace,
-                        'Traffic:'+this.data_scatter.Traffic,'VIEW:'+this.data_scatter.VIEW]
-            },
-            calculable : true,
-            series : [
-                {
-                    name:'半径模式',
-                    type:'pie',
-                    radius : [10, 60],
-                    roseType : 'radius',
-                    label: {
-                        normal: {
-                            show: false
-                        },
-                        emphasis: {
-                            show: true
-                        }
-                    },
-                    lableLine: {
-                        normal: {
-                            show: false
-                        },
-                        emphasis: {
-                            show: true
-                        }
-                    },
-                    data:[
-                        {value: this.data_scatter.Living, name:'Living:'+this.data_scatter.Living},
-                        {value:this.data_scatter.Quality, name:'Quality:'+this.data_scatter.Quality},
-                        {value:this.data_scatter.Structure, name:'Struct:'+this.data_scatter.Structure},
-                        {value:this.data_scatter.Renovation, name:'Renova:'+this.data_scatter.Renovation},
-                        {value:this.data_scatter.Condiction, name:'Condic:'+this.data_scatter.Condiction},
-                        {value:this.data_scatter.Greenspace, name:'Greens:'+this.data_scatter.Greenspace},
-                        {value:this.data_scatter.Traffic, name:'Traffic:'+this.data_scatter.Traffic},
-                        {value:this.data_scatter.VIEW, name:'VIEW:'+this.data_scatter.VIEW}
-                    ]
-                }
-            ] 
+    name: 'chartAnalysis',
+    data () {
+        return {
+            addChartIconShow:[true,true,true,true,true],//点击可以设置图标参数的文字显示
+            chartParSettingPanelShow:[false,false,false,false,false],//图表参数设置面板显示
+            chartPanelShow:[false,false,false,false,false],//图表面板显示
+            zongNodeShow:[false,false,false,false,false],//添加的第二维纵坐标显示
+            chartType:['scatter','bar'],//支持的图表类型
+            par:{}//图表参数存储对象
         }
-        myChart.setOption(option, true);
     },
-   
-  }
+    components:{
+        mapResult
+    },
+    beforeMount(){
+        //初始化生成图表参数
+        for(let i=1,string;i<6;i++){
+            string = 'chart'+i;
+            this.par[string] = {
+                title: null,
+                chartType: null,
+                heng: null,
+                zong1: null,
+                zong2: null
+            }
+        }
+    },
+    computed:{
+        ...mapState({
+            parentNodeIndex: state => state.parent_node_index,
+            childNodeIndex: state => state.child_node_index,
+            computeResult: state => state.computeResult.data.features
+        })
+    },
+    methods:{
+        //监听地图点击事件传来的数据
+        listenValue:function(){
+            messageBus.$on('data-for-chart',(prop)=>{    
+            });
+        },
+        //显示图表参数设置内容
+        showParPanel:function(index){
+            this.addChartIconShow.splice(index, 1, false);
+            this.chartParSettingPanelShow.splice(index,1,true);
+        },
+        //添加第二维的纵坐标
+        addZongNode:function(index){
+            this.zongNodeShow.splice(index,1,true);
+        },
+        //设置图表容器id
+        chartPanelId:function(index){
+            return 'chart-panel'+(index+1);
+        },
+        //图表参数设置
+        parSettingSubmit:function(index,title,heng,zong1,zong2,chartType){      
+            if(heng && (zong1 || zong2) && chartType){
+                this.chartParSettingPanelShow.splice(index,1,false);
+                this.chartPanelShow.splice(index,1,true);
+                this.drawChart(index,title,heng,zong1,zong2,chartType);
+                !title && alert('没有选择图表标题哦~~')
+            }else{
+                alert('图表的横纵坐标等必要参数没有设置完全哦~~')
+            }
+        },
+        //图表绘制
+        drawChart:function(index,title,heng,zong1,zong2,chartType){
+            let strId = 'chart-panel'+(index+1),
+                scatterChart = document.getElementById(strId),
+                myChart = echarts.init(scatterChart),
+                app = {},data1=[],data2=[],series=[],self=this,option,xAxisType;
+            for(let i=0;i<this.computeResult.length;i++){
+                data1.push([this.computeResult[i].properties[heng],this.computeResult[i].properties[zong1]]);
+                zong2 && data2.push([this.computeResult[i].properties[heng],this.computeResult[i].properties[zong2]]);
+            }
+            zong1 && series.push({name:zong1,type:chartType,symbolSize:4,data:data1});
+            zong2 && series.push({name:zong2,type:chartType,symbolSize:4,data:data2});
+            xAxisType = chartType == 'bar'? 'category':'value';
+            option = {
+                title : {text: title},
+                tooltip : {trigger: 'axis'},
+                grid: {x:40,y2:40},
+                toolbox: {show: true, feature: {
+                    saveAsImage: {},
+                    myTool: {
+                        show: true,
+                        title: '删除图表',
+                        icon: 'path://M176.662 817.173c-8.19 8.471-7.96 21.977 0.51 30.165 8.472 8.19 21.978 7.96 30.166-0.51l618.667-640c8.189-8.472 7.96-21.978-0.511-30.166-8.471-8.19-21.977-7.96-30.166 0.51l-618.666 640z M795.328 846.827c8.19 8.471 21.695 8.7 30.166 0.511 8.471-8.188 8.7-21.694 0.511-30.165l-618.667-640c-8.188-8.471-21.694-8.7-30.165-0.511-8.471 8.188-8.7 21.694-0.511 30.165l618.666 640z',
+                        onclick:function(){
+                            self.chartParSettingPanelShow.splice(index,1,true);
+                            self.chartPanelShow.splice(index,1,false);
+                            myChart = null;
+                        }
+                    }}},
+                xAxis : [{type : 'category',scale:true,splitNumber:4}],
+                yAxis : [{type : 'value',scale:true}],
+                legend: [{data: [zong1,zong2],right:0,top:30}],
+                series : series
+            };
+            myChart.setOption(option, true);
+        }
+    }
 }
 </script>

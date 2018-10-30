@@ -54,9 +54,10 @@ export default {
   methods:{
 	  //初始化地图
   	initMap:function(){
-  		this.map = L.map('leafmap').setView([50.505,-108.09],3);
-      L.tileLayer(bgMapUrl).addTo(this.map);
-      console.log(this.map)
+  		if(!this.map){
+        this.map = L.map('leafmap').setView([50.505,-108.09],3);
+        L.tileLayer(bgMapUrl).addTo(this.map);
+      }
   	},
 	  //添加数据属性的可视化图层
     addDataViewOnMap:function(){
@@ -97,7 +98,7 @@ export default {
     },
     //鼠标滑过特征图块，高亮显示
     highlightFeature:function(e) {
-      var layer = e.target;
+      let layer = e.target;
       layer.setStyle(this.highlightLayerStyle);
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
           layer.bringToFront();

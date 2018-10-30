@@ -17,7 +17,6 @@ export default {
   name: 'RightSideForDataView',
   data () {
     return {
-      msg: ' Hello to GTWR'
     }
   },
   components:{

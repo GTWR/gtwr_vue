@@ -4,15 +4,15 @@
         <router-view></router-view>
       </div>    
       <div class="tab" id="tab" @click="switchTab">
-          <button class="result-switch-tab" id="chart">图表展示</button>
+          <button class="result-switch-tab" id="chart" v-show="computeSuccess">图表展示</button>
           <button class="result-switch-tab" id="log">计算日志</button>
-          <button class="result-switch-tab last-btn" id="precision">精度评价</button>
       </div>
     </div>
 </template>
 
 <script>
 require('../style/rightSideForResult.scss')
+import {mapState} from 'vuex'
 
 export default {
   name: 'RightSideForResult',
@@ -24,15 +24,18 @@ export default {
   },
   mounted(){
     //初试加载中页面路由指向计算日志模块
-    this.$router.push({path:'/home/computeresult/computeLog'});
+    this.$router.push({path:'/computeresult/computeLog'});
     document.getElementById("log").style.border="2px solid lightseagreen";
   },
   computed:{
+    ...mapState({
+      computeSuccess: state => state.ComputeResultBtnShow.computeSuccess,
+    })
   },
   methods:{
     //切换tab跳转到对应的页面
     switchTab:function(e){
-      let rootUrl = '/home/computeresult/';
+      let rootUrl = '/computeresult/';
       //按钮高亮
       this.handleBtnBorder(e.target.id);
       switch(e.target.id){
@@ -42,9 +45,6 @@ export default {
         case 'log':
           this.$router.push({path:rootUrl+'computeLog'});
           break;
-        case 'precision':
-            this.$router.push({path:rootUrl+'precesion'})
-            break;
       }
     },
     //调整按钮边框

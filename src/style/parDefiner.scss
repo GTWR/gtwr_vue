@@ -38,7 +38,6 @@
       background-color: rgba(0,139,139,0.8);
       border: none;
       color: #FFFFFF;
-      transition: all 0.5s;
       cursor: pointer;
     }
     .submit span {
@@ -71,4 +70,14 @@
 
 }
 
-
+.btn-animation{
+  animation: btnAnimation 5s linear;
+}
+@keyframes btnAnimation{
+  from{
+    width: 0px;
+  }
+  to{
+    width: 100px;
+  }
+}

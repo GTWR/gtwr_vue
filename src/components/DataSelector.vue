@@ -15,10 +15,11 @@
             <p>拖拽本地文件到此处</p>   
           </div>          
           <div v-for="child,index1 in data.data_type" >
-              <div class="child_node" @click="showDataView(index,index1,0)">          
+              <div class="child_node">          
                   <p :data-parentIndex="index1" :class="{highlight: childIndex == index1}">
                     <img class="child_node_img" :src='ImgParentNodeSrc'>
                     {{child.name}}
+                    <button v-show="($route.path.toString().indexOf('/computeresult/')==-1) && computeSuccess.computeSuccess && index1==computeSuccess.computeChildIndex && index == computeSuccess.computeParentIndex" @click="showComputeResult()" >查看计算结果</button>
                   </p>
               </div>
               <div class="grand_son_list2">
@@ -27,7 +28,7 @@
                     <p> 
                       <img :src='ImgChildNodeSrc'>
                       {{grandson.name}}
-                      <button :class="{highlight:  childIndex==index1 && grandsonIndex==index2 }" @click="showDataView(index,index1,index2)" >预览</button>
+                      <button :class="{highlight:  parentIndex == index && childIndex==index1 && grandsonIndex==index2 }" @click="showDataView(index,index1,index2)" >预览</button>
                     </p>
                   </div>
                 </div>
@@ -78,6 +79,7 @@ export default {
   },
   computed:{
     ...mapState({
+      computeSuccess: state => state.ComputeResultBtnShow,
       data_list: state => state.data_list,
       par_list:state=>state.par_list
     })
@@ -96,15 +98,18 @@ export default {
       this.$store.dispatch('parentIndexAction' , this.parentIndex);
       this.$store.dispatch('childIndexAction' , this.childIndex);
       this.$store.dispatch('grandSonIndexAction' , this.grandsonIndex);
+    },
+    //数据节点上查看计算结果的按钮响应函数
+    showComputeResult:function(){
+      this.$router.push({path:'/computeresult/chartAnalysis'});
     }
   }
 }
 function upload(input) {
   //支持chrome IE10
   if (window.FileReader) {
-    var file = input.files[0];
+    let file = input.files[0],reader = new FileReader();
     filename = file.name.split(".")[0];
-    var reader = new FileReader();
     reader.onload = function() {
       console.log(this.result)
       alert(this.result);
@@ -113,7 +118,7 @@ function upload(input) {
   } 
   //支持IE 7 8 9 10
   else if (typeof window.ActiveXObject != 'undefined'){
-    var xmlDoc; 
+    let xmlDoc; 
     xmlDoc = new ActiveXObject("Microsoft.XMLDOM"); 
     xmlDoc.async = false; 
     xmlDoc.load(input.value); 
@@ -121,7 +126,7 @@ function upload(input) {
   } 
   //支持FF
   else if (document.implementation && document.implementation.createDocument) { 
-    var xmlDoc; 
+    let xmlDoc; 
     xmlDoc = document.implementation.createDocument("", "", null); 
     xmlDoc.async = false; 
     xmlDoc.load(input.value); 

@@ -6,7 +6,6 @@ import RightSideForDataView from '@/components/RightSideForDataView'
 import RightSideForResult from '@/components/RightSideForResult'
 import chartAnalysis from '@/components/rightSideForResult/chartAnalysis'
 import computeLog from '@/components/rightSideForResult/computeLog'
-import precision from '@/components/rightSideForResult/precision'
 import slides from '@/components/firstPage/slides'
 
 Vue.use(Router)
@@ -31,7 +30,6 @@ export default new Router({
     },
     {
       path:'/login',
-      name:'Login',
       component: login,
     },
     {
@@ -47,27 +45,16 @@ export default new Router({
           component: RightSideForDataView
         },
         {
-          path:'home/computeresult',
+          path:'computeresult',
           component: RightSideForResult,
           children:[
             {
               path:"computeLog",
-              name:'computeLog',
               component: computeLog,
-              meta: {keepAlive: true}
             },
 			      {
               path:"chartAnalysis",
-              name:'chartAnalysis',
               component: chartAnalysis,
-              meta: {keepAlive: true}
-            },
-            
-            {
-              path:'precesion',
-              name:'precesion',
-              component:precision,
-              meta: {keepAlive: true}
             }
           ]
         }
