@@ -164,9 +164,6 @@ export default {
                 series : series
             };
             this.myChart[index].setOption(option, true);
-            this.myChart[index].on('click', function(param) {
-                console.log(param);//重要的参数都在这里！
-            });
         }
     }
 }
