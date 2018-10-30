@@ -42,12 +42,14 @@ export default {
     name: 'chartAnalysis',
     data () {
         return {
+            dataFromMap:null,
             addChartIconShow:[true,true,true,true,true],//点击可以设置图标参数的文字显示
             chartParSettingPanelShow:[false,false,false,false,false],//图表参数设置面板显示
             chartPanelShow:[false,false,false,false,false],//图表面板显示
             zongNodeShow:[false,false,false,false,false],//添加的第二维纵坐标显示
             chartType:['scatter','bar'],//支持的图表类型
-            par:{}//图表参数存储对象
+            par:{},//图表参数存储对象
+            myChart:[null,null,null,null,null]//图表容器
         }
     },
     components:{
@@ -66,6 +68,9 @@ export default {
             }
         }
     },
+    mounted(){
+        this.listenValue();
+    },
     computed:{
         ...mapState({
             parentNodeIndex: state => state.parent_node_index,
@@ -76,7 +81,18 @@ export default {
     methods:{
         //监听地图点击事件传来的数据
         listenValue:function(){
+            let self = this;
             messageBus.$on('data-for-chart',(prop)=>{    
+                self.dataFromMap = prop;
+                for(let i=0;i<self.myChart.length;i++){
+                    let title = self.par['chart'+(i+1)]['title'],
+                        heng = self.par['chart'+(i+1)]['heng'],
+                        zong1 = self.par['chart'+(i+1)]['zong1'],
+                        zong2 = self.par['chart'+(i+1)]['zong2'],
+                        chartType = self.par['chart'+(i+1)]['chartType'];
+                    //地图与数据表联动
+                    self.myChart[i] && self.drawChart(i,title,heng,zong1,zong2,chartType)
+                }
             });
         },
         //显示图表参数设置内容
@@ -107,20 +123,30 @@ export default {
         drawChart:function(index,title,heng,zong1,zong2,chartType){
             let strId = 'chart-panel'+(index+1),
                 scatterChart = document.getElementById(strId),
-                myChart = echarts.init(scatterChart),
-                app = {},data1=[],data2=[],series=[],self=this,option,xAxisType;
+                app = {},data1=[],data2=[],series=[],self=this,yAxisName='',option,xAxisType;
+            this.myChart[index] = echarts.init(scatterChart);
             for(let i=0;i<this.computeResult.length;i++){
-                data1.push([this.computeResult[i].properties[heng],this.computeResult[i].properties[zong1]]);
+                zong1 && data1.push([this.computeResult[i].properties[heng],this.computeResult[i].properties[zong1]]);
                 zong2 && data2.push([this.computeResult[i].properties[heng],this.computeResult[i].properties[zong2]]);
             }
-            zong1 && series.push({name:zong1,type:chartType,symbolSize:4,data:data1});
-            zong2 && series.push({name:zong2,type:chartType,symbolSize:4,data:data2});
+            zong1 && data1 && series.push({name:zong1,type:chartType,symbolSize:4,data:data1});
+            zong2 && data2 && series.push({name:zong2,type:chartType,symbolSize:4,data:data2});
+            if(zong1 && !zong2){yAxisName = zong1;}
+            if(zong2 && !zong1){yAxisName = zong2;}
+            if(zong2 && zong1){yAxisName = zong1+'/'+zong2;}
+            this.dataFromMap && series.push({
+                type: 'effectScatter',
+                itemStyle:{color:'#FC4E2A'},
+                symbolSize: 10,
+                data: [[this.dataFromMap[heng],this.dataFromMap[zong1]],[this.dataFromMap[heng],this.dataFromMap[zong2]]],
+            });
             xAxisType = chartType == 'bar'? 'category':'value';
             option = {
                 title : {text: title},
-                tooltip : {trigger: 'axis'},
-                grid: {x:40,y2:40},
+                tooltip : {trigger: 'item'},
+                grid: {x:40,bottom:45},
                 toolbox: {show: true, feature: {
+                    dataZoom: {},
                     saveAsImage: {},
                     myTool: {
                         show: true,
@@ -129,15 +155,18 @@ export default {
                         onclick:function(){
                             self.chartParSettingPanelShow.splice(index,1,true);
                             self.chartPanelShow.splice(index,1,false);
-                            myChart = null;
+                            self.myChart[index] = null;
                         }
                     }}},
-                xAxis : [{type : 'category',scale:true,splitNumber:4}],
-                yAxis : [{type : 'value',scale:true}],
+                xAxis : [{name:heng,nameLocation:'center',nameGap:25,type : 'category',scale:true,splitNumber:4}],
+                yAxis : [{name:yAxisName,type : 'value',scale:true}],
                 legend: [{data: [zong1,zong2],right:0,top:30}],
                 series : series
             };
-            myChart.setOption(option, true);
+            this.myChart[index].setOption(option, true);
+            this.myChart[index].on('click', function(param) {
+                console.log(param);//重要的参数都在这里！
+            });
         }
     }
 }

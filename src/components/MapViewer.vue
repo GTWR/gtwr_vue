@@ -61,9 +61,7 @@ export default {
   	},
 	  //添加数据属性的可视化图层
     addDataViewOnMap:function(){
-      if(this.layer != null){
-        this.layer.remove();
-      }
+      this.layer && this.layer.remove();
       this.map.setView(this.centerPosition,this.viewZoom)
       let that = this;
       this.layer = L.geoJson(this.dataA,{
@@ -100,9 +98,7 @@ export default {
     highlightFeature:function(e) {
       let layer = e.target;
       layer.setStyle(this.highlightLayerStyle);
-      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-          layer.bringToFront();
-      }
+      !L.Browser.ie && !L.Browser.opera && !L.Browser.edge && layer.bringToFront();
     },
     //鼠标移出，还原样式
     resetHighlight:function(e) {
@@ -118,12 +114,15 @@ export default {
     },
     //鼠标点击传输数据到dataViewer组件
     handleClick:function(e){
-      let layer = e.target;
-      let prop = layer.feature.properties.name;
+      let layer = e.target,prop = layer.feature.properties.name,self=this;
       //清空已经高亮的图层
-      if (this.highlightFromTable!=null) {
-        this.highlightFromTable.remove();
-      }
+      this.highlightFromTable && this.highlightFromTable.remove();
+      self.highlightFromTable = L.geoJson(layer.feature,{
+        pointToLayer: function(feature,latlng){
+          return L.circleMarker(latlng,self.pointStyle(feature,self.par))
+        }
+      }).addTo(self.map)
+      self.highlightFromTable.setStyle(self.highlightLayerStyle);
 	    messageBus.$emit('event-to-chart',prop);
       
     },
@@ -132,9 +131,7 @@ export default {
       const that = this;
       messageBus.$on('from-table-to-map',function(val){
         //清空已经高亮的图层
-        if (that.highlightFromTable!=null) {
-          that.highlightFromTable.remove();
-        }
+        that.highlightFromTable && that.highlightFromTable.remove();
         //叠加点击数据行对一个的小图块
         const temp = that;
         that.highlightFromTable = L.geoJson(val,{

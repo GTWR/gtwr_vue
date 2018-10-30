@@ -81,7 +81,7 @@ export default {
       for(let i=0;i<t1.rows.length;i++){
         t1.rows[i].style.backgroundColor='';//将表格容器中所有行背景色变为空
       } 
-      let id = '#'+name;//点击数据行的id
+      let id = '#'+name,//点击数据行的id
           $objTr = $(id); //找到数据行的dom 
       $objTr.css("background-color","#DCDCDC"); //设置点击行的css
       messageBus.$emit('from-table-to-map',line)
