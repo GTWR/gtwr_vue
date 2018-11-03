@@ -20,11 +20,8 @@ export default {
     return {
     }
   },
-  components:{
-  },
   mounted(){
-    //初试加载中页面路由指向计算日志模块
-    this.$router.push({path:'/computeresult/computeLog'});
+    this.$router.push({path:'/computeresult/computeLog'});//初试加载中页面路由指向计算日志模块
     document.getElementById("log").style.border="2px solid lightseagreen";
   },
   computed:{
@@ -36,8 +33,7 @@ export default {
     //切换tab跳转到对应的页面
     switchTab:function(e){
       let rootUrl = '/computeresult/';
-      //按钮高亮
-      this.handleBtnBorder(e.target.id);
+      this.handleBtnBorder(e.target.id);//按钮高亮
       switch(e.target.id){
         case 'chart':
           this.$router.push({path:rootUrl+'chartAnalysis'});
@@ -47,7 +43,10 @@ export default {
           break;
       }
     },
-    //调整按钮边框
+    /**
+     * 调整按钮边框
+     * @param String id [description] tab切换按钮的id
+     */
     handleBtnBorder:function(id){
       let tab = document.getElementsByClassName('result-switch-tab');
       for (let i = 0; i< tab.length; i++) {

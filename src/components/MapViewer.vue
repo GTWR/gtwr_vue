@@ -35,18 +35,12 @@ export default {
       childNodeIndex: state => state.child_node_index,
       grandSonNodeIndex: state => state.grandson_node_index,
     }),
-    //节点数据，例如房价数据
-    dataA(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;},
-    //当前选择的参数，数据属性
-    par(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].name;},
-    //当前数据适宜的缩放尺度
-    viewZoom(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;},
-    //当前数据适宜的中心
-    centerPosition(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;},
-    //当前数据属性对应的最大值
-    maxVal(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].max;},
-    //当前数据属性对应的最小值
-    minVal(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].min;},
+    dataA(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;},//节点数据，例如房价数据
+    par(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].name;},    //当前选择的参数，数据属性
+    viewZoom(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;},    //当前数据适宜的缩放尺度
+    centerPosition(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].centerPosition;},    //当前数据适宜的中心
+    maxVal(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].max;},    //当前数据属性对应的最大值
+    minVal(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].children[this.grandSonNodeIndex].min;},    //当前数据属性对应的最小值
   },
   watch:{
 	  par:'addDataViewOnMap'
@@ -72,7 +66,10 @@ export default {
       }) 
       this.layer.addTo(this.map);	  
     },
-	  //设置数据点分层设色的颜色
+	  /**
+     * 设置数据点分层设色的颜色
+     * @param float d [description] 数据点属性值
+     */
     GetColor:function(d) {
       let distance = (this.maxVal - this.minVal)/8
       return d > this.maxVal+distance*7 ? '#800026' :
@@ -115,8 +112,7 @@ export default {
     //鼠标点击传输数据到dataViewer组件
     handleClick:function(e){
       let layer = e.target,prop = layer.feature.properties.name,self=this;
-      //清空已经高亮的图层
-      this.highlightFromTable && this.highlightFromTable.remove();
+      this.highlightFromTable && this.highlightFromTable.remove();//清空已经高亮的图层
       self.highlightFromTable = L.geoJson(layer.feature,{
         pointToLayer: function(feature,latlng){
           return L.circleMarker(latlng,self.pointStyle(feature,self.par))
@@ -130,11 +126,9 @@ export default {
     listenToTable:function(){
       const that = this;
       messageBus.$on('from-table-to-map',function(val){
-        //清空已经高亮的图层
-        that.highlightFromTable && that.highlightFromTable.remove();
-        //叠加点击数据行对一个的小图块
+        that.highlightFromTable && that.highlightFromTable.remove();//清空已经高亮的图层     
         const temp = that;
-        that.highlightFromTable = L.geoJson(val,{
+        that.highlightFromTable = L.geoJson(val,{   //叠加点击数据行对一个的小图块
           pointToLayer: function(feature,latlng){
             return L.circleMarker(latlng,temp.pointStyle(feature,temp.par))
           }

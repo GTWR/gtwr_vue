@@ -69,20 +69,14 @@ export default {
                     show:false,
                     label: {
                         normal: {
-                            textStyle: {
-                                color: '#fff'
-                            }
+                            textStyle: {color: '#fff'}
                         },
                         emphasis: {
-                            textStyle: {
-                                color: '#aaa'
-                            }
+                            textStyle: {color: '#aaa'}
                         }
                     },
                     symbol: 'circle',
-                    lineStyle: {
-                        color: '#555'
-                    },
+                    lineStyle: {color: '#555'},
                     checkpointStyle: {
                         color: '#bbb',
                         borderColor: '#777',
@@ -104,12 +98,8 @@ export default {
                     show: false,
                     calculable: true,
                     realtime: false,
-                    inRange: {
-                        color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-                    },
-                    outOfRange: {
-                        colorAlpha: 0
-                    }
+                    inRange: {color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']},
+                    outOfRange: {colorAlpha: 0}
                 },
                 mapbox: {
                     center: [120.5393, 31.323070],
@@ -156,12 +146,8 @@ export default {
                 'value': [120, 30, linedata[1]]
             })
             option.options.push({
-                visualMap: {
-                    max: linedata[1]
-                },
-                series: [{
-                    data: data
-                }]
+                visualMap: {max: linedata[1]},
+                series: [{data: data}]
             });
         }
         if (option && typeof option === "object") {

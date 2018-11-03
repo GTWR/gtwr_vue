@@ -102,18 +102,15 @@ export default {
     },
     //鼠标点击传输数据生成对应的图表
     handleClick:function(e){
-      let layer = e.target,prop = layer.feature.properties,self=this;
-      //清空已经高亮的图层
-      this.highlightFromTable && this.highlightFromTable.remove();
-      //绘制点击小图斑的高亮图层
+      let layer = e.target,prop = layer.feature.properties,self=this;     
+      this.highlightFromTable && this.highlightFromTable.remove();//清空已经高亮的图层
       this.highlightFromTable = L.geoJson(layer.feature,{
         pointToLayer: function(feature,latlng){
           return L.circleMarker(latlng,self.pointStyle(feature,self.par))
         }
       }).addTo(self.map)
-      this.highlightFromTable.setStyle(this.highlightLayerStyle);
-      //传输数据到chart中，支持图表联动
-      messageBus.$emit('data-for-chart',prop);
+      this.highlightFromTable.setStyle(this.highlightLayerStyle);     
+      messageBus.$emit('data-for-chart',prop);//传输数据到chart中，支持图表联动
     }
   }
 }

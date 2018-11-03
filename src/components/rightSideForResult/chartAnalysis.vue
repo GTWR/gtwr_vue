@@ -90,8 +90,7 @@ export default {
                         zong1 = self.par['chart'+(i+1)]['zong1'],
                         zong2 = self.par['chart'+(i+1)]['zong2'],
                         chartType = self.par['chart'+(i+1)]['chartType'];
-                    //地图与数据表联动
-                    self.myChart[i] && self.drawChart(i,title,heng,zong1,zong2,chartType)
+                    self.myChart[i] && self.drawChart(i,title,heng,zong1,zong2,chartType)//地图与数据表联动
                 }
             });
         },
@@ -108,7 +107,14 @@ export default {
         chartPanelId:function(index){
             return 'chart-panel'+(index+1);
         },
-        //图表参数设置
+        /**
+         * 提交图表参数设置
+         * @param index        图表容器索引，标定图表绘制的容器
+         * @param title        图表标题
+         * @param heng         图表横坐标
+         * @param zong1/zong2  图表纵坐标
+         * @param chartType    图表类型
+         */
         parSettingSubmit:function(index,title,heng,zong1,zong2,chartType){      
             if(heng && (zong1 || zong2) && chartType){
                 this.chartParSettingPanelShow.splice(index,1,false);

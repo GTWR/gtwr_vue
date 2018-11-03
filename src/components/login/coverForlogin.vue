@@ -46,24 +46,19 @@ export default {
       this.pwd_type=!this.pwd_type;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
     },
     submitPar:function(){
-        //关闭遮罩层与登录面板
-        messageBus.$emit('login-cover-show',false);
+        messageBus.$emit('login-cover-show',false);//关闭遮罩层与登录面板
         this.$store.commit('username',this.username);
         this.$router.push({path:"/home"});
     },
-    sign:function(){
-      //关闭遮罩层与登录忘记密码面板
-      messageBus.$emit('login-cover-show',false);
-      messageBus.$emit('reset-cover-show',false);
-      //打开注册页面
-      messageBus.$emit('sign-cover-show',true);
+    sign:function(){     
+      messageBus.$emit('login-cover-show',false);//关闭遮罩层与登录忘记密码面板
+      messageBus.$emit('reset-cover-show',false);     
+      messageBus.$emit('sign-cover-show',true);//打开注册页面
     },
-    reset:function(){
-      //关闭遮罩层与登录注册面板
-      messageBus.$emit('login-cover-show',false);
-      messageBus.$emit('sign-cover-show',false);
-      //打开忘记密码页面
-      messageBus.$emit('reset-cover-show',true);
+    reset:function(){      
+      messageBus.$emit('login-cover-show',false);//关闭遮罩层与登录注册面板
+      messageBus.$emit('sign-cover-show',false);     
+      messageBus.$emit('reset-cover-show',true);//打开忘记密码页面
     }
   }   
 }

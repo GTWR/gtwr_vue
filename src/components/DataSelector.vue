@@ -85,7 +85,12 @@ export default {
     })
   },
   methods:{
-    //预览按钮
+    /**
+     * 预览按钮
+     * @param index   父节点索引,示例数据/本地数据
+     * @param index1  数据节点索引，具体的数据名称
+     * @param index2  属性节点索引，具体数据中的属性名称
+     */
     showDataView:function(index,index1,index2){
       this.$router.push({path:'/home'});
       this.IndexChange(index,index1,index2);

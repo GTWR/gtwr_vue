@@ -74,9 +74,8 @@ export default {
       this.seen = !this.seen;//小眼睛的变化
       this.pwdType=!this.pwdType;//跟着小眼睛变化，密码框隐藏显示文本框，内容就显示了
     },
-    submitPar:function(){
-      //关闭遮罩层与注册面板
-      messageBus.$emit('sign-cover-show',false);
+    submitPar:function(){     
+      messageBus.$emit('sign-cover-show',false);//关闭遮罩层与注册面板
     },
     send:function() {
       let me = this;
@@ -126,21 +125,15 @@ export default {
     },
     // 图片验证码
     createCode(){
-        //先清空验证码的输入
         this.code = "";
         this.checkCode = "";
-        this.picLyanzhengma = "";
-        //验证码的长度  
-        let codeLength = 4,
-        //随机数 
+        this.picLyanzhengma = ""; 
+        let codeLength = 4, 
         random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');  
         for(let i = 0; i < codeLength; i++) {
-            //取得随机数的索引（0~35）
             let index = Math.floor(Math.random()*36);   
-            //根据索引取得随机数加到code上
             this.code += random[index];   
         }
-        //把code值赋给验证码  
         this.checkCode = this.code; 
     },  
     getview:function(){

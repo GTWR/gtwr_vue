@@ -33,7 +33,7 @@ export default {
     //添加计算日志展示的信息
     handleResultView:function(){
         let content,arr;
-        console.log(computeLog)
+        // console.log(computeLog)
         this.success = (computeLog[computeLog.length-1].line).indexOf('成功') == -1 ? false : true;
         for(let i=0;i<computeLog.length;i++){
           if(computeLog[i].number && computeLog[i].line){
@@ -50,12 +50,10 @@ export default {
           }
         }
         $('.comments').append(content);
-        if(this.success){      
-          //传递计算是否成功的消息，控制结果展示点击按钮的disable属性
+        if(this.success){               
           arr=[this.success,this.parent_node_index,this.child_node_index]
-          this.$store.dispatch('computeSuccessAction' , arr);
-          //打开面板，让用户选择数据图表的横纵坐标
-          messageBus.$emit('img-par-cover-show',true); 
+          this.$store.dispatch('computeSuccessAction' , arr);//传递计算是否成功的消息，控制结果展示点击按钮的disable属性
+          messageBus.$emit('img-par-cover-show',true); //打开面板，让用户选择数据图表的横纵坐标
         }
     }
   },

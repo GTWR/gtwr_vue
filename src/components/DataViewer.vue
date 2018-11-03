@@ -49,23 +49,24 @@ export default {
     //绘制表格
   	getEventData(){
   		const that = this;
-  		//接收点击要素的name值，传给titlename
   		messageBus.$on('event-to-chart',function(val){
         this.titlename=val 
-        //jquery方法,使表格中的滚动条滚动到指定位置，同时改变背景色
-        let id = '#'+that.SpaceFilter(this.titlename),//要定位的地方的id
-            $objTr = $(id), //找到要定位的地方 
-            t1 = document.getElementById('t1');//表格容器
+        let id = '#'+that.SpaceFilter(this.titlename),
+            $objTr = $(id), 
+            t1 = document.getElementById('t1');
         for(var i=0;i<t1.rows.length;i++){
-          t1.rows[i].style.backgroundColor='';//将表格容器中所有行背景色变为空
+          t1.rows[i].style.backgroundColor='';
         } 
-        $objTr.css("background-color","#DCDCDC"); //设置要定位地方的css 
+        $objTr.css("background-color","#DCDCDC"); //jquery方法,使表格中的滚动条滚动到指定位置，同时改变背景色
         let tableContainer = $("#data-table"),
             scrollLocation = $objTr.offset().top-tableContainer.offset().top+tableContainer.scrollTop();//计算滚动的位置
         tableContainer.animate({scrollTop:scrollLocation},"slow"); //定位tr 
       });
   	},
-    //字符串格式化，将name中包含空格的字符串进行格式化，如New Mexico=>New-Mexico
+    /**
+     * 字符串格式化，将name中包含空格的字符串进行格式化，如New Mexico=>New-Mexico
+     * @param String string [description] name字符串
+     */
     SpaceFilter:function(string){
       if (typeof string === 'string') {
         if(string.indexOf(" ") != -1) {
@@ -75,11 +76,15 @@ export default {
       }
       return string;
     },
-    //与地图交互，传输数据
+    /**
+     * 与地图交互，传输数据
+     * @param string name [description] 数据行的name，用于标识不同的数据行
+     * @param string line [description] 传输到地图端用于地图高亮的数据
+     */
     InteractWithMap:function(name,line){
-      let t1 = document.getElementById('t1');//表格容器
+      let t1 = document.getElementById('t1');
       for(let i=0;i<t1.rows.length;i++){
-        t1.rows[i].style.backgroundColor='';//将表格容器中所有行背景色变为空
+        t1.rows[i].style.backgroundColor='';
       } 
       let id = '#'+name,//点击数据行的id
           $objTr = $(id); //找到数据行的dom 
