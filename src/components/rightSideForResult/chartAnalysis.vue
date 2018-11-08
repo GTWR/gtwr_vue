@@ -49,7 +49,7 @@ export default {
             zongNodeShow:[false,false,false,false,false],//添加的第二维纵坐标显示
             chartType:['scatter','bar'],//支持的图表类型
             par:{},//图表参数存储对象
-            myChart:[null,null,null,null,null]//图表容器
+            myChart:[null,null,null,null,null],//图表容器
         }
     },
     components:{
@@ -70,6 +70,20 @@ export default {
     },
     mounted(){
         this.listenValue();
+        if(window.sessionStorage.getItem('computeResultForChart')){
+            let chartStorageArr = window.sessionStorage.getItem('computeResultForChart').indexOf(';')!=-1 ?window.sessionStorage.getItem('computeResultForChart').split(';'):window.sessionStorage.getItem('computeResultForChart');
+            for(let i=0;i<chartStorageArr.length;i++){
+                let line = chartStorageArr[i].split(',');
+                line[0] = parseInt(line[0]);
+                this.addChartIconShow.splice(line[0],1,false);
+                this.chartParSettingPanelShow.splice(line[0],1,false);
+                this.chartPanelShow.splice(line[0],1,true);
+                for(let j=0;j<line.length;j++){
+                    line[j] = (typeof line[j] == 'string' &&  line[j] == '') ? null:line[j];
+                }
+                this.drawChart(line[0],line[1],line[2],line[3],line[4],line[5])
+            }
+        }
     },
     computed:{
         ...mapState({
@@ -120,6 +134,10 @@ export default {
                 this.chartParSettingPanelShow.splice(index,1,false);
                 this.chartPanelShow.splice(index,1,true);
                 this.drawChart(index,title,heng,zong1,zong2,chartType);
+                let sessionChart = [index,title,heng,zong1,zong2,chartType].join(',');
+                window.sessionStorage.getItem('computeResultForChart') ? 
+                    window.sessionStorage.setItem('computeResultForChart',window.sessionStorage.getItem('computeResultForChart')+';'+sessionChart)
+                    : window.sessionStorage.setItem('computeResultForChart',sessionChart);
                 !title && alert('没有选择图表标题哦~~')
             }else{
                 alert('图表的横纵坐标等必要参数没有设置完全哦~~')
@@ -127,6 +145,7 @@ export default {
         },
         //图表绘制
         drawChart:function(index,title,heng,zong1,zong2,chartType){
+            console.log('this is parameters',index,title,heng,zong1,zong2,chartType)
             let strId = 'chart-panel'+(index+1),
                 scatterChart = document.getElementById(strId),
                 app = {},data1=[],data2=[],series=[],self=this,yAxisName='',option,xAxisType;

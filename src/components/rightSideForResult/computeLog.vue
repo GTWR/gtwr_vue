@@ -10,7 +10,6 @@ require('../../style/rightSideForResult.scss')
 var $ = require("jquery")
 import messageBus from '../../bus/messageBus.js'
 import {mapState} from 'vuex'
-import computeLog from '../../assets/data/computeLog.json'
 
 export default {
   name: 'computeLog',

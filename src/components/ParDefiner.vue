@@ -112,6 +112,7 @@ export default {
 			requestPar = this.tab == 2 ? {computeData: JSON.stringify(computeOriginData),bandWidth:bandWidth} : {computeData: JSON.stringify(computeOriginData)},
 			result = {data: {"type": "FeatureCollection" ,"features":[]},minVal: null,maxVal: null,centerPosition: this.centerPosition,zoom: this.viewZoom,};
 			(window.sessionStorage.getItem('computeLog') || window.sessionStorage.getItem('computeLog') == '') && window.sessionStorage.removeItem('computeLog');
+			(window.sessionStorage.getItem('computeResultForChart') || window.sessionStorage.getItem('computeResultForChart') == '') && window.sessionStorage.removeItem('computeResultForChart');
 			this.$store.dispatch('computeLogRecordAction', null);
 			this.handleComputeProcessing();
 			messageBus.$emit('compute-again-compute-result-reflesh',true);
