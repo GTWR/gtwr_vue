@@ -71,9 +71,10 @@ export default {
     mounted(){
         this.listenValue();
         if(window.sessionStorage.getItem('computeResultForChart')){
-            let chartStorageArr = window.sessionStorage.getItem('computeResultForChart').indexOf(';')!=-1 ?window.sessionStorage.getItem('computeResultForChart').split(';'):window.sessionStorage.getItem('computeResultForChart');
-            for(let i=0;i<chartStorageArr.length;i++){
-                let line = chartStorageArr[i].split(',');
+            let jusgeTemp = window.sessionStorage.getItem('computeResultForChart').indexOf(';')!=-1,
+                chartStorageArr =  jusgeTemp?window.sessionStorage.getItem('computeResultForChart').split(';'):window.sessionStorage.getItem('computeResultForChart');
+            for(let i=0;i<(jusgeTemp?chartStorageArr.length:1);i++){
+                let line = (jusgeTemp?chartStorageArr[i]:chartStorageArr).split(',');
                 line[0] = parseInt(line[0]);
                 this.addChartIconShow.splice(line[0],1,false);
                 this.chartParSettingPanelShow.splice(line[0],1,false);
