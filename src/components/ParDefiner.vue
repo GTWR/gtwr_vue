@@ -69,6 +69,7 @@ export default {
 			...mapState({
 				parentNodeIndex: state => state.parent_node_index,
 				childNodeIndex: state => state.child_node_index,
+				computeLogRecord: state => state.computeLogRecord
 			}),
 			computeData(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].url;},
 			viewZoom(){return this.$store.state.data_list[this.parentNodeIndex].data_type[this.childNodeIndex].zoom;},//当前数据适宜的缩放尺度
@@ -154,7 +155,8 @@ export default {
 		 * @param result      支持图表展示的计算结果初始化
 		*/
 		gwrComputeRequest: function(requestUrl,requestPar,result){
-				let self = this, arr=[];
+			let self = this, arr=[];
+			try{
 				$.ajax({
 						url: requestUrl,type: "GET",dataType: "json",data: requestPar,
 						success: function(response){  
@@ -184,6 +186,11 @@ export default {
 								self.$store.dispatch('computeLogRecordAction', [{result:error}]);//gwr后台程序调用错误，计算日志显示
 						}
 				});
+			}catch(e){
+				this.$store.dispatch('computeLogRecordAction',[{result:"This data can't be used to do gwr computing，computing failed"},{result:'Please change other data'}]);
+			}finally{
+				!this.computeLogRecord &&  this.$store.dispatch('computeLogRecordAction',[{result:"This data can't be used to do gwr computing，computing failed"},{result:'Please change other data'}]);
+			}
 		},
   	gtwr:function(){
         this.tab=1
