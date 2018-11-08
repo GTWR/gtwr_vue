@@ -53,7 +53,8 @@ const state = {
 		computeSuccess:false,
 		computeParentIndex:null,
 		computeChildIndex:null
-	}
+	},
+	computeLogRecord:null //计算日志
 }
 
 const mutations = {
@@ -76,6 +77,9 @@ const mutations = {
 		state.ComputeResultBtnShow.computeSuccess = msg[0];
 		state.ComputeResultBtnShow.computeParentIndex = msg[1];
 		state.ComputeResultBtnShow.computeChildIndex = msg[2];
+	},
+	computeLogRecordMutation: function(state,msg){
+		state.computeLogRecord = msg;
 	}
 }
 
@@ -94,6 +98,9 @@ const actions = {
 	},
 	computeSuccessAction:function({commit},msg){
 		commit('computeSuccessMutation',msg)
+	},
+	computeLogRecordAction:function({commit},msg){
+		commit('computeLogRecordMutation',msg)
 	}
 }
 

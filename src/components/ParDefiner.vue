@@ -35,6 +35,7 @@
 <script>
 require('../style/parDefiner.scss')
 import {mapState} from 'vuex'
+import messageBus from '../bus/messageBus.js'
 
 var $ = require("jquery")
 export default {
@@ -42,7 +43,6 @@ export default {
   data () {
     return {
 			tab:1,
-			computeLog:null,
 			par_list1:[
 				{name:'因变量', value:'', content:'GTWR模型的dependent variable'},
 				{name:'解释变量', value:'', content:'GTWR模型的explanatory variable'},
@@ -79,12 +79,10 @@ export default {
 		//整合计算数据，判断参数是否设置完全和正确，整合初始计算数据
 		organizeComputeData: function(parArray){
 				let data = [],dataObj = {},originData = this.computeData[0].features;
-				for(let ind=0;ind<parArray.length;ind++){
-						if(!parArray[ind].value) {return{errCode:1000};break;}//判断参数是否设置完全
-				}
+				for(let ind=0;ind<parArray.length;ind++){if(!parArray[ind].value) {return {errCode:1000};break;}}//判断参数是否设置完全
 				try{
-						for(let i=0,obj = {};i<originData.length;i++){
-							obj.properties = {};
+						for(let i=0;i<originData.length;i++){
+							let obj = {}; obj.properties = {};
 							for(let j=0;j<parArray.length-1;j++){
 								obj.properties[parArray[j].node] = originData[i].properties[parArray[j].value];
 							}
@@ -94,80 +92,97 @@ export default {
 						return dataObj;
 				}catch(e){return {errCode:1001};}
 		},
-		//传输计算日志到computeLog.vue
-		handleComputeLog: function(parArray){
-			let computeOriginData = this.organizeComputeData(parArray);
+		//判断计算参数是否设置正确，或者设置完整
+		judgeParSetting: function(data){
+			return data.hasOwnProperty('errCode')? false:true;
 		},
-		//"开始计算"按钮响应函数
-  	compute:function(){
-			let self = this,arr=[],
-					parArray = this.tab == 1 ? this.par_list1: this.par_list2,
-					computeOriginData = this.organizeComputeData(parArray),
-					result = {data: {"type": "FeatureCollection" ,"features":[]},minVal: null,maxVal: null,centerPosition: self.centerPosition,zoom: self.viewZoom,};
-			if(computeOriginData.hasOwnProperty('errCode')){
-				this.computeLog = computeOriginData.errCode == 1000 ? {result:"Parameters setting is not completed，computing failed"}:computeOriginData.errCode == 1001?{result:"Parameters are wrong，computing failed"}:this.computeLog;
-			}else{	
+		//处理开始计算后的路由切换、按钮动画等内容
+		handleComputeProcessing:function(){
 				this.$store.dispatch('computeSuccessAction' , [false,this.parentNodeIndex,this.childNodeIndex]);//清空“查看计算结果按钮”
 				$("#proBar").addClass('btn-animation');//按钮动画
 				this.$router.push({path:'/computeresult/computeLog'});//切换路由到计算日志面板
-				if(this.tab == 2){
-					let computeString = JSON.stringify(computeOriginData),
-							bandWidth = this.par_list2[this.par_list2.length-1].value;
-					$.ajax({
-						url: 'http://localhost:8080/GWR_war/GWRService',
-						type: "GET",
-						dataType: "json",
-						data: {
-							computeData: computeString,
-							bandWidth:bandWidth
-						},
-						success: function(data){  
-							console.log(data);
-							// let dataJson = JSON.parse(data);
-							// console.log(dataJson);
-							// for(let i=0;i<dataJson.length;i++){
-							// 	arr.push(dataJson[i].yhat);
-							// 	let obj = {
-							// 		"type": "Feature",
-							// 		"properties": Object.assign(dataJson[i],self.computeData[0].features[i].properties),
-							// 		"geometry": {
-							// 			"type": "Point",
-							// 			"coordinates": [dataJson[i].x, dataJson[i].y]
-							// 		}
-							// 	};
-							// 	result.data.features.push(obj);
-							// }
+		},
+		//"开始计算"按钮响应函数
+  	compute:function(){
+			let parArray = this.tab == 1 ? this.par_list1: this.par_list2,
+			computeOriginData = this.organizeComputeData(parArray),
+			computeParSetting = this.judgeParSetting(computeOriginData),
+			bandWidth = this.tab == 2 ? this.par_list2[this.par_list2.length-1].value:0,
+			requestUrl = this.tab == 1 ? 'http://localhost:8080/GWR_war/GTWRService':'http://localhost:8080/GWR_war/GWRService',
+			requestPar = this.tab == 2 ? {computeData: JSON.stringify(computeOriginData),bandWidth:bandWidth} : {computeData: JSON.stringify(computeOriginData)},
+			result = {data: {"type": "FeatureCollection" ,"features":[]},minVal: null,maxVal: null,centerPosition: this.centerPosition,zoom: this.viewZoom,};
+			(window.sessionStorage.getItem('computeLog') || window.sessionStorage.getItem('computeLog') == '') && window.sessionStorage.removeItem('computeLog');
+			this.$store.dispatch('computeLogRecordAction', null);
+			this.handleComputeProcessing();
+			messageBus.$emit('compute-again-compute-result-reflesh',true);
+			if(computeParSetting){			
+				this.tab == 2 ? this.gwrComputeRequest(requestUrl,requestPar,result):this.gtwrComputeRequest(result);
+			}else{
+				this.$store.dispatch('computeLogRecordAction', computeOriginData.errCode == 1000 ? [{result:"Parameters setting is not completed，computing failed"},{result:'Please set the blank parameters'}]:computeOriginData.errCode == 1001?[{result:"Parameters are wrong，computing failed"},{result:'Please check every parameter'}]:'');
+			}
+		},
+		//gtwr计算
+		gtwrComputeRequest:function(result){
+			try{
+				let response = this.computeData[0].features, arr = [];
+				for(let i=0;i<response.length;i++){
+					arr.push(response[i].properties.Pprice);
+					let obj = {
+						"type": "Feature",
+						"properties": response[i].properties,
+						"geometry": {
+							"type": "Point",
+							"coordinates": [response[i].properties.Longtitude, response[i].properties.Latitude]
+						}
+					};
+					result.data.features.push(obj);
+				}
+				result.minVal = Math.min.apply(null,arr);
+				result.maxVal = Math.max.apply(null,arr);
+				this.$store.dispatch('computeResultAction' , result);
+				let logMsg = [{number:"Step 1",line:"Parsing data and parsing parameter settings",result:''},{number:"Step 2",line:"Parsing coordinates of spatial points",result:''},{number:"Step 3",line:"Calculating GTWR predicted result",result:''},{number:"",line:"",result:'computing success'}];
+				this.$store.dispatch('computeLogRecordAction', logMsg); //计算成功，计算日志显示
+			}catch(e){
+				this.$store.dispatch('computeLogRecordAction', [{result:"GTWR computing failed"}]); //计算失败，计算日志显示
+			}	
+		},
+		/** 
+		 * gwr计算请求
+		 * @param requestUrl  请求链接
+		 * @param requestPar  请求参数
+		 * @param result      支持图表展示的计算结果初始化
+		*/
+		gwrComputeRequest: function(requestUrl,requestPar,result){
+				let self = this, arr=[];
+				$.ajax({
+						url: requestUrl,type: "GET",dataType: "json",data: requestPar,
+						success: function(response){  
+							if(response && response[0].hasOwnProperty('log') && !response[0].log ){
+								for(let i=0;i<response.length-1;i++){
+									arr.push(response[i].yhat);
+									let obj = {
+										"type": "Feature",
+										"properties": Object.assign(response[i],self.computeData[0].features[i].properties),
+										"geometry": {
+											"type": "Point",
+											"coordinates": [response[i].x, response[i].y]
+										}
+									};
+									result.data.features.push(obj);
+								}
+								result.minVal = Math.min.apply(null,arr);
+								result.maxVal = Math.max.apply(null,arr);
+								self.$store.dispatch('computeResultAction' , result);
+								let logMsg = JSON.parse(response[response.length-1].log);
+								self.$store.dispatch('computeLogRecordAction', logMsg); //计算成功，计算日志显示
+							}else{
+								self.$store.dispatch('computeLogRecordAction', response); //计算失败，计算日志显示
+							}			
 						},
 						error: function(xhr,status,error){
-							self.computeLog = {result:error};
-							alert(error,status)
+								self.$store.dispatch('computeLogRecordAction', [{result:error}]);//gwr后台程序调用错误，计算日志显示
 						}
-					});
-				}else if(this.tab == 1){
-					let temp = this.computeData[0].features,
-							dataJson = [];
-					for(let j=0;j<temp.length;j++){
-						dataJson.push(temp[j].properties)
-						dataJson[j].yhat = temp[j].properties.Pprice;//GTWR和GWR的计算结果都叫yhat
-					}
-					for(let i=0;i<dataJson.length;i++){
-						arr.push(dataJson[i].yhat);//这里需要从接口中返回的数据中取出最终的计算值，添加到数组
-						let obj = {
-							"type": "Feature",
-							"properties": dataJson[i],
-							"geometry": {
-								"type": "Point",
-								//这里为了适应原始的数据，所以需要从接口中返回的数据中取出经纬度，定义在这里~
-								"coordinates": [dataJson[i].Longtitude, dataJson[i].Latitude]
-							}
-						};
-						result.data.features.push(obj);
-					}
-				}
-			}
-			result.minVal = Math.min.apply(null,arr);
-			result.maxVal = Math.max.apply(null,arr);
-			self.$store.dispatch('computeResultAction' , result);
+				});
 		},
   	gtwr:function(){
         this.tab=1
