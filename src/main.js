@@ -3,18 +3,16 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store/store'
 import $ from 'jquery'
 import VueResource from 'vue-resource'
-import axios from 'axios'
 
-Vue.use(VueAwesomeSwiper)
-Vue.prototype.$http=axios
+import Vtip from 'vtip'
+import 'vtip/lib/index.min.css'
+
 Vue.use(VueResource)
-
-
-
+Vue.use(Vtip.directive)// 注册指令使用
+Vue.prototype.$tip = Vtip.tip// 工具函数调用
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -25,6 +23,4 @@ new Vue({
   store,
   components: { App },
   template: '<App/>',
-
-
 })

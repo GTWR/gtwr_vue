@@ -7,6 +7,7 @@ import Leaflet from 'leaflet'
 import {mapState} from 'vuex'
 import Vue from "vue"
 import messageBus from '../../bus/messageBus.js'
+require('../../style/main_style.scss')
 
 var bgMapUrl11 = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2VtbWFhYWEiLCJhIjoiY2o2a2N5dzB1MWd1ZTMzcnlqMDhkM3ZjYyJ9.0vVVkY9k7t8z0e3uqMgQnQ';
 
@@ -17,6 +18,8 @@ export default {
       	map: null,
         layer:null,
         highlightFromTable:null,
+        legendLayer:null,
+        legendColor:['#FFEDA0','#FED976','#FEB24C', '#FD8D3C','#FC4E2A','#E31A1C','#BD0026','#800026'],
         highlightLayerStyle:{
           weight: 3,
           color: 'lightseagreen',
@@ -58,22 +61,43 @@ export default {
         },
         onEachFeature: this.onEachFeature
       }) 
-      this.layer.addTo(this.map);	  
+      this.layer.addTo(this.map);
+      this.legendLayer && this.legendLayer.remove();
+      this.addLegend();	  
+    },
+    //添加地图图例
+    addLegend: function(){
+      let minVal = this.computeResult.minVal,
+      maxVal = this.computeResult.maxVal,
+      distance = (maxVal - minVal)/8, self = this;
+      this.legendLayer = L.control({position: 'bottomright'});   
+      this.legendLayer.onAdd = function(map) {
+        let div = L.DomUtil.create('div', 'map_legend'),
+            grades = minVal<maxVal?[minVal.toFixed(2), (minVal+distance).toFixed(2), (minVal+distance*2).toFixed(2), (minVal+distance*3).toFixed(2), (minVal+distance*4).toFixed(2), (minVal+distance*5).toFixed(2), (minVal+distance*6).toFixed(2), (minVal+distance*7).toFixed(2),maxVal.toFixed(2)]:[minVal.toFixed(2),maxVal.toFixed(2)],
+            labels = [], from, to;
+        for (let i = 0; i < grades.length; i++) {
+          from = grades[i];
+          to = grades[i + 1];
+          to && labels.push('<i class="map_legend_div" style="background:' + self.legendColor[i] + '"></i><i class="map_legend_font"> ' + from + '&ndash;' + to+'</i>');
+        }
+        div.innerHTML = labels.join('<br>');
+        return div;
+      };
+      this.legendLayer.addTo(this.map);
     },
 	  //设置数据点分层设色的颜色
     GetColor:function(d) {
-      let distance = (this.computeResult.maxVal - this.computeResult.minVal)/8
-      return d > this.computeResult.maxVal+distance*7 ? '#800026' :
-             d > this.computeResult.minVal+distance*6  ? '#BD0026' :
-             d > this.computeResult.minVal+distance*5  ? '#E31A1C' :
-             d > this.computeResult.minVal+distance*4  ? '#FC4E2A' :
-             d > this.computeResult.minVal+distance*3   ? '#FD8D3C' :
-             d > this.computeResult.minVal+distance*2   ? '#FEB24C' :
-             d > this.computeResult.minVal+distance   ? '#FED976' :
-                        '#FFEDA0';
+      let minVal = this.computeResult.minVal,maxVal = this.computeResult.maxVal,distance = (maxVal - minVal)/8;
+      return d > maxVal+distance*7 ? this.legendColor[7] :
+             d > minVal+distance*6  ? this.legendColor[6] :
+             d > minVal+distance*5  ? this.legendColor[5] :
+             d > minVal+distance*4  ? this.legendColor[4] :
+             d > minVal+distance*3   ? this.legendColor[3] :
+             d > minVal+distance*2   ? this.legendColor[2] :
+             d > minVal+distance   ? this.legendColor[1] : this.legendColor[0];
     },
     //设置数据点显示的样式
-    pointStyle:function(feature,par){
+    pointStyle:function(feature){
       return {
             radius: 3,
             fillColor: this.GetColor(feature.properties.yhat),

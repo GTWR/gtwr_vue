@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="data-selector">
-    <header class="title"><p>数据选择</p></header>
+    <header class="title"><p>计算数据选择</p></header>
     <!--数据列表-->
     <div class="data-list" id="data-list">
       <div v-for="data,index in data_list">       
@@ -10,7 +10,7 @@
         </div>   
         <div class="child_list">
           <div class="data_drag_container" v-if="data.name == '私有数据'" style="position: relative;">        
-            <img class="normalFace" src="../assets/img/add.png" height="30" width="30" >
+            <img class="normalFace" src="../assets/img/add.png" height="30" width="30">
                 <input  type="file"  id="file"  onchange="upload(this)" >
             <p>拖拽本地文件到此处</p>   
           </div>          
@@ -27,8 +27,9 @@
                   <div v-for="grandson,index2 in child.children" class="grand_son_node">
                     <p> 
                       <img :src='ImgChildNodeSrc'>
-                      {{grandson.name}}
-                      <button :class="{highlight:  parentIndex == index && childIndex==index1 && grandsonIndex==index2 }" @click="showDataView(index,index1,index2)" >预览</button>
+                      {{grandson.decribeName}} {{grandson.name}}
+                      <button :class="{highlight:  parentIndex == index && childIndex==index1 && grandsonIndex==index2 && viewOrdescription == 0 }" @click="showDataView(index,index1,index2)">预览</button>
+                      <button :class="{highlight:  parentIndex == index && childIndex==index1 && grandsonIndex==index2 && viewOrdescription == 1}" @click="showDataDesCription(index,index1,index2)">说明</button>
                     </p>
                   </div>
                 </div>
@@ -44,6 +45,7 @@
 <script>
 require('../style/dataSelector.scss')
 import {mapState} from 'vuex'
+import messageBus from '../bus/messageBus';
 
 export default {
   name: 'DataSelector',
@@ -52,11 +54,10 @@ export default {
       parentIndex: 0,
       childIndex:0,
       grandsonIndex:0,
+      viewOrdescription: 0,
       ImgChildNodeSrc:require('../assets/img/service.png'),
       ImgParentNodeSrc:require('../assets/img/mind_map.png'),
     }
-  },
-  components: {           
   },
   mounted(){
     //控制点击节点，收起列表的动画
@@ -94,6 +95,12 @@ export default {
     showDataView:function(index,index1,index2){
       this.$router.push({path:'/home'});
       this.IndexChange(index,index1,index2);
+      this.viewOrdescription = 0;
+    },
+    showDataDesCription:function(index,index1,index2){
+      this.$router.push({path:'/description'});
+      this.IndexChange(index,index1,index2);
+      this.viewOrdescription = 1;
     },
     //传输目前选择的节点的index到vuex
     IndexChange:function(index,index1,index2){
@@ -106,7 +113,8 @@ export default {
     },
     //数据节点上查看计算结果的按钮响应函数
     showComputeResult:function(){
-      this.$router.push({path:'/computeresult/chartAnalysis'});
+      this.$router.push({path:'/computeresult/computeLog'});
+      this.$store.dispatch('rightContainerShowAction' , [true,false,false]);
     }
   }
 }

@@ -54,7 +54,7 @@ const state = {
 		computeParentIndex:null,
 		computeChildIndex:null
 	},
-	computeLogRecord:null //计算日志
+	computeLogRecord:null, //计算日志
 }
 
 const mutations = {

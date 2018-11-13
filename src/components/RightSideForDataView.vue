@@ -11,6 +11,7 @@
 <script>
 import mapViewer from './MapViewer'
 import dataViewer from './DataViewer'
+import messageBus from '../bus/messageBus';
 require('../style/main_style.scss')
 
 export default {

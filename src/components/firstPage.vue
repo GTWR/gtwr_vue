@@ -4,10 +4,8 @@
       <dynamic></dynamic>
     </div>
     <div class="intro-text">
-      <p class="title">高性能地理加权回归计算平台</p>
-      <p>多角度透析数据本体与计算结果</p>
-      <p>多维度示例数据</p>
-      <router-link to="/demo" class="link">更多应用案例</router-link>
+      <p class="title">GTWR云计算平台</p>
+      <router-link to="/demo" class="link">点击此处可浏览更多GTWR应用案例</router-link>
     </div>
   </div>
 </template>

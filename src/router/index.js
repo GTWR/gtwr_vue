@@ -3,9 +3,11 @@ import Router from 'vue-router'
 import login from '@/components/firstPage'
 import Home from '@/components/Home'
 import RightSideForDataView from '@/components/RightSideForDataView'
+import RightSideForDescription from '@/components/RightSideForDescription'
 import RightSideForResult from '@/components/RightSideForResult'
 import chartAnalysis from '@/components/rightSideForResult/chartAnalysis'
 import computeLog from '@/components/rightSideForResult/computeLog'
+import precision from '@/components/rightSideForResult/precision'
 import slides from '@/components/firstPage/slides'
 
 Vue.use(Router)
@@ -45,6 +47,10 @@ export default new Router({
           component: RightSideForDataView
         },
         {
+          path: "description",
+          component: RightSideForDescription
+        },
+        {
           path:'computeresult',
           component: RightSideForResult,
           children:[
@@ -55,6 +61,10 @@ export default new Router({
 			      {
               path:"chartAnalysis",
               component: chartAnalysis,
+            },
+            {
+              path:'precision',
+              component: precision
             }
           ]
         }

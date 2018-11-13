@@ -1,6 +1,6 @@
 <template>
   <div class="data-container">
-  	<header class="title"><p>数据列表</p></header><!-- /header -->
+  	<header class="title"><p>计算数据内容</p></header><!-- /header -->
   	<div class="data-head">
       <table>
         <tr>

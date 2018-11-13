@@ -1,19 +1,21 @@
 <template>
   <div class="par-container">
-	<header class="title"><p>参数设置</p></header><!-- /header -->
+	<header class="title"><p>计算参数设置</p></header><!-- /header -->
     <div class="GWRtab" >
-			<button :class="{active: tab==1}" @click="gtwr">GTWR</button>
-			<button :class="{active: tab==2}" @click="gwr">GWR</button>
-		</div>
-		<div class="par-list">	   
-			 <div v-if="tab==1">
-		     <div v-for="(par,index) in par_list1">
-		    	  <span class="par-title">{{par.name}}：</span>
-						<input placeholder="输入参数" v-model="par.value" >
-						<select v-model="par.value"><option v-for="item in varList">{{item}}</option></select>
+		<button :class="{active: tab==1}" @click="gtwr">GTWR</button>
+		<button :class="{active: tab==2}" @click="gwr">GWR</button>
+	</div>
+	<div class="par-list">	   
+		<div v-if="tab==1">
+		    <div v-for="(par,index) in par_list1">
+		    	<span class="par-title">{{par.name}}：</span>
+				<input placeholder="输入参数" v-model="par.value" >
+				<select v-model="par.value">
+					<option v-for="item in index == 6 ? par_list1[6].options: index == 7 ? par_list1[7].options:varList">{{item}}</option>
+				</select>
 		        <p>参数说明：{{par.content}}</p>
-	   	   </div>
-			 </div>
+	   		</div>
+		</div>
 			 <div v-else>
 						<div v-for="(par,index) in par_list2">
 						<span class="par-title">{{par.name}}：</span>
@@ -50,8 +52,8 @@ export default {
 				{name:'Y - 坐标', value:'', content:'点或面板数据的y坐标，表示空间信息'},
 				{name:'时间维度', value:'', content:'点或面板数据的时间戳，表示时态信息'},
 				{name:'时空距比', value:'', content:'可自定义，也可自动优化生成'},
-				{name:'带宽方法', value:'', content:'选择计算带宽的方法，如AICc等'},
-				{name:'核方法', value:'', content:'内核类型决定是固定距离还是可变的'},
+				{name:'带宽方法', value:'', content:'选择计算带宽的方法，如AICc等',options:['交叉验证法','AIC准则','贝叶斯信息准则']},
+				{name:'核方法', value:'', content:'内核类型决定是固定距离还是可变的',options:['固定常量','可变函数']},
 			],
 			par_list2:[
 				{name:'X - 坐标',node:'X', value:'',content:'点或面板数据的x坐标，表示空间信息'},
@@ -63,8 +65,6 @@ export default {
 			]
     }
   },
-  mounted(){
-	},
 	computed:{
 			...mapState({
 				parentNodeIndex: state => state.parent_node_index,
@@ -102,6 +102,9 @@ export default {
 				this.$store.dispatch('computeSuccessAction' , [false,this.parentNodeIndex,this.childNodeIndex]);//清空“查看计算结果按钮”
 				$("#proBar").addClass('btn-animation');//按钮动画
 				this.$router.push({path:'/computeresult/computeLog'});//切换路由到计算日志面板
+				messageBus.$emit('judge-right-container-tab',true);
+				this.$store.dispatch('rightContainerShowAction' , [true,false,false]);
+				messageBus.$emit('compute-again',true);
 		},
 		//"开始计算"按钮响应函数
   	compute:function(){
@@ -125,26 +128,32 @@ export default {
 		},
 		//gtwr计算
 		gtwrComputeRequest:function(result){
-			try{
-				let response = this.computeData[0].features, arr = [];
-				for(let i=0;i<response.length;i++){
-					arr.push(response[i].properties.Pprice);
-					let obj = {
-						"type": "Feature",
-						"properties": response[i].properties,
-						"geometry": {
-							"type": "Point",
-							"coordinates": [response[i].properties.Longtitude, response[i].properties.Latitude]
-						}
-					};
-					result.data.features.push(obj);
+			if(this.computeData[0].features[0].properties.hasOwnProperty('Pprice')){
+				try{
+					let response = this.computeData[0].features, arr = [];
+					for(let i=0;i<response.length;i++){
+						arr.push(response[i].properties.Pprice);
+						let obj = {
+							"type": "Feature",
+							"properties": response[i].properties,
+							"geometry": {
+								"type": "Point",
+								"coordinates": [response[i].properties.Longtitude, response[i].properties.Latitude]
+							}
+						};
+						obj.properties.yhat = response[i].properties.Pprice;
+						result.data.features.push(obj);
+					}
+					result.minVal = Math.min.apply(null,arr);
+					result.maxVal = Math.max.apply(null,arr);
+					this.$store.dispatch('computeResultAction' , result);
+					let logMsg = [{number:"Step 1",line:"Parsing data and parsing parameter settings",result:''},{number:"Step 2",line:"Parsing coordinates of spatial points",result:''},{number:"Step 3",line:"Calculating GTWR predicted result",result:''},{number:"",line:"",result:'computing success'}];
+					logMsg.push({tip:'点击右侧“图表展示”按钮查看计算结果'})
+					this.$store.dispatch('computeLogRecordAction', logMsg); //计算成功，计算日志显示
+				}catch(e){
+					this.$store.dispatch('computeLogRecordAction', [{result:"GTWR computing failed"}]); //计算失败，计算日志显示
 				}
-				result.minVal = Math.min.apply(null,arr);
-				result.maxVal = Math.max.apply(null,arr);
-				this.$store.dispatch('computeResultAction' , result);
-				let logMsg = [{number:"Step 1",line:"Parsing data and parsing parameter settings",result:''},{number:"Step 2",line:"Parsing coordinates of spatial points",result:''},{number:"Step 3",line:"Calculating GTWR predicted result",result:''},{number:"",line:"",result:'computing success'}];
-				this.$store.dispatch('computeLogRecordAction', logMsg); //计算成功，计算日志显示
-			}catch(e){
+			}else{
 				this.$store.dispatch('computeLogRecordAction', [{result:"GTWR computing failed"}]); //计算失败，计算日志显示
 			}	
 		},
@@ -160,6 +169,7 @@ export default {
 				$.ajax({
 						url: requestUrl,type: "GET",dataType: "json",data: requestPar,
 						success: function(response){  
+							if(self.computeLogRecord!=null){self.$store.dispatch('computeLogRecordAction', null);}
 							if(response && response[0].hasOwnProperty('log') && !response[0].log ){
 								for(let i=0;i<response.length-1;i++){
 									arr.push(response[i].yhat);
@@ -177,19 +187,18 @@ export default {
 								result.maxVal = Math.max.apply(null,arr);
 								self.$store.dispatch('computeResultAction' , result);
 								let logMsg = JSON.parse(response[response.length-1].log);
+								logMsg.push({tip:'点击右侧“图表展示”按钮查看计算结果'})
 								self.$store.dispatch('computeLogRecordAction', logMsg); //计算成功，计算日志显示
 							}else{
 								self.$store.dispatch('computeLogRecordAction', response); //计算失败，计算日志显示
 							}			
 						},
 						error: function(xhr,status,error){
-								self.$store.dispatch('computeLogRecordAction', [{result:error}]);//gwr后台程序调用错误，计算日志显示
+							self.$store.dispatch('computeLogRecordAction', [{result:xhr.statusText}]);//gwr后台程序调用错误，计算日志显示
 						}
 				});
 			}catch(e){
 				this.$store.dispatch('computeLogRecordAction',[{result:"This data can't be used to do gwr computing，computing failed"},{result:'Please change other data'}]);
-			}finally{
-				!this.computeLogRecord &&  this.$store.dispatch('computeLogRecordAction',[{result:"This data can't be used to do gwr computing，computing failed"},{result:'Please change other data'}]);
 			}
 		},
   	gtwr:function(){
