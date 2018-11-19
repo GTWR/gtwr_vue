@@ -58,21 +58,28 @@ export default {
     //打印日志
     printLog:function(log, speed) {
       $('#log-content').html('');
-      let i = 0;
+      let i = 0,self = this;
       window.sessionStorage.getItem('computeLog') && window.sessionStorage.removeItem('computeLog');
       let interval = setInterval(function(){
         let div1 = log[i].number ? '<p class="keyword">'+log[i].number+'</p>':'',
             div2 = log[i].line ? '<p class="value">'+log[i].line+'</p>':'',
             div3 = log[i].result ? '<p class="error">'+log[i].result+'</p>':'',
-            div4 = log[i].tip ? '<p class="comments">'+log[i].tip+'</p>':'',
+            div4 = log[i].tip ? '<p class="comments" id="turnToChartPage">'+log[i].tip+'</p>':'',
             record = window.sessionStorage.getItem('computeLog'),
             storage = record ? record+div1+div2+div3:div1+div2+div3;
         window.sessionStorage.setItem('computeLog',storage);
         $('#log-content').append(div1+div2+div3+div4);
+        if(document.getElementById("turnToChartPage")){
+          let div = document.getElementById("turnToChartPage");
+          div.addEventListener('click',function(){
+            self.$router.push({path:'/computeresult/chartAnalysis'});
+            messageBus.$emit('judge-right-container-tab','chart');
+          },false);
+        }
         i += 1;
         i >= log.length && clearInterval(interval);
       },speed);
-    }
+    },
   }
 }
 </script>

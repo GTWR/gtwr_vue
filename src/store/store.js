@@ -13,7 +13,7 @@ for(let i=0;i<dataTreeNodeName.length;i++){
 		dataTreeNodeName[i].url = demo;
 		for(let j=0;j<dataTreeNodeName[i].children.length;j++){
 			const pro = dataTreeNodeName[i].children[j].name;
-			let arr = [];
+			let arr = [],xArr=[],yArr=[];
 			for(let m=0;m<demo[0].features.length;m++){
 				arr.push(demo[0].features[m].properties[pro]);
 				lonArr.push(demo[0].features[m].geometry.coordinates[0]);
@@ -21,6 +21,8 @@ for(let i=0;i<dataTreeNodeName.length;i++){
 			}
 			dataTreeNodeName[i].children[j].max=Math.max.apply(null,arr);
 			dataTreeNodeName[i].children[j].min=Math.min.apply(null,arr);
+			dataTreeNodeName[i].children[j].latitude=[Math.min.apply(null,latArr),Math.max.apply(null,latArr)];
+			dataTreeNodeName[i].children[j].Logitude=[Math.min.apply(null,lonArr),Math.max.apply(null,lonArr)];
 		}
 	}
 	dataTreeNodeName[i].centerPosition[0] = (Math.max.apply(null,latArr)+Math.min.apply(null,latArr))/2;

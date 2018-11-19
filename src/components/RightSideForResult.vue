@@ -48,7 +48,7 @@ export default {
     //重新计算之后更改右侧tab高亮
     listenComputeAgainTabHighlight:function(){
       messageBus.$on('judge-right-container-tab',(par)=>{
-        par && this.handleBtnBorder('log');
+        par && this.handleBtnBorder(par);
       })
     },
     //切换tab跳转到对应的页面

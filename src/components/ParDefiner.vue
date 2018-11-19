@@ -102,8 +102,7 @@ export default {
 				this.$store.dispatch('computeSuccessAction' , [false,this.parentNodeIndex,this.childNodeIndex]);//清空“查看计算结果按钮”
 				$("#proBar").addClass('btn-animation');//按钮动画
 				this.$router.push({path:'/computeresult/computeLog'});//切换路由到计算日志面板
-				messageBus.$emit('judge-right-container-tab',true);
-				this.$store.dispatch('rightContainerShowAction' , [true,false,false]);
+				messageBus.$emit('judge-right-container-tab','log');
 				messageBus.$emit('compute-again',true);
 		},
 		//"开始计算"按钮响应函数

@@ -114,7 +114,6 @@ export default {
     //数据节点上查看计算结果的按钮响应函数
     showComputeResult:function(){
       this.$router.push({path:'/computeresult/computeLog'});
-      this.$store.dispatch('rightContainerShowAction' , [true,false,false]);
     }
   }
 }
